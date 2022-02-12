@@ -2,12 +2,14 @@ import FavoritesLocations from './favorites-locations';
 
 const cities = ['Amsterdam', 'Cologne'];
 
+const favoritesCounts = [2,1];
+
 type FavoriteScreenProps = {
   city: string;
   favoritesCount: number;
 }
 
-function FavoritesScreen({city}: FavoriteScreenProps, {favoritesCount}: FavoriteScreenProps): JSX.Element {
+function FavoritesScreen({city, favoritesCount}: FavoriteScreenProps): JSX.Element {
   return (
     <body>
       <div style={{display: 'none'}}>
@@ -48,8 +50,8 @@ function FavoritesScreen({city}: FavoriteScreenProps, {favoritesCount}: Favorite
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                <FavoritesLocations city={cities[0]} favoritesCount ={2}/>
-                <FavoritesLocations city={cities[1]} favoritesCount = {1}/>
+                <FavoritesLocations city={cities[0]} favoritesCount ={favoritesCounts[0]}/>
+                <FavoritesLocations city={cities[1]} favoritesCount = {favoritesCounts[1]}/>
               </ul>
             </section>
           </div>

@@ -5,7 +5,7 @@ type FavoritesLocationsProps = {
   favoritesCount: number;
 }
 
-function FavoritesLocations({city}: FavoritesLocationsProps, {favoritesCount}: FavoritesLocationsProps): JSX.Element {
+function FavoritesLocations({city, favoritesCount}: FavoritesLocationsProps): JSX.Element {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
