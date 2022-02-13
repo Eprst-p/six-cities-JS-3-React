@@ -6,12 +6,13 @@ type AppScreenProps = {
   cardsCount: number;
   favoriteCities: string[];
   favoriteLocPerCity: number[];
+  allCities: string[];
 }
 
-function App({cardsCount, favoriteCities, favoriteLocPerCity}: AppScreenProps): JSX.Element {
+function App({cardsCount, favoriteCities, favoriteLocPerCity, allCities}: AppScreenProps): JSX.Element {
   return (
     <>
-      <MainScreen cardsCount={cardsCount}/>
+      <MainScreen cardsCount={cardsCount} allCities={allCities}/>
       <FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/>{/*вывод в общей куче несколько экранов для теста*/}
       <PropretyScreen />
     </>

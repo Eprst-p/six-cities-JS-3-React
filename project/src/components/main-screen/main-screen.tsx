@@ -2,9 +2,10 @@ import PlaceCard from '../place-card/place-card';
 
 type MainScreenProps = {
   cardsCount: number;
+  allCities: string[];
 }
 
-function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
+function MainScreen({cardsCount, allCities}: MainScreenProps): JSX.Element {
   const emptyCards = Array.from({length: cardsCount});//массив только для map
   const temporaryKeys = emptyCards.map((value, index) => index.toString());//пока такие кривые ключи, т.к нет данных и нет ничего уникального, нет id. Позже заменить на айди или подобное
 
@@ -48,36 +49,17 @@ function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
+                {
+                  allCities.map((city) =>
+                    (
+                      <li className="locations__item" key={city}>
+                        <a className="locations__item-link tabs__item" href="#">
+                          <span>{city}</span>
+                        </a>
+                      </li>
+                    ),
+                  )
+                }
               </ul>
             </section>
           </div>
