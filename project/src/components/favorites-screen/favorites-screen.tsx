@@ -1,15 +1,15 @@
 import FavoritesLocations from './favorites-locations';
 
-const cities = ['Amsterdam', 'Cologne'];
-
-const favoritesCounts = [2,1];
-
 type FavoriteScreenProps = {
-  city: string;
-  favoritesCount: number;
+  favoriteCities: string[];
+  favoriteLocPerCity: number[];
 }
 
-function FavoritesScreen({city, favoritesCount}: FavoriteScreenProps): JSX.Element {
+function FavoritesScreen({favoriteCities, favoriteLocPerCity}: FavoriteScreenProps): JSX.Element {
+  const emptyFavoriteCities = Array.from({length: favoriteCities.length});//массив только для map
+  const temporaryKeys = emptyFavoriteCities.map((value, index) => index.toString());//пока такие кривые ключи, т.к нет данных и нет ничего уникального, нет id. Позже заменить на айди или подобное
+
+
   return (
     <body>
       <div style={{display: 'none'}}>
@@ -50,8 +50,11 @@ function FavoritesScreen({city, favoritesCount}: FavoriteScreenProps): JSX.Eleme
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                <FavoritesLocations city={cities[0]} favoritesCount ={favoritesCounts[0]}/>
-                <FavoritesLocations city={cities[1]} favoritesCount = {favoritesCounts[1]}/>
+                {
+                  emptyFavoriteCities.map((value, index) =>
+                    <FavoritesLocations key={temporaryKeys[index]} city={favoriteCities[index]} favoritesCount ={favoriteLocPerCity[index]}/>,
+                  )
+                }
               </ul>
             </section>
           </div>

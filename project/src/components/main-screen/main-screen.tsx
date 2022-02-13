@@ -1,20 +1,13 @@
 import PlaceCard from '../place-card/place-card';
 
-//можно ли сделать вывод PlaceCard через цикл, чет непонятно пока, как тут это работает
-
-/*function AllPlaceCards() {
-  const allCards =[];
-  for (let i = 0; i < 5; i++) {
-    allCards.push(<PlaceCard />);
-  }
-  return allCards.join();- тут строка, а не JSX
-}*/
-
 type MainScreenProps = {
   cardsCount: number;
 }
 
 function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
+  const emptyCards = Array.from({length: cardsCount});//массив только для map
+  const temporaryKeys = emptyCards.map((value, index) => index.toString());//пока такие кривые ключи, т.к нет данных и нет ничего уникального, нет id. Позже заменить на айди или подобное
+
   return (
     <body>
       <div style={{display: 'none'}}>
@@ -109,12 +102,11 @@ function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  <PlaceCard />
-                  <PlaceCard />
-                  <PlaceCard />
-                  <PlaceCard />
-                  <PlaceCard />
-                  Просто цифорка для теста - {cardsCount}
+                  {
+                    emptyCards.map((value, index) =>
+                      <PlaceCard key={temporaryKeys[index]}/>,
+                    )
+                  }
                 </div>
               </section>
               <div className="cities__right-section">
