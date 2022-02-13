@@ -1,5 +1,6 @@
 import MainScreen from '../main-screen/main-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
+import PropretyScreen from '../proprety-screen/proprety-screen';
 
 type AppScreenProps = {
   cardsCount: number;
@@ -11,7 +12,8 @@ function App({cardsCount, favoriteCities, favoriteLocPerCity}: AppScreenProps): 
   return (
     <>
       <MainScreen cardsCount={cardsCount}/>
-      <FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/>{/*вывод фаворитес в общей куче для теста - т.е сейчас двойная отрисовка*/}
+      <FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/>{/*вывод в общей куче несколько экранов для теста*/}
+      <PropretyScreen />
     </>
   );
 }
