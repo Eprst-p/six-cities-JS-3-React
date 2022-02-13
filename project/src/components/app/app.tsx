@@ -1,5 +1,5 @@
 import MainScreen from '../main-screen/main-screen';
-//import FavoritesScreen from '../favorites-screen/favorites-screen';
+import FavoritesScreen from '../favorites-screen/favorites-screen';
 
 type AppScreenProps = {
   cardsCount: number;
@@ -9,8 +9,10 @@ type AppScreenProps = {
 
 function App({cardsCount, favoriteCities, favoriteLocPerCity}: AppScreenProps): JSX.Element {
   return (
-    <MainScreen cardsCount={cardsCount}/>
-    //<FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/> - тест для favorites
+    <>
+      <MainScreen cardsCount={cardsCount}/>
+      <FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/>{/*вывод фаворитес в общей куче для теста - т.е сейчас двойная отрисовка*/}
+    </>
   );
 }
 
