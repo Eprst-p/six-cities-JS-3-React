@@ -91,7 +91,7 @@ function PropretyScreen(): JSX.Element {
                       (
                         <li className="property__feature property__feature--entire" key={feature}>
                           {feature}
-                        </li>),
+                        </li>)
                     )
                   }
                 </ul>
@@ -107,7 +107,7 @@ function PropretyScreen(): JSX.Element {
                         (
                           <li className="property__inside-item" key={item}>
                             {item}
-                          </li>),
+                          </li>)
                       )
                     }
                   </ul>
@@ -124,7 +124,7 @@ function PropretyScreen(): JSX.Element {
                           // eslint-disable-next-line react/no-array-index-key
                           <li className="reviews__item" key={`review-${index}`}>
                             <PropretyReview key={`review-${index}`}/>
-                          </li>),
+                          </li>)
                       )
                     }
                   </ul>
@@ -144,7 +144,7 @@ function PropretyScreen(): JSX.Element {
                       // eslint-disable-next-line react/no-array-index-key
                       <li className="reviews__item" key={`near-card-${index}`}>
                         <PropretyNearPlaceCard key={`near-card-${index}`}/>
-                      </li>),
+                      </li>)
                   )
                 }
               </div>

@@ -52,7 +52,7 @@ function FavoritesScreen({favoriteCities, favoriteLocPerCity}: FavoriteScreenPro
                     (
                       <li className="favorites__locations-items" key={favoriteCities[index]}>
                         <FavoritesLocations key={favoriteCities[index]} city={favoriteCities[index]} favoritesCount ={favoriteLocPerCity[index]}/>
-                      </li>),
+                      </li>)
                   )
                 }
               </ul>

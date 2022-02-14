@@ -37,7 +37,7 @@ function PropretyFormReview(): JSX.Element {
                   </svg>
                 </label>
               </>
-            ),
+            )
           )
         }
       </div>
