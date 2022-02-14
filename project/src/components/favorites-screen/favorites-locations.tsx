@@ -6,9 +6,6 @@ type FavoritesLocationsProps = {
 }
 
 function FavoritesLocations({city, favoritesCount}: FavoritesLocationsProps): JSX.Element {
-  const emptyCards = Array.from({length: favoritesCount});//массив только для map
-  const temporaryKeys = emptyCards.map((value, index) => index.toString());//пока такие кривые ключи, т.к нет данных и нет ничего уникального, нет id. Позже заменить на айди или подобное
-
 
   return (
     <>
@@ -21,9 +18,8 @@ function FavoritesLocations({city, favoritesCount}: FavoritesLocationsProps): JS
       </div>
       <div className="favorites__places">
         {
-          emptyCards.map((value, index) =>
-            <FavoriteCard key={temporaryKeys[index]}/>,
-          )
+          // eslint-disable-next-line react/no-array-index-key
+          new Array(favoritesCount).fill('').map((_, index) => (<FavoriteCard key={`favorite-card-${index}`} />))
         }
       </div>
     </>

@@ -6,7 +6,6 @@ type FavoriteScreenProps = {
 }
 
 function FavoritesScreen({favoriteCities, favoriteLocPerCity}: FavoriteScreenProps): JSX.Element {
-  const emptyFavoriteCities = Array.from({length: favoriteCities.length});//массив только для map
 
   return (
     <>
@@ -49,7 +48,7 @@ function FavoritesScreen({favoriteCities, favoriteLocPerCity}: FavoriteScreenPro
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
                 {
-                  emptyFavoriteCities.map((value, index) =>
+                  new Array(favoriteCities.length).fill('').map((_, index) =>
                     (
                       <li className="favorites__locations-items" key={favoriteCities[index]}>
                         <FavoritesLocations key={favoriteCities[index]} city={favoriteCities[index]} favoritesCount ={favoriteLocPerCity[index]}/>

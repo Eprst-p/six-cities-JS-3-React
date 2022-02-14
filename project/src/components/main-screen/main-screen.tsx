@@ -6,8 +6,6 @@ type MainScreenProps = {
 }
 
 function MainScreen({cardsCount, allCities}: MainScreenProps): JSX.Element {
-  const emptyCards = Array.from({length: cardsCount});//массив только для map
-  const temporaryKeys = emptyCards.map((value, index) => index.toString());//пока такие кривые ключи, т.к нет данных и нет ничего уникального, нет id. Позже заменить на айди или подобное
 
   return (
     <>
@@ -85,9 +83,8 @@ function MainScreen({cardsCount, allCities}: MainScreenProps): JSX.Element {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
                   {
-                    emptyCards.map((value, index) =>
-                      <PlaceCard key={temporaryKeys[index]}/>,
-                    )
+                    // eslint-disable-next-line react/no-array-index-key
+                    new Array(cardsCount).fill('').map((_, index) => (<PlaceCard key={`place-card-${index}`} />))
                   }
                 </div>
               </section>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
@@ -9,13 +10,7 @@ const apartmentFeatures = ['Apartment', '3 Bedrooms', 'Max 4 adults'];
 const insideItems = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
 
 const REVIEW_AMOUNT = 3;
-const emptyReviews = Array.from({length: REVIEW_AMOUNT});
-const temporaryReviewKeys = emptyReviews.map((value, index) => index.toString());
-
-const NEAR_CARDS_AMOUNT = 4;
-const emptyCards = Array.from({length: NEAR_CARDS_AMOUNT});
-const temporaryCardKeys = emptyCards.map((value, index) => index.toString());
-
+const NEAR_CARDS_AMOUNT = 3;
 
 function PropretyScreen(): JSX.Element {
   return (
@@ -124,10 +119,11 @@ function PropretyScreen(): JSX.Element {
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{REVIEW_AMOUNT}</span></h2>
                   <ul className="reviews__list">
                     {
-                      emptyReviews.map((value, index) =>
+                      new Array(REVIEW_AMOUNT).fill('').map((_, index) =>
                         (
-                          <li className="reviews__item" key={temporaryReviewKeys[index]}>
-                            <PropretyReview key={temporaryReviewKeys[index]}/>
+                          // eslint-disable-next-line react/no-array-index-key
+                          <li className="reviews__item" key={`review-${index}`}>
+                            <PropretyReview key={`review-${index}`}/>
                           </li>),
                       )
                     }
@@ -143,8 +139,12 @@ function PropretyScreen(): JSX.Element {
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
                 {
-                  emptyCards.map((value, index) =>
-                    <PropretyNearPlaceCard key={temporaryCardKeys[index]}/>,
+                  new Array(NEAR_CARDS_AMOUNT).fill('').map((_, index) =>
+                    (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <li className="reviews__item" key={`near-card-${index}`}>
+                        <PropretyNearPlaceCard key={`near-card-${index}`}/>
+                      </li>),
                   )
                 }
               </div>
