@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
-const Settings = {
+const AppPropsValues = {
   CARDS_COUNT: 5,
   FAVORITE_CITIES: ['Amsterdam', 'Cologne', 'RandomCity'],
   FAVORITE_LOC_PER_CITY: [2,1,4],
@@ -12,10 +12,10 @@ const Settings = {
 ReactDOM.render(
   <React.StrictMode>
     <App
-      cardsCount = {Settings.CARDS_COUNT}
-      favoriteCities = {Settings.FAVORITE_CITIES}
-      favoriteLocPerCity = {Settings.FAVORITE_LOC_PER_CITY}
-      allCities = {Settings.ALL_CITIES}
+      cardsCount = {AppPropsValues.CARDS_COUNT}
+      favoriteCities = {AppPropsValues.FAVORITE_CITIES}
+      favoriteLocPerCity = {AppPropsValues.FAVORITE_LOC_PER_CITY}
+      allCities = {AppPropsValues.ALL_CITIES}
     />
   </React.StrictMode>,
   document.getElementById('root'));

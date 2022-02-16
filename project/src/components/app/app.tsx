@@ -1,10 +1,11 @@
 import {Link, Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import Layout from '../layout/layout';
 import MainScreen from '../main-screen/main-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PropretyScreen from '../proprety-screen/proprety-screen';
 import LoginScreen from '../login-screen/login-sreen';
+import PrivateRoute  from '../private-route/private-route';
 
 type AppScreenProps = {
   cardsCount: number;
@@ -32,7 +33,13 @@ function App({cardsCount, favoriteCities, favoriteLocPerCity, allCities}: AppScr
           />
           <Route
             path={AppRoute.Favorites}
-            element={<FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/>}
+            element={
+              <PrivateRoute
+                authorizationStatus={AuthorizationStatus.NoAuth} //чтобы попасть на favorites надо заменить на .Auth
+              >
+                <FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/>
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Proprety}
