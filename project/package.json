@@ -24,7 +24,8 @@
     "extends": [
       "react-app",
       "react-app/jest",
-      "htmlacademy/react-typescript"
+      "htmlacademy/react-typescript",
+      "prettier"
     ]
   },
   "browserslist": {
@@ -54,6 +55,7 @@
     "@types/react-router-dom": "^5.3.3",
     "axios-mock-adapter": "^1.19.0",
     "eslint-config-htmlacademy": "^4.1.0",
+    "eslint-config-prettier": "^8.3.0",
     "faker": "^5.5.3",
     "redux-devtools-extension": "2.13",
     "typescript": "^4.5.5"

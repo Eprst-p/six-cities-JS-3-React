@@ -1,4 +1,6 @@
 import FavoriteCard from './favorite-card';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 type FavoritesLocationsProps = {
   city: string;
@@ -6,24 +8,20 @@ type FavoritesLocationsProps = {
 }
 
 function FavoritesLocations({city, favoritesCount}: FavoritesLocationsProps): JSX.Element {
-  const emptyCards = Array.from({length: favoritesCount});//массив только для map
-  const temporaryKeys = emptyCards.map((value, index) => index.toString());//пока такие кривые ключи, т.к нет данных и нет ничего уникального, нет id. Позже заменить на айди или подобное
-
 
   return (
     <>
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link className="locations__item-link" to={AppRoute.Proprety}>
             <span>{city}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">
         {
-          emptyCards.map((value, index) =>
-            <FavoriteCard key={temporaryKeys[index]}/>,
-          )
+          // eslint-disable-next-line react/no-array-index-key
+          new Array(favoritesCount).fill('').map((_, index) => (<FavoriteCard key={`favorite-card-${index}`} />))
         }
       </div>
     </>
