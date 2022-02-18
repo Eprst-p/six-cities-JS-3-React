@@ -87,7 +87,6 @@ function PropretyScreen(): JSX.Element {
                 {
                   new Array(REVIEW_AMOUNT).fill('').map((_, index) =>
                     (
-                      // eslint-disable-next-line react/no-array-index-key
                       <li className="reviews__item" key={`review-${index}`}>
                         <PropretyReview key={`review-${index}`}/>
                       </li>)

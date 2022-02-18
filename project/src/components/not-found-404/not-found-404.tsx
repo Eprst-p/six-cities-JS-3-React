@@ -3,7 +3,7 @@ import {AppRoute} from '../../const';
 
 const styleFlexContainer = {
   display: 'flex',
-  flexDirection: 'column' as const,
+  flexDirection: 'column' as const, //выглядит как хрень собачья, но без этого не работает, чет не то с типом стринг для flexDirection, подобная хрень и для textAlign
   justifyContent: 'space-around',
   alignItems: 'center',
 };
