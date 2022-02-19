@@ -19,10 +19,10 @@ function PropretyScreen(): JSX.Element {
         <div className="property__gallery-container container">
           <div className="property__gallery">
             {
-              apartmentPhotos.map((url) =>
+              apartmentPhotos.map((photo) =>
                 (
-                  <div className="property__image-wrapper" key={url}>
-                    <img className="property__image" src={url} alt="studio" key={url} />
+                  <div className="property__image-wrapper" key={photo}>
+                    <img className="property__image" src={photo} alt="studio" key={photo} />
                   </div>),
               )
             }
@@ -85,12 +85,15 @@ function PropretyScreen(): JSX.Element {
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{REVIEW_AMOUNT}</span></h2>
               <ul className="reviews__list">
                 {
+                  REVIEW_AMOUNT > 0
+                  ?
                   new Array(REVIEW_AMOUNT).fill('').map((_, index) =>
                     (
                       <li className="reviews__item" key={`review-${index}`}>
                         <PropretyReview key={`review-${index}`}/>
                       </li>)
                   )
+                  : null
                 }
               </ul>
               <PropretyFormReview />

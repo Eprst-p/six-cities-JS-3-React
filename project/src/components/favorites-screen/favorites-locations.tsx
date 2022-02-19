@@ -1,6 +1,6 @@
 import FavoriteCard from './favorite-card';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute} from '../../settings/app-routes';
 
 type FavoritesLocationsProps = {
   city: string;
@@ -13,7 +13,7 @@ function FavoritesLocations({city, favoritesCount}: FavoritesLocationsProps): JS
     <>
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <Link className="locations__item-link" to={AppRoute.Proprety}>
+          <Link className="locations__item-link" to={AppRoute.Main}>
             <span>{city}</span>
           </Link>
         </div>

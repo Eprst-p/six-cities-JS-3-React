@@ -1,6 +1,6 @@
 import FavoritesLocations from './favorites-locations';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute} from '../../settings/app-routes';
 
 type FavoriteScreenProps = {
   favoriteCities: string[];
@@ -17,10 +17,10 @@ function FavoritesScreen({favoriteCities, favoriteLocPerCity}: FavoriteScreenPro
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {
-                new Array(favoriteCities.length).fill('').map((_, index) =>
+                favoriteCities.map((city, index) =>
                   (
-                    <li className="favorites__locations-items" key={favoriteCities[index]}>
-                      <FavoritesLocations key={favoriteCities[index]} city={favoriteCities[index]} favoritesCount ={favoriteLocPerCity[index]}/>
+                    <li className="favorites__locations-items" key={city}>
+                      <FavoritesLocations key={city} city={city} favoritesCount ={favoriteLocPerCity[index]}/>
                     </li>)
                 )
               }

@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute} from '../../settings/app-routes';
 
 function PropretyNearPlaceCard(): JSX.Element {
   return (

@@ -1,5 +1,5 @@
 import {Link, Outlet, useLocation} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute} from '../../settings/app-routes';
 import NavLinkProfile from './nav-link-profile';
 
 const pagesDifferences = new Map();
@@ -48,7 +48,7 @@ function Layout(): JSX.Element {
                   <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
                 </Link>
               </div>
-              {pageSettings.isNavElement ? <NavLinkProfile /> : ''}
+              {pageSettings.isNavElement ? <NavLinkProfile /> : null}
             </div>
           </div>
         </header>
