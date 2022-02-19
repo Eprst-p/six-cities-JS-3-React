@@ -1,45 +1,19 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
-const styleFlexContainer = {
-  display: 'flex',
-  flexDirection: 'column' as const, //выглядит как хрень собачья, но без этого не работает, чет не то с типом стринг для flexDirection, подобная хрень и для textAlign
-  justifyContent: 'space-around',
-  alignItems: 'center',
-};
-
-const styleImg = {
-  width: 1100,
-  height: 400,
-};
-
-const styleText = {
-  fontSize: '300%',
-};
-
-const styleReasons = {
-  fontSize: '150%',
-};
-
-const styleBackLink = {
-  fontSize: '200%',
-  color: 'blue',
-  marginLeft: 400,
-};
-
 function NotFound404(): JSX.Element {
   return (
-  <div style = {styleFlexContainer}>
-    <div style = {styleText}>
+  <div className="page404_container">
+    <div className="page404_title">
       <h1>
         404
         <br />
         <small>Page not found</small>
       </h1>
     </div>
-    <Link to={AppRoute.Main} style = {styleBackLink}>Go to main page</Link>
-    <img  src="img/404notFound.png" alt="stop the bus" style = {styleImg} />
-    <div style={styleReasons}>
+    <Link className="page404_back_link" to={AppRoute.Main}>Go to main page</Link>
+    <img className="page404_img"  src="img/404notFound.png" alt="stop the bus" />
+    <div className="page404_reasons">
       <p><b>Why could this happen?</b></p>
       <ul>
         <li>
