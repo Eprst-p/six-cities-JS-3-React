@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import {generateOffers} from './mocks/offers';
+
+// eslint-disable-next-line no-console
+console.log(generateOffers());
 
 const AppPropsValues = {
   CARDS_COUNT: 5,
