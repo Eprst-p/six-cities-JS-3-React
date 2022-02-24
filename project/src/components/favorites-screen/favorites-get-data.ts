@@ -38,6 +38,4 @@ const getFavoriteLocationsPerCity = (allFavorites:offerType[], favoriteCities:st
   return locationsPerCity;
 };
 
-
-
 export {getFavorites, getFavoriteCities, getFavoriteLocationsPerCity};

@@ -1,11 +1,13 @@
 import PlaceCard from '../place-card/place-card';
+import {offerType} from '../../types/offer-type';
 
 type MainScreenProps = {
-  cardsCount: number;
+  allOffers: offerType[];
   allCities: string[];
 }
 
-function MainScreen({cardsCount, allCities}: MainScreenProps): JSX.Element {
+function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
+  const cardsCount = allOffers.length;
 
   return (
     <main className="page__main page__main--index">

@@ -8,15 +8,14 @@ import PropretyScreen from '../proprety-screen/proprety-screen';
 import LoginScreen from '../login-screen/login-sreen';
 import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
+import {offerType} from '../../types/offer-type';
 
 type AppScreenProps = {
-  cardsCount: number;
-  favoriteCities: string[];
-  favoriteLocPerCity: number[];
   allCities: string[];
+  allOffers: offerType[];
 }
 
-function App({cardsCount, favoriteCities, favoriteLocPerCity, allCities}: AppScreenProps): JSX.Element {
+function App({allCities, allOffers}: AppScreenProps): JSX.Element {
 
   return (
       <BrowserRouter>
@@ -27,7 +26,7 @@ function App({cardsCount, favoriteCities, favoriteLocPerCity, allCities}: AppScr
         >
           <Route
             path={AppRoute.Main}
-            element={<MainScreen cardsCount={cardsCount} allCities={allCities}/>}
+            element={<MainScreen allOffers={allOffers} allCities={allCities}/>}
           />
           <Route
             path={AppRoute.Login}
@@ -39,7 +38,7 @@ function App({cardsCount, favoriteCities, favoriteLocPerCity, allCities}: AppScr
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth} //чтобы попасть на favorites надо заменить на .Auth
               >
-                <FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/>
+                <FavoritesScreen allOffers={allOffers} />
               </PrivateRoute>
             }
           />
