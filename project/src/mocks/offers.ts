@@ -1,4 +1,4 @@
-import {offer} from "../types/offer";
+import {offerType} from '../types/offer-type';
 import {getRandomPositiveNumber, getRandomFloatNumber, getRandomElement} from './randomaizers';
 import {apartmentPhotos, insideItems, allCities, titles, roomTypes, descriptions} from './sources';
 
@@ -12,7 +12,7 @@ const generateImges = ():string => {
   return apartmentPhotos.slice(0, randomIndex).join();
 };
 
-const generateOffer = ():offer => (
+const generateOffer = ():offerType => (
     {
       bedrooms: getRandomPositiveNumber(1, 5),
       city: {

@@ -1,16 +1,36 @@
+/* eslint-disable no-console */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {generateOffers} from './mocks/offers';
+import {generateComments} from './mocks/comments';
+import {allCities} from './mocks/sources';
+import {getFavorites, getFavoriteCities, getFavoriteLocationsPerCity} from './components/favorites-screen/favorites-get-data'
 
-// eslint-disable-next-line no-console
-console.log(generateOffers());
+const allOffers = generateOffers();
+console.log(allOffers);
+
+const allComments = generateComments();
+console.log(allComments);
+
+const cardCount = allOffers.length;
+console.log(cardCount);
+
+const allFavorites = getFavorites(allOffers);
+console.log(allFavorites);
+
+const favoriteCities = getFavoriteCities(allFavorites);
+console.log(favoriteCities);
+
+const locationsPerCity = getFavoriteLocationsPerCity(allFavorites, favoriteCities);
+console.log(locationsPerCity);
+
 
 const AppPropsValues = {
-  CARDS_COUNT: 5,
-  FAVORITE_CITIES: ['Amsterdam', 'Cologne', 'RandomCity'],
-  FAVORITE_LOC_PER_CITY: [2,1,4],
-  ALL_CITIES: ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'],
+  CARDS_COUNT: cardCount,
+  FAVORITE_CITIES: favoriteCities,
+  FAVORITE_LOC_PER_CITY: locationsPerCity,
+  ALL_CITIES: allCities,
 };
 
 ReactDOM.render(
