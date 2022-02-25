@@ -47,9 +47,7 @@ function App({allCities, allOffers}: AppScreenProps): JSX.Element {
             element={<PropretyScreen />}
           />
         </Route>
-        <Route path="*" element={<NotFound404 />
-        }
-        />
+        <Route path="*" element={<NotFound404 />} />
       </Routes>
     </BrowserRouter>
   );

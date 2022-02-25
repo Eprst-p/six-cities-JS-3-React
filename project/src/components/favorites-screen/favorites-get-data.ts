@@ -22,20 +22,16 @@ const getFavoriteCities = (allFavorites:offerType[]) => {
   return favoriteCities;
 };
 
-const getFavoriteLocationsPerCity = (allFavorites:offerType[], favoriteCities:string[]) => {
-  const locationsPerCity :number[] = [];
+const getLocationsPerCity = (allFavorites:offerType[], city:string) => {
+  const locationsPerCity :offerType[] = [];
 
-  favoriteCities.forEach((city) => {
-    let locationsAmount = 0;
-    allFavorites.forEach((favoriteOffer) => {
-      if (favoriteOffer.city.name === city) {
-        locationsAmount += 1;
-      }
-    })
-    locationsPerCity.push(locationsAmount);
+  allFavorites.forEach((favoriteOffer) => {
+    if (favoriteOffer.city.name === city) {
+      locationsPerCity.push(favoriteOffer);
+    }
   });
 
   return locationsPerCity;
 };
 
-export {getFavorites, getFavoriteCities, getFavoriteLocationsPerCity};
+export {getFavorites, getFavoriteCities, getLocationsPerCity};

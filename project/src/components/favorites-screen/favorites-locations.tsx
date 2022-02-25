@@ -1,13 +1,14 @@
 import FavoriteCard from './favorite-card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
+import {offerType} from '../../types/offer-type';
 
 type FavoritesLocationsProps = {
   city: string;
-  favoritesCount: number;
+  locationsPerCity: offerType[];
 }
 
-function FavoritesLocations({city, favoritesCount}: FavoritesLocationsProps): JSX.Element {
+function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
 
   return (
     <>
@@ -20,8 +21,7 @@ function FavoritesLocations({city, favoritesCount}: FavoritesLocationsProps): JS
       </div>
       <div className="favorites__places">
         {
-          // eslint-disable-next-line react/no-array-index-key
-          new Array(favoritesCount).fill('').map((_, index) => (<FavoriteCard key={`favorite-card-${index}`} />))
+          locationsPerCity.map((location) => (<FavoriteCard key={`favorite-card-${location.id}`} offer={location} />))
         }
       </div>
     </>

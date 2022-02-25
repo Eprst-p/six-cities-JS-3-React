@@ -2,7 +2,7 @@ import FavoritesLocations from './favorites-locations';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {offerType} from '../../types/offer-type';
-import {getFavorites, getFavoriteCities, getFavoriteLocationsPerCity} from './favorites-get-data'
+import {getFavorites, getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
 
 type FavoriteScreenProps = {
   allOffers: offerType[];
@@ -11,7 +11,6 @@ type FavoriteScreenProps = {
 function FavoritesScreen({allOffers}: FavoriteScreenProps): JSX.Element {
   const allFavorites = getFavorites(allOffers);
   const favoriteCities = getFavoriteCities(allFavorites);
-  const locationsPerCity = getFavoriteLocationsPerCity(allFavorites, favoriteCities);
 
   return (
     <>
@@ -21,10 +20,10 @@ function FavoritesScreen({allOffers}: FavoriteScreenProps): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {
-                favoriteCities.map((city, index) =>
+                favoriteCities.map((city) =>
                   (
                     <li className="favorites__locations-items" key={city}>
-                      <FavoritesLocations key={city} city={city} favoritesCount ={locationsPerCity[index]}/>
+                      <FavoritesLocations key={city} city={city} locationsPerCity ={getLocationsPerCity(allFavorites, city)}/>
                     </li>)
                 )
               }

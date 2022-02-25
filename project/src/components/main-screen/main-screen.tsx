@@ -1,4 +1,4 @@
-import PlaceCard from '../place-card/place-card';
+import PlaceCard from './place-card';
 import {offerType} from '../../types/offer-type';
 
 type MainScreenProps = {
@@ -7,7 +7,6 @@ type MainScreenProps = {
 }
 
 function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
-  const cardsCount = allOffers.length;
 
   return (
     <main className="page__main page__main--index">
@@ -51,8 +50,7 @@ function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
             </form>
             <div className="cities__places-list places__list tabs__content">
               {
-                // eslint-disable-next-line react/no-array-index-key
-                new Array(cardsCount).fill('').map((_, index) => (<PlaceCard key={`place-card-${index}`} />))
+                allOffers.map((location) => (<PlaceCard key={`place-card-${location.id}`} offer={location} />))
               }
             </div>
           </section>

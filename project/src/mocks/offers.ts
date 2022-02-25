@@ -45,7 +45,7 @@ const generateOffer = ():offerType => (
         zoom: getRandomPositiveNumber(5,10)
       },
       maxAdults: getRandomPositiveNumber(1,10),
-      previewImage: 'img/apartment-01.jpg',
+      previewImage: getRandomElement(apartmentPhotos),
       price: getRandomPositiveNumber(1,15)*10,
       rating: getRandomPositiveNumber(10,50)/10,
       title: getRandomElement(titles),
@@ -54,7 +54,7 @@ const generateOffer = ():offerType => (
 );
 
 const generateOffers = () => {
-  const offersAmount = getRandomPositiveNumber(1, 10);
+  const offersAmount = getRandomPositiveNumber(1, 30);
   const offers = [];
   for (let i = 0; i< offersAmount; i++) {
     offers.push(generateOffer());

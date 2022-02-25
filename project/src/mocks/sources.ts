@@ -3,7 +3,7 @@ const apartmentPhotos = ['img/room.jpg', 'img/apartment-01.jpg','img/apartment-0
 const insideItems = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
 const allCities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 const titles = ['Beautiful & luxurious studio at great location', 'Wood and stone place', 'Canal View Prinsengracht','Nice, cozy, warm big bed apartment'];
-const roomTypes = ['apartment', 'private room'];
+const roomTypes = ['Apartment', 'Private room'];
 const descriptions = [
   'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
   'That clone-Angelina always smiling, and sometimes come at night and just watch at you',
