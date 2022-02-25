@@ -9,13 +9,15 @@ import LoginScreen from '../login-screen/login-sreen';
 import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
 import {offerType} from '../../types/offer-type';
+import {commentType} from '../../types/comment-type';
 
 type AppScreenProps = {
   allCities: string[];
   allOffers: offerType[];
+  allComments: commentType[][];
 }
 
-function App({allCities, allOffers}: AppScreenProps): JSX.Element {
+function App({allCities, allOffers, allComments}: AppScreenProps): JSX.Element {
 
   return (
       <BrowserRouter>
@@ -43,8 +45,8 @@ function App({allCities, allOffers}: AppScreenProps): JSX.Element {
             }
           />
           <Route
-            path={AppRoute.Proprety}
-            element={<PropretyScreen />}
+            path={`${AppRoute.Proprety}/:id`}
+            element={<PropretyScreen allOffers={allOffers} allComments={allComments} />}
           />
         </Route>
         <Route path="*" element={<NotFound404 />} />

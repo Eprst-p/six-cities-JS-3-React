@@ -27,7 +27,7 @@ pagesDifferences
     }
   )
   .set(
-    AppRoute.Proprety, {
+    'Default', {
       outerDivClass: "page",
       headerLogoLinkClass: "header__logo-link",
       isNavElement: true,
@@ -36,7 +36,7 @@ pagesDifferences
 
 function Layout(): JSX.Element {
   const currentLocation = useLocation().pathname;
-  const pageSettings = pagesDifferences.get(currentLocation);
+  const pageSettings = pagesDifferences.get(currentLocation) || pagesDifferences.get('Default');
 
   return (
       <div className={pageSettings.outerDivClass}>

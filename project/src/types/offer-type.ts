@@ -9,7 +9,7 @@ export type offerType = {
   name: string
   }
   description: string
-  goods: [string]
+  goods: string[]
   host: {
     avatarUrl: string
     id: number
@@ -17,7 +17,7 @@ export type offerType = {
     name: string
   }
   id: number
-  images: [string]
+  images: string[]
   isFavorite: boolean
   isPremium: boolean
   location: {

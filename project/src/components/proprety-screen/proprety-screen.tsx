@@ -3,23 +3,56 @@ import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
 import PropretyNearPlaceCard from './proprety-near-place-card';
+import {offerType} from '../../types/offer-type';
+import {commentType} from '../../types/comment-type';
+import {useParams} from 'react-router-dom';
 
-//пока данные просто здесь для теста, без пропсов
-const apartmentPhotos = ['img/room.jpg', 'img/apartment-01.jpg','img/apartment-02.jpg','img/apartment-03.jpg','img/apartment-small-03.jpg','img/apartment-small-04.jpg'];
-const apartmentFeatures = ['Apartment', '3 Bedrooms', 'Max 4 adults'];
-const insideItems = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
+type PropretyScreenProps = {
+  allOffers: offerType[];
+  allComments: commentType[][];
+}
 
-const REVIEW_AMOUNT = 3;
-const NEAR_CARDS_AMOUNT = 3;
+function PropretyScreen({allOffers, allComments}: PropretyScreenProps): JSX.Element {
 
-function PropretyScreen(): JSX.Element {
+  const currentId = useParams().id;
+
+  const getCurrentOffer = (): offerType | null => {
+    let offerForId = null;
+    allOffers.forEach((offer) => {
+      if (offer.id.toString() === currentId) {
+        offerForId = offer;
+      }
+    })
+    return offerForId;
+  }
+  const currentOffer = getCurrentOffer();
+
+  const apartmentFeatures = [
+    currentOffer?.type,
+    `${currentOffer?.bedrooms} Bedrooms`,
+    `Max ${currentOffer?.maxAdults} adults`,
+  ];
+
+  const nearPlaces = allOffers.slice(0, 2);
+
+  const getCurrentComments = (): commentType[] | null => {
+    let commentsForOffer = null;
+    allOffers.forEach((offer, index) => {
+      if (offer.id.toString() === currentId) {
+        commentsForOffer = allComments[index];
+      }
+    })
+    return commentsForOffer;
+  }
+  const currentComments = getCurrentComments();
+
   return (
     <main className="page__main page__main--property">
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
             {
-              apartmentPhotos.map((photo) =>
+              currentOffer?.images.map((photo) =>
                 (
                   <div className="property__image-wrapper" key={photo}>
                     <img className="property__image" src={photo} alt="studio" key={photo} />
@@ -30,12 +63,17 @@ function PropretyScreen(): JSX.Element {
         </div>
         <div className="property__container container">
           <div className="property__wrapper">
-            <div className="property__mark">
-              <span>Premium</span>
-            </div>
+            {
+              currentOffer?.isPremium === true
+              ?
+              <div className="property__mark">
+                <span>Premium</span>
+              </div>
+              : null
+            }
             <div className="property__name-wrapper">
               <h1 className="property__name">
-                Beautiful &amp; luxurious studio at great location
+                {currentOffer?.title}
               </h1>
               <button className="property__bookmark-button button" type="button">
                 <svg className="property__bookmark-icon" width="31" height="33">
@@ -49,7 +87,7 @@ function PropretyScreen(): JSX.Element {
                 <span style={{width: '80%'}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="property__rating-value rating__value">4.8</span>
+              <span className="property__rating-value rating__value">{currentOffer?.rating}</span>
             </div>
             <ul className="property__features">
               {
@@ -62,14 +100,14 @@ function PropretyScreen(): JSX.Element {
               }
             </ul>
             <div className="property__price">
-              <b className="property__price-value">&euro;120</b>
+              <b className="property__price-value">&euro;{currentOffer?.price}</b>
               <span className="property__price-text">&nbsp;night</span>
             </div>
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
                 {
-                  insideItems.map((item) =>
+                  currentOffer?.goods.map((item) =>
                     (
                       <li className="property__inside-item" key={item}>
                         {item}
@@ -79,21 +117,18 @@ function PropretyScreen(): JSX.Element {
               </ul>
             </div>
             <div className="property__host">
-              <PropretyHost />
+              <PropretyHost offer={currentOffer} />
             </div>
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{REVIEW_AMOUNT}</span></h2>
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{currentComments?.length}</span></h2>
               <ul className="reviews__list">
                 {
-                  REVIEW_AMOUNT > 0
-                  ?
-                  new Array(REVIEW_AMOUNT).fill('').map((_, index) =>
+                  currentComments?.map((comment) =>
                     (
-                      <li className="reviews__item" key={`review-${index}`}>
-                        <PropretyReview key={`review-${index}`}/>
-                      </li>)
+                    <li className="reviews__item" key={`review-${comment.id}`}>
+                      <PropretyReview key={`review-${comment.id}`} comment={comment}/>
+                    </li>)
                   )
-                  : null
                 }
               </ul>
               <PropretyFormReview />
@@ -107,13 +142,11 @@ function PropretyScreen(): JSX.Element {
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
             {
-              new Array(NEAR_CARDS_AMOUNT).fill('').map((_, index) =>
-                (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <li className="reviews__item" key={`near-card-${index}`}>
-                    <PropretyNearPlaceCard key={`near-card-${index}`}/>
-                  </li>)
-              )
+              nearPlaces.map((location) => (
+                <li className="reviews__item" key={`near-card-${location.id}`}>
+                  <PropretyNearPlaceCard key={`near-card-${location.id}`} offer={location}/>
+                </li>)
+                )
             }
           </div>
         </section>

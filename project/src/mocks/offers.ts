@@ -2,14 +2,14 @@ import {offerType} from '../types/offer-type';
 import {getRandomPositiveNumber, getRandomFloatNumber, getRandomElement} from './randomaizers';
 import {apartmentPhotos, insideItems, allCities, titles, roomTypes, descriptions} from './sources';
 
-const generateGoods = ():string => {
+const generateGoods = ():string[] => {
   const randomIndex = getRandomPositiveNumber(0, 9);
-  return insideItems.slice(0, randomIndex).join();
+  return insideItems.slice(0, randomIndex);
 };
 
-const generateImges = ():string => {
+const generateImges = ():string[] => {
   const randomIndex = getRandomPositiveNumber(0, 5);
-  return apartmentPhotos.slice(0, randomIndex).join();
+  return apartmentPhotos.slice(0, randomIndex);
 };
 
 const generateOffer = ():offerType => (
@@ -24,9 +24,7 @@ const generateOffer = ():offerType => (
         name: getRandomElement(allCities),
       },
       description: getRandomElement(descriptions),
-      goods: [
-        generateGoods()
-      ],
+      goods: generateGoods(),
       host: {
         avatarUrl: 'img/avatar-angelina.jpg',
         id: getRandomPositiveNumber(1,10000000),
@@ -34,9 +32,7 @@ const generateOffer = ():offerType => (
         name: `clon-Angelina-${getRandomPositiveNumber(1,45694152)}`
       },
       id: getRandomPositiveNumber(1,10000000),
-      images: [
-        generateImges()
-      ],
+      images: generateImges(),
       isFavorite: Boolean(getRandomPositiveNumber(0, 1)),
       isPremium: Boolean(getRandomPositiveNumber(0, 1)),
       location: {

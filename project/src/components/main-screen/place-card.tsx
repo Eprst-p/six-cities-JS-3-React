@@ -19,7 +19,7 @@ function PlaceCard({offer} : PlaceCardProps): JSX.Element {
         : null
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link  to={AppRoute.Proprety}>
+        <Link  to={`${AppRoute.Proprety}/${offer.id}`}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -43,7 +43,7 @@ function PlaceCard({offer} : PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link  to={AppRoute.Proprety}>{offer.title}</Link>
+          <Link  to={`${AppRoute.Proprety}/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
