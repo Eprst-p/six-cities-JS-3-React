@@ -1,14 +1,22 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {offerType} from '../../types/offer-type';
+import {useState,} from 'react';
 
 type FavoriteCardProps = {
   offer: offerType;
 }
 
 function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
+
+  const [id, setId] = useState(0);
+
+  const handlerMouseOverCard = () => { //аналогично place-card
+    setId(offer.id);
+  };
+
   return (
-    <article className="favorites__card place-card">
+    <article className="favorites__card place-card" onMouseOver={handlerMouseOverCard}>
       {
         offer.isPremium === true
         ?
@@ -18,7 +26,7 @@ function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
         : null
       }
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Proprety}/${offer.id}`}>
+        <Link to={`${AppRoute.Proprety}/${id}`}>
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place" />
         </Link>
       </div>
@@ -42,7 +50,7 @@ function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Proprety}/${offer.id}`}>{offer.title}</Link>
+          <Link to={`${AppRoute.Proprety}/${id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
