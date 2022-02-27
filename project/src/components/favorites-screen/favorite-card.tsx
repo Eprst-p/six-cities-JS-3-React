@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {offerType} from '../../types/offer-types';
+import {generatePath} from "react-router";
 
 type FavoriteCardProps = {
   offer: offerType;
@@ -21,7 +22,7 @@ function FavoriteCard({offer, handlerMouseEnterCard, handlerMouseLeaveCard} : Fa
         : null
       }
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Proprety}/${offer.id}`}>
+        <Link to={generatePath(AppRoute.Proprety, {id: offer.id.toString()})}>
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place" />
         </Link>
       </div>
@@ -45,7 +46,7 @@ function FavoriteCard({offer, handlerMouseEnterCard, handlerMouseLeaveCard} : Fa
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Proprety}/${offer.id}`}>{offer.title}</Link>
+          <Link to={generatePath(AppRoute.Proprety, {id: offer.id.toString()})}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

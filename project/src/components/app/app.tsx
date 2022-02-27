@@ -44,7 +44,7 @@ function App({cities, offers, comments}: AppScreenProps): JSX.Element {
             }
           />
           <Route
-            path={`${AppRoute.Proprety}/:id`}
+            path={AppRoute.Proprety}
             element={<PropretyScreen offers={offers} comments={comments} />}
           />
         </Route>
