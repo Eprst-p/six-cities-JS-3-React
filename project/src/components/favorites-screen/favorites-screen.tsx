@@ -11,7 +11,6 @@ type FavoriteScreenProps = {
 function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
   const allFavorites = getFavorites(offers);
   const favoriteCities = getFavoriteCities(allFavorites);
-
   return (
     <>
       <main className="page__main page__main--favorites">
@@ -28,7 +27,7 @@ function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
                 )
               }
             </ul>
-          </section>s
+          </section>
         </div>
       </main>
       <footer className="footer container">

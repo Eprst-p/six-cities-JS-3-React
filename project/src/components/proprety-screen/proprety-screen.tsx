@@ -13,10 +13,8 @@ type PropretyScreenProps = {
 }
 
 function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
-
   const currentId = useParams().id;
-
-  const getCurrentOffer = (): offerType | null => {
+    const getCurrentOffer = (): offerType | null => {
     let offerForId = null;
     offers.forEach((offer) => {
       if (offer.id.toString() === currentId) {
@@ -26,15 +24,12 @@ function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
     return offerForId;
   }
   const currentOffer = getCurrentOffer();
-
   const apartmentFeatures = [
     currentOffer?.type,
     `${currentOffer?.bedrooms} Bedrooms`,
     `Max ${currentOffer?.maxAdults} adults`,
   ];
-
   const nearPlaces = offers.slice(0, 2);
-
   const getCurrentComments = (): commentType[] | null => {
     let commentsForOffer = null;
     offers.forEach((offer, index) => {
@@ -45,7 +40,6 @@ function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
     return commentsForOffer;
   }
   const currentComments = getCurrentComments();
-
   return (
     <main className="page__main page__main--property">
       <section className="property">

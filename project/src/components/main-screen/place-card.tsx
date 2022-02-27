@@ -8,13 +8,10 @@ type PlaceCardProps = {
 }
 
 function PlaceCard({offer} : PlaceCardProps): JSX.Element {
-
   const [id, setId] = useState(0);
-
   const handlerMouseOverCard = () => { //пока не очень понятен сакральный смылс, но по заданию надо было сделать. А так то айди можно просто передать через offer.id
     setId(offer.id);
   };
-
   return (
     <article className="cities__place-card place-card" onMouseOver={handlerMouseOverCard} >
       {

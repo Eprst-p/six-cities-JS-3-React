@@ -8,17 +8,14 @@ type FavoriteCardProps = {
 }
 
 function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
-
   const [id, setId] = useState(0);
-
   const handlerMouseOverCard = () => { //аналогично place-card
     setId(offer.id);
   };
-
   return (
     <article className="favorites__card place-card" onMouseOver={handlerMouseOverCard}>
       {
-        offer.isPremium === true
+        offer.isPremium
         ?
         <div className="place-card__mark">
           <span>Premium</span>

@@ -9,7 +9,6 @@ type FavoritesLocationsProps = {
 }
 
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
-
   return (
     <>
       <div className="favorites__locations locations locations--current">

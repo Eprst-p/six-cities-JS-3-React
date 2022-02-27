@@ -7,7 +7,6 @@ type MainScreenProps = {
 }
 
 function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
-
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>

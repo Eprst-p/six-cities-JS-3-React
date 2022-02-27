@@ -7,7 +7,6 @@ const getFavorites = (allOffers:offerType[]):offerType[] => {
       favorites.push(offer);
     }
   });
-
   return favorites;
 };
 
@@ -18,19 +17,16 @@ const getFavoriteCities = (allFavorites:offerType[]) => {
       favoriteCities.push(offer.city.name);
     }
   });
-
   return favoriteCities;
 };
 
 const getLocationsPerCity = (allFavorites:offerType[], city:string) => {
   const locationsPerCity :offerType[] = [];
-
   allFavorites.forEach((favoriteOffer) => {
     if (favoriteOffer.city.name === city) {
       locationsPerCity.push(favoriteOffer);
     }
   });
-
   return locationsPerCity;
 };
 
