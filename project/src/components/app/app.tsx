@@ -1,5 +1,6 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../settings/app-routes';
+import {AuthorizationStatus} from '../../settings/auth-status'
 import Layout from '../layout/layout';
 import MainScreen from '../main-screen/main-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -7,15 +8,16 @@ import PropretyScreen from '../proprety-screen/proprety-screen';
 import LoginScreen from '../login-screen/login-sreen';
 import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
+import {offerType} from '../../types/offer-type';
+import {commentType} from '../../types/comment-type';
 
 type AppScreenProps = {
-  cardsCount: number;
-  favoriteCities: string[];
-  favoriteLocPerCity: number[];
   allCities: string[];
+  allOffers: offerType[];
+  allComments: commentType[][];
 }
 
-function App({cardsCount, favoriteCities, favoriteLocPerCity, allCities}: AppScreenProps): JSX.Element {
+function App({allCities, allOffers, allComments}: AppScreenProps): JSX.Element {
 
   return (
       <BrowserRouter>
@@ -26,7 +28,7 @@ function App({cardsCount, favoriteCities, favoriteLocPerCity, allCities}: AppScr
         >
           <Route
             path={AppRoute.Main}
-            element={<MainScreen cardsCount={cardsCount} allCities={allCities}/>}
+            element={<MainScreen allOffers={allOffers} allCities={allCities}/>}
           />
           <Route
             path={AppRoute.Login}
@@ -36,20 +38,18 @@ function App({cardsCount, favoriteCities, favoriteLocPerCity, allCities}: AppScr
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth} //чтобы попасть на favorites надо заменить на .Auth
+                authorizationStatus={AuthorizationStatus.Auth} //чтобы попасть на favorites надо заменить на .Auth
               >
-                <FavoritesScreen favoriteCities={favoriteCities} favoriteLocPerCity={favoriteLocPerCity}/>
+                <FavoritesScreen allOffers={allOffers} />
               </PrivateRoute>
             }
           />
           <Route
-            path={AppRoute.Proprety}
-            element={<PropretyScreen />}
+            path={`${AppRoute.Proprety}/:id`}
+            element={<PropretyScreen allOffers={allOffers} allComments={allComments} />}
           />
         </Route>
-        <Route path="*" element={<NotFound404 />
-        }
-        />
+        <Route path="*" element={<NotFound404 />} />
       </Routes>
     </BrowserRouter>
   );

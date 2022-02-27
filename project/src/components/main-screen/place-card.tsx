@@ -3,20 +3,20 @@ import {AppRoute} from '../../settings/app-routes';
 import {offerType} from '../../types/offer-type';
 import {useState,} from 'react';
 
-type FavoriteCardProps = {
+type PlaceCardProps = {
   offer: offerType;
 }
 
-function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
+function PlaceCard({offer} : PlaceCardProps): JSX.Element {
 
   const [id, setId] = useState(0);
 
-  const handlerMouseOverCard = () => { //аналогично place-card
+  const handlerMouseOverCard = () => { //пока не очень понятен сакральный смылс, но по заданию надо было сделать. А так то айди можно просто передать через offer.id
     setId(offer.id);
   };
 
   return (
-    <article className="favorites__card place-card" onMouseOver={handlerMouseOverCard}>
+    <article className="cities__place-card place-card" onMouseOver={handlerMouseOverCard} >
       {
         offer.isPremium === true
         ?
@@ -25,32 +25,32 @@ function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
         </div>
         : null
       }
-      <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Proprety}/${id}`}>
-          <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place" />
+      <div className="cities__image-wrapper place-card__image-wrapper">
+        <Link  to={`${AppRoute.Proprety}/${id}`}>
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
-      <div className="favorites__card-info place-card__info">
+      <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button className="place-card__bookmark-button button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">In bookmarks</span>
+            <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '100%'}}></span>
+            <span style={{width: '80%'}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Proprety}/${id}`}>{offer.title}</Link>
+          <Link  to={`${AppRoute.Proprety}/${id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
@@ -58,4 +58,4 @@ function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
   );
 }
 
-export default FavoriteCard;
+export default PlaceCard;

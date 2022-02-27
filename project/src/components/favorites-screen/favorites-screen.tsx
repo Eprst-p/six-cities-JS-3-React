@@ -1,13 +1,16 @@
 import FavoritesLocations from './favorites-locations';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute} from '../../settings/app-routes';
+import {offerType} from '../../types/offer-type';
+import {getFavorites, getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
 
 type FavoriteScreenProps = {
-  favoriteCities: string[];
-  favoriteLocPerCity: number[];
+  allOffers: offerType[];
 }
 
-function FavoritesScreen({favoriteCities, favoriteLocPerCity}: FavoriteScreenProps): JSX.Element {
+function FavoritesScreen({allOffers}: FavoriteScreenProps): JSX.Element {
+  const allFavorites = getFavorites(allOffers);
+  const favoriteCities = getFavoriteCities(allFavorites);
 
   return (
     <>
@@ -17,15 +20,15 @@ function FavoritesScreen({favoriteCities, favoriteLocPerCity}: FavoriteScreenPro
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {
-                new Array(favoriteCities.length).fill('').map((_, index) =>
+                favoriteCities.map((city) =>
                   (
-                    <li className="favorites__locations-items" key={favoriteCities[index]}>
-                      <FavoritesLocations key={favoriteCities[index]} city={favoriteCities[index]} favoritesCount ={favoriteLocPerCity[index]}/>
+                    <li className="favorites__locations-items" key={city}>
+                      <FavoritesLocations key={city} city={city} locationsPerCity ={getLocationsPerCity(allFavorites, city)}/>
                     </li>)
                 )
               }
             </ul>
-          </section>
+          </section>s
         </div>
       </main>
       <footer className="footer container">
