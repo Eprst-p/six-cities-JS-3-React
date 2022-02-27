@@ -12,12 +12,12 @@ import {offerType} from '../../types/offer-type';
 import {commentType} from '../../types/comment-type';
 
 type AppScreenProps = {
-  allCities: string[];
-  allOffers: offerType[];
-  allComments: commentType[][];
+  cities: string[];
+  offers: offerType[];
+  comments: commentType[][];
 }
 
-function App({allCities, allOffers, allComments}: AppScreenProps): JSX.Element {
+function App({cities, offers, comments}: AppScreenProps): JSX.Element {
 
   return (
       <BrowserRouter>
@@ -28,7 +28,7 @@ function App({allCities, allOffers, allComments}: AppScreenProps): JSX.Element {
         >
           <Route
             path={AppRoute.Main}
-            element={<MainScreen allOffers={allOffers} allCities={allCities}/>}
+            element={<MainScreen offers={offers} cities={cities}/>}
           />
           <Route
             path={AppRoute.Login}
@@ -40,13 +40,13 @@ function App({allCities, allOffers, allComments}: AppScreenProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth} //чтобы попасть на favorites надо заменить на .Auth
               >
-                <FavoritesScreen allOffers={allOffers} />
+                <FavoritesScreen offers={offers} />
               </PrivateRoute>
             }
           />
           <Route
             path={`${AppRoute.Proprety}/:id`}
-            element={<PropretyScreen allOffers={allOffers} allComments={allComments} />}
+            element={<PropretyScreen offers={offers} comments={comments} />}
           />
         </Route>
         <Route path="*" element={<NotFound404 />} />

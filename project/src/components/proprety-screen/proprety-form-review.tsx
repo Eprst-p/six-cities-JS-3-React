@@ -43,12 +43,7 @@ function PropretyFormReview(): JSX.Element {
     alert(`комментарий: ${commentText} рейтинг : ${rating}`);
   };
 
-  const checkCommentAndStars = () => {
-    if (commentText === '' || rating === 0) {
-      return true;
-    }
-    return false;
-  };
+  const isDisabled: boolean = rating === 0 || commentText.length < 50;
 
   return (
     <form
@@ -93,7 +88,7 @@ function PropretyFormReview(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={checkCommentAndStars()}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isDisabled}>Submit</button>
       </div>
     </form>
   );

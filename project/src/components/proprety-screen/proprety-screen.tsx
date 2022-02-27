@@ -8,17 +8,17 @@ import {commentType} from '../../types/comment-type';
 import {useParams} from 'react-router-dom';
 
 type PropretyScreenProps = {
-  allOffers: offerType[];
-  allComments: commentType[][];
+  offers: offerType[];
+  comments: commentType[][];
 }
 
-function PropretyScreen({allOffers, allComments}: PropretyScreenProps): JSX.Element {
+function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
 
   const currentId = useParams().id;
 
   const getCurrentOffer = (): offerType | null => {
     let offerForId = null;
-    allOffers.forEach((offer) => {
+    offers.forEach((offer) => {
       if (offer.id.toString() === currentId) {
         offerForId = offer;
       }
@@ -33,13 +33,13 @@ function PropretyScreen({allOffers, allComments}: PropretyScreenProps): JSX.Elem
     `Max ${currentOffer?.maxAdults} adults`,
   ];
 
-  const nearPlaces = allOffers.slice(0, 2);
+  const nearPlaces = offers.slice(0, 2);
 
   const getCurrentComments = (): commentType[] | null => {
     let commentsForOffer = null;
-    allOffers.forEach((offer, index) => {
+    offers.forEach((offer, index) => {
       if (offer.id.toString() === currentId) {
-        commentsForOffer = allComments[index];
+        commentsForOffer = comments[index];
       }
     })
     return commentsForOffer;

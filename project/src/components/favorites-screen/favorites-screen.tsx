@@ -5,11 +5,11 @@ import {offerType} from '../../types/offer-type';
 import {getFavorites, getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
 
 type FavoriteScreenProps = {
-  allOffers: offerType[];
+  offers: offerType[];
 }
 
-function FavoritesScreen({allOffers}: FavoriteScreenProps): JSX.Element {
-  const allFavorites = getFavorites(allOffers);
+function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
+  const allFavorites = getFavorites(offers);
   const favoriteCities = getFavoriteCities(allFavorites);
 
   return (

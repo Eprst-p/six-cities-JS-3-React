@@ -1,6 +1,6 @@
 import {offerType} from '../types/offer-type';
 import {getRandomPositiveNumber, getRandomFloatNumber, getRandomElement} from './randomaizers';
-import {apartmentPhotos, insideItems, allCities, titles, roomTypes, descriptions} from './sources';
+import {apartmentPhotos, insideItems, cities, titles, roomTypes, descriptions} from './sources';
 
 const generateGoods = ():string[] => {
   const randomIndex = getRandomPositiveNumber(0, 9);
@@ -21,7 +21,7 @@ const generateOffer = ():offerType => (
         longitude: getRandomFloatNumber(1, 50),
         zoom: getRandomPositiveNumber(5, 10)
         },
-        name: getRandomElement(allCities),
+        name: getRandomElement(cities),
       },
       description: getRandomElement(descriptions),
       goods: generateGoods(),

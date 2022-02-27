@@ -1,20 +1,19 @@
-/* eslint-disable no-console */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {generateOffers} from './mocks/offers';
 import {generateAllComments} from './mocks/comments';
-import {allCities} from './mocks/sources';
+import {cities} from './mocks/sources';
 
-const allOffers = generateOffers();
-const allComments = generateAllComments(allOffers);
+const offers = generateOffers();
+const comments = generateAllComments(offers);
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      allCities = {allCities}
-      allOffers = {allOffers}
-      allComments = {allComments}
+      cities = {cities}
+      offers = {offers}
+      comments = {comments}
     />
   </React.StrictMode>,
   document.getElementById('root'));

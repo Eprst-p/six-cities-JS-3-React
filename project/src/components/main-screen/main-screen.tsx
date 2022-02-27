@@ -2,11 +2,11 @@ import PlaceCard from './place-card';
 import {offerType} from '../../types/offer-type';
 
 type MainScreenProps = {
-  allOffers: offerType[];
-  allCities: string[];
+  offers: offerType[];
+  cities: string[];
 }
 
-function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
+function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
 
   return (
     <main className="page__main page__main--index">
@@ -15,7 +15,7 @@ function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
         <section className="locations container">
           <ul className="locations__list tabs__list">
             {
-              allCities.map((city) =>
+              cities.map((city) =>
                 (
                   <li className="locations__item" key={city}>
                     <a className="locations__item-link tabs__item" href="/#">
@@ -50,7 +50,7 @@ function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
             </form>
             <div className="cities__places-list places__list tabs__content">
               {
-                allOffers.map((location) => (<PlaceCard key={`place-card-${location.id}`} offer={location} />))
+                offers.map((location) => (<PlaceCard key={`place-card-${location.id}`} offer={location} />))
               }
             </div>
           </section>

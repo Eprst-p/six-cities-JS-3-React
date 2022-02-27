@@ -1,7 +1,7 @@
 const apartmentPhotos = ['img/room.jpg', 'img/apartment-01.jpg','img/apartment-02.jpg','img/apartment-03.jpg','img/apartment-small-03.jpg','img/apartment-small-04.jpg'];
 //const apartmentFeatures = ['Apartment', '3 Bedrooms', 'Max 4 adults'];//это склеивается из разных полей объекта оффер
 const insideItems = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
-const allCities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 const titles = ['Beautiful & luxurious studio at great location', 'Wood and stone place', 'Canal View Prinsengracht','Nice, cozy, warm big bed apartment'];
 const roomTypes = ['Apartment', 'Private room'];
 const descriptions = [
@@ -13,4 +13,4 @@ const descriptions = [
   'You cannot steel towel, clone-Angelina can find you everywhere',
 ];
 
-export {apartmentPhotos, insideItems, allCities, titles, roomTypes, descriptions}
+export {apartmentPhotos, insideItems, cities, titles, roomTypes, descriptions}
