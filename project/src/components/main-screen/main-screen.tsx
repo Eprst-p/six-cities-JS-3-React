@@ -1,8 +1,8 @@
 import PlaceCard from './place-card';
-import {offerType} from '../../types/offer-type';
+import {offerTypes} from '../../types/offer-types';
 
 type MainScreenProps = {
-  offers: offerType[];
+  offers: offerTypes;
   cities: string[];
 }
 

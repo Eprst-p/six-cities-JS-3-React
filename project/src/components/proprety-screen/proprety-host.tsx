@@ -1,7 +1,7 @@
-import {offerType} from '../../types/offer-type';
+import {offerType} from '../../types/offer-types';
 
 type PropretyHostProps = {
-  offer: offerType | null;
+  offer: offerType | undefined;
 }
 
 function PropretyHost({offer}: PropretyHostProps): JSX.Element {

@@ -8,12 +8,12 @@ import PropretyScreen from '../proprety-screen/proprety-screen';
 import LoginScreen from '../login-screen/login-sreen';
 import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
-import {offerType} from '../../types/offer-type';
+import {offerTypes} from '../../types/offer-types';
 import {commentType} from '../../types/comment-type';
 
 type AppScreenProps = {
   cities: string[];
-  offers: offerType[];
+  offers: offerTypes;
   comments: commentType[][];
 }
 

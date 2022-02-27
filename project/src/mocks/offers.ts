@@ -1,4 +1,4 @@
-import {offerType} from '../types/offer-type';
+import {offerType} from '../types/offer-types';
 import {getRandomPositiveNumber, getRandomFloatNumber, getRandomElement} from './randomaizers';
 import {apartmentPhotos, insideItems, cities, titles, roomTypes, descriptions} from './sources';
 

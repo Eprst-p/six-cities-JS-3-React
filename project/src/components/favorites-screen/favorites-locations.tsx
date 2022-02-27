@@ -1,11 +1,11 @@
 import FavoriteCard from './favorite-card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerType} from '../../types/offer-type';
+import {offerTypes} from '../../types/offer-types';
 
 type FavoritesLocationsProps = {
   city: string;
-  locationsPerCity: offerType[];
+  locationsPerCity: offerTypes;
 }
 
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {

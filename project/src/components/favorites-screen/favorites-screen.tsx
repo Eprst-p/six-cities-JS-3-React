@@ -1,11 +1,11 @@
 import FavoritesLocations from './favorites-locations';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerType} from '../../types/offer-type';
+import {offerTypes} from '../../types/offer-types';
 import {getFavorites, getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
 
 type FavoriteScreenProps = {
-  offers: offerType[];
+  offers: offerTypes;
 }
 
 function FavoritesScreen({offers}: FavoriteScreenProps): JSX.Element {
