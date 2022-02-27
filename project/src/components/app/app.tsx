@@ -15,9 +15,10 @@ type AppScreenProps = {
   cities: string[];
   offers: offerTypes;
   comments: commentType[][];
+  favorites: offerTypes;
 }
 
-function App({cities, offers, comments}: AppScreenProps): JSX.Element {
+function App({cities, offers, comments, favorites}: AppScreenProps): JSX.Element {
   return (
       <BrowserRouter>
       <Routes>
@@ -39,7 +40,7 @@ function App({cities, offers, comments}: AppScreenProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth} //чтобы попасть на favorites надо заменить на .Auth
               >
-                <FavoritesScreen offers={offers} />
+                <FavoritesScreen favorites={favorites} />
               </PrivateRoute>
             }
           />
