@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import PlaceCard from './place-card';
-import {offerTypes} from '../../types/offer-types';
+import {offerTypes, offerType} from '../../types/offer-types';
+import {useState,} from 'react';
 
 type MainScreenProps = {
   offers: offerTypes;
@@ -7,6 +9,16 @@ type MainScreenProps = {
 }
 
 function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
+  const [id, setId] = useState(0);
+  const handlerMouseEnterCard = (offer?: offerType) => {
+    offer
+    ?
+    setId(offer.id)
+    :
+    setId(0)
+  };
+  console.log(id)
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -49,7 +61,13 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
             </form>
             <div className="cities__places-list places__list tabs__content">
               {
-                offers.map((location) => (<PlaceCard key={`place-card-${location.id}`} offer={location} />))
+                offers.map((location) => (
+                  <PlaceCard
+                    key={`place-card-${location.id}`}
+                    offer={location}
+                    handlerMouseEnterCard={() => handlerMouseEnterCard(location)}
+                    handlerMouseLeaveCard={() => handlerMouseEnterCard()}
+                  />))
               }
             </div>
           </section>
