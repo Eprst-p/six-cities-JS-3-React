@@ -20,6 +20,12 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
   };
   const chosenOffer = offers.find((offer) => offer.id === id);
 
+  const [chosenCity, setCity] = useState('Amsterdam');
+  const offersForCity = offers.filter((offer) => offer.city.name === chosenCity);
+  const handlerOnCityClick = (city: string) => {
+    setCity(city)
+  };
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -30,7 +36,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
               cities.map((city) =>
                 (
                   <li className="locations__item" key={city}>
-                    <a className="locations__item-link tabs__item" href="/#">
+                    <a className="locations__item-link tabs__item" href="/#" onClick = {() => handlerOnCityClick(city)}>
                       <span>{city}</span>
                     </a>
                   </li>
@@ -62,7 +68,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
             </form>
             <div className="cities__places-list places__list tabs__content">
               {
-                offers.map((location) => (
+                offersForCity.map((location) => (
                   <PlaceCard
                     key={`place-card-${location.id}`}
                     offer={location}

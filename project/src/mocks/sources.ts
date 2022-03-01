@@ -12,5 +12,11 @@ const descriptions = [
   'Be carefull, cold water can become very hot an any random moment',
   'You cannot steel towel, clone-Angelina can find you everywhere',
 ];
+const coordinates = [
+  [52.3909553943508, 4.85309666406198],
+  [52.369553943508, 4.85309666406198],
+  [52.3909553943508, 4.929309666406198],
+  [52.3809553943508, 4.939309666406198],
+]
 
-export {apartmentPhotos, insideItems, cities, titles, roomTypes, descriptions}
+export {apartmentPhotos, insideItems, cities, titles, roomTypes, descriptions, coordinates}
