@@ -10,7 +10,13 @@ type MainScreenProps = {
 }
 
 function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
-  const [id, setId] = useState(0);
+  const [chosenCity, setCity] = useState('Amsterdam');
+  const offersForCity = offers.filter((offer) => offer.city.name === chosenCity);
+  const handlerOnCityClick = (city: string) => {
+    setCity(city)
+  };
+
+  const [id, setId] = useState(offersForCity[0].id);
   const handlerMouseEnterCard = (offer?: offerType) => {
     offer
     ?
@@ -19,12 +25,6 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
     setId(0)
   };
   const chosenOffer = offers.find((offer) => offer.id === id);
-
-  const [chosenCity, setCity] = useState('Amsterdam');
-  const offersForCity = offers.filter((offer) => offer.city.name === chosenCity);
-  const handlerOnCityClick = (city: string) => {
-    setCity(city)
-  };
 
   return (
     <main className="page__main page__main--index">
@@ -50,7 +50,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">312 places to stay in Amsterdam</b>
+            <b className="places__found">{`${offersForCity.length} places to stay in ${chosenCity}`}</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
