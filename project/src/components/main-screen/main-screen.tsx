@@ -24,7 +24,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
     :
     setId(0)
   };
-  const chosenOffer = offers.find((offer) => offer.id === id);
+  const chosenOffer = offersForCity.find((offer) => offer.id === id);
 
   return (
     <main className="page__main page__main--index">
@@ -80,7 +80,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map offer = {chosenOffer} />
+              <Map chosenOffer={chosenOffer} offers={offersForCity} />
             </section>
           </div>
         </div>

@@ -1,17 +1,54 @@
+/* eslint-disable no-console */
 import 'leaflet/dist/leaflet.css';
-import {useRef} from 'react';
+import {Icon, Marker} from 'leaflet';
+import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/useMap';
-import {offerType} from '../../types/offer-types';
+import {offerType, offerTypes} from '../../types/offer-types';
 
 type MapProps = {
-  offer: offerType | undefined;
+  chosenOffer: offerType | undefined;
+  offers: offerTypes;
 }
 
-function Map({offer} : MapProps): JSX.Element {
-  const city =  offer?.city
+const defaultPin = new Icon({
+  iconUrl: '/img/pin.svg',
+  iconSize: [25, 35],
+  iconAnchor: [20, 35]
+});
+
+const chosenPin = new Icon({
+  iconUrl: '/img/pin-active.svg',
+  iconSize: [35, 45],
+  iconAnchor: [20, 35]
+});
+
+function Map({chosenOffer, offers} : MapProps): JSX.Element {
+  const city =  chosenOffer?.city
+  console.log(city);
+  console.log(chosenOffer);
+
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+
+  useEffect(() => {
+    if (map) {
+      offers.forEach((offer) => {
+        const marker = new Marker({
+          lat: offer.city.location.latitude,
+          lng: offer.city.location.longitude
+        });
+
+        marker
+          .setIcon(
+            chosenOffer !== undefined  && offer.id === chosenOffer.id
+              ? chosenPin
+              : defaultPin
+          )
+          .addTo(map);
+      });
+    }
+  }, [map, offers, chosenOffer]);
 
   return (
     <div
