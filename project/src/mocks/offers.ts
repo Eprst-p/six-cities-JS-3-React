@@ -52,7 +52,7 @@ const generateOffer = ():offerType => {
   };
 
 const generateOffers = () => {
-  const offersAmount = getRandomPositiveNumber(35, 120);
+  const offersAmount = getRandomPositiveNumber(20, 35);
   const offers = [];
   for (let i = 0; i< offersAmount; i++) {
     offers.push(generateOffer());

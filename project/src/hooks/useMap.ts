@@ -1,4 +1,5 @@
 import {useEffect, useState, MutableRefObject} from 'react';
+import {offerType} from '../types/offer-types';
 import {Map} from 'leaflet';
 import {City} from '../types/city';
 import leaflet from 'leaflet';
@@ -6,7 +7,8 @@ import 'leaflet/dist/leaflet.css';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  city: City | undefined
+  city: City | undefined,
+  chosenOffer: offerType | undefined,
 ): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);
@@ -32,7 +34,7 @@ function useMap(
 
       setMap(instance);
     }
-  }, [mapRef, map, city]);
+  }, [mapRef, map, city, chosenOffer]);
 
   return map;
 }

@@ -24,12 +24,9 @@ const chosenPin = new Icon({
 
 function Map({chosenOffer, offers} : MapProps): JSX.Element {
   const city =  chosenOffer?.city
-  console.log(city);
-  console.log(chosenOffer);
-
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, city, chosenOffer);
 
   useEffect(() => {
     if (map) {
