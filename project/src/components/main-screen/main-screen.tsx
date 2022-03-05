@@ -2,7 +2,7 @@
 import PlaceCard from './place-card';
 import Map from './map';
 import {offerTypes, offerType} from '../../types/offer-types';
-import {useState,} from 'react';
+import {useState} from 'react';
 
 type MainScreenProps = {
   offers: offerTypes;
@@ -24,6 +24,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
     :
     setId(0)
   };
+
   const chosenOffer = offersForCity.find((offer) => offer.id === id);
 
   return (
