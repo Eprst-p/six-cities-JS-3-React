@@ -18,11 +18,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
 
   const [id, setId] = useState(offersForCity[0].id);
   const handlerMouseEnterCard = (offer?: offerType) => {
-    offer
-    ?
-    setId(offer.id)
-    :
-    setId(0)
+    setId(offer ? offer.id : 0)
   };
 
   const chosenOffer = offersForCity.find((offer) => offer.id === id);

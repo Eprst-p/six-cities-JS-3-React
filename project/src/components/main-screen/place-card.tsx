@@ -21,7 +21,7 @@ function PlaceCard({offer, handlerMouseEnterCard, handlerMouseLeaveCard} : Place
         : null
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link  to={generatePath(AppRoute.Proprety, {id: offer.id.toString()})}>
+        <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -45,7 +45,7 @@ function PlaceCard({offer, handlerMouseEnterCard, handlerMouseLeaveCard} : Place
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link  to={generatePath(AppRoute.Proprety, {id: offer.id.toString()})}>{offer.title}</Link>
+          <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

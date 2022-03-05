@@ -25,9 +25,9 @@ function useMap(
   offers: offerTypes,
 ): Map | null {
 
-  console.log('city:', city);
+  /*console.log('city:', city);
   console.log('chosenOffer:',chosenOffer);
-  console.log('offers:',offers);
+  console.log('offers:',offers);*/
 
   const [map, setMap] = useState<Map | null>(null);
 

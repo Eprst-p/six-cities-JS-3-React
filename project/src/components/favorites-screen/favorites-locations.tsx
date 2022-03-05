@@ -13,11 +13,7 @@ type FavoritesLocationsProps = {
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
   const [id, setId] = useState(0);
   const handlerMouseEnterCard = (offer?: offerType) => {
-    offer
-    ?
-    setId(offer.id)
-    :
-    setId(0)
+    setId(offer ? offer.id : 0)
   };
   console.log(id)
 
