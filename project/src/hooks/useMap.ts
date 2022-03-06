@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import {useEffect, useState, MutableRefObject} from 'react';
 import {offerType, offerTypes} from '../types/offer-types';
-import {Map, Icon, Marker} from 'leaflet';
+import {Map, Icon, Marker, LayerGroup} from 'leaflet';
 import {City} from '../types/city';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -56,15 +56,16 @@ function useMap(
 
   const updateMap = (newCity: City | undefined, viewedMap: Map) :void => {
     if (newCity) {
-      viewedMap.setView([newCity.location.latitude, newCity.location.longitude], 10);
+      viewedMap.flyTo({lat: newCity.location.latitude, lng: newCity.location.longitude}, newCity.location.zoom);
     }
   };
 
-  const setMarkers = (viewedMap: Map) => {
+  const setMarkers = (viewedMap: Map):LayerGroup => {
+      const groupMarkers = new LayerGroup();
       offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.city.location.latitude,
-          lng: offer.city.location.longitude
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
         });
 
         marker
@@ -73,30 +74,25 @@ function useMap(
               ? chosenPin
               : defaultPin
           )
-          .addTo(viewedMap)
+          .addTo(groupMarkers)
       });
+      groupMarkers.addTo(viewedMap);
+      return groupMarkers;
   };
 
-  /*
   useEffect(() => {
     if (map === null) {
       createMap();
     }
-    setMarkers();
-  }, [mapRef, map, city, chosenOffer, offers]);*/
-
-  useEffect(() => {
-    if (map === null) {
-      createMap();
-    }
-  }, [mapRef]);
-
-  useEffect(() => {
-    if (map ) {
+    let groupMarkers: LayerGroup;
+    if (map) {
       updateMap(city, map);
-      setMarkers(map);
+      groupMarkers = setMarkers(map);
     }
-  }, [map, city, chosenOffer, offers]);
+    return () => {
+        map?.removeLayer(groupMarkers);
+    };
+  }, [offers]);
 
   return map;
 }

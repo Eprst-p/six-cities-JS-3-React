@@ -3,9 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {cities} from './mocks/sources';
-import statickOffers from './mocks/statick-offers.json'
 import statickComments from './mocks/statick-comments.json'
 import statickFavorites from './mocks/statick-favorites.json'
+import offers from './fixtures/offers'
+
+//console.log(offers);
 
 /*
 import {generateOffers} from './mocks/offers';
@@ -27,7 +29,7 @@ ReactDOM.render(
   <React.StrictMode>
     <App
       cities = {cities}
-      offers = {statickOffers}
+      offers = {offers}
       comments = {statickComments}
       favorites = {statickFavorites}
     />
