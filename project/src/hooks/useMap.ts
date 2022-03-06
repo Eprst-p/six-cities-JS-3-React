@@ -25,9 +25,6 @@ function useMap(
   offers: offerTypes,
 ): Map | null {
 
-  /*console.log('city:', city);
-  console.log('chosenOffer:',chosenOffer);
-  console.log('offers:',offers);*/
 
   const [map, setMap] = useState<Map | null>(null);
 
@@ -81,10 +78,10 @@ function useMap(
   };
 
   useEffect(() => {
+    let groupMarkers: LayerGroup;
     if (map === null) {
       createMap();
     }
-    let groupMarkers: LayerGroup;
     if (map) {
       updateMap(city, map);
       groupMarkers = setMarkers(map);
@@ -92,7 +89,7 @@ function useMap(
     return () => {
         map?.removeLayer(groupMarkers);
     };
-  }, [offers]);
+  }, [map, offers]);
 
   return map;
 }
