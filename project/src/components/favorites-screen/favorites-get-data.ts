@@ -1,6 +1,6 @@
 import {offerTypes} from '../../types/offer-types';
 
-const getFavorites = (allOffers:offerTypes):offerTypes => allOffers.filter((offer) => offer.isFavorite);
+const getFavorites = (allOffers:offerTypes):offerTypes => allOffers.filter((offer) => offer.isPremium);
 
 const getFavoriteCities = (allFavorites:offerTypes) => {
   const favoriteCities :string[] = [];

@@ -8,6 +8,18 @@ import statickFavorites from './mocks/statick-favorites.json'
 import offers from './fixtures/offers'
 import 'leaflet/dist/leaflet.css';
 
+/*
+import {generateAllComments} from './mocks/comments';
+import {getFavorites} from './components/favorites-screen/favorites-get-data';
+
+const comments = generateAllComments(offers);
+const favorites = getFavorites(offers);
+console.log(comments);
+console.log(JSON.stringify(comments));
+console.log(favorites);
+console.log(JSON.stringify(favorites));
+*/
+
 ReactDOM.render(
   <React.StrictMode>
     <App

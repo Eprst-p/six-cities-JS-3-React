@@ -10,7 +10,7 @@ type MainScreenProps = {
 }
 
 function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
-  const [chosenCity, setCity] = useState('Amsterdam');
+  const [chosenCity, setCity] = useState('Paris');
   const offersForCity = offers.filter((offer) => offer.city.name === chosenCity);
   const handlerOnCityClick = (city: string) => {
     setCity(city)
