@@ -8,17 +8,17 @@ import PropretyScreen from '../proprety-screen/proprety-screen';
 import LoginScreen from '../login-screen/login-sreen';
 import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
-import {offerType} from '../../types/offer-type';
+import {offerTypes} from '../../types/offer-types';
 import {commentType} from '../../types/comment-type';
 
 type AppScreenProps = {
-  allCities: string[];
-  allOffers: offerType[];
-  allComments: commentType[][];
+  cities: string[];
+  offers: offerTypes;
+  comments: commentType[][];
+  favorites: offerTypes;
 }
 
-function App({allCities, allOffers, allComments}: AppScreenProps): JSX.Element {
-
+function App({cities, offers, comments, favorites}: AppScreenProps): JSX.Element {
   return (
       <BrowserRouter>
       <Routes>
@@ -28,7 +28,7 @@ function App({allCities, allOffers, allComments}: AppScreenProps): JSX.Element {
         >
           <Route
             path={AppRoute.Main}
-            element={<MainScreen allOffers={allOffers} allCities={allCities}/>}
+            element={<MainScreen offers={offers} cities={cities}/>}
           />
           <Route
             path={AppRoute.Login}
@@ -40,13 +40,13 @@ function App({allCities, allOffers, allComments}: AppScreenProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth} //чтобы попасть на favorites надо заменить на .Auth
               >
-                <FavoritesScreen allOffers={allOffers} />
+                <FavoritesScreen favorites={favorites} />
               </PrivateRoute>
             }
           />
           <Route
-            path={`${AppRoute.Proprety}/:id`}
-            element={<PropretyScreen allOffers={allOffers} allComments={allComments} />}
+            path={AppRoute.Proprety}
+            element={<PropretyScreen offers={offers} comments={comments} />}
           />
         </Route>
         <Route path="*" element={<NotFound404 />} />

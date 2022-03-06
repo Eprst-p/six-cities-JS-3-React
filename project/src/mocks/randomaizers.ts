@@ -11,5 +11,6 @@ const getRandomFloatNumber = (a:number, b:number) => {
 };
 
 const getRandomElement = (array:string[]) => array[getRandomPositiveNumber(0, array.length-1)];
+const getRandomCoordinate = (array: number[][]) => array[getRandomPositiveNumber(0, array.length-1)];
 
-export {getRandomPositiveNumber, getRandomFloatNumber, getRandomElement}
+export {getRandomPositiveNumber, getRandomFloatNumber, getRandomElement, getRandomCoordinate}

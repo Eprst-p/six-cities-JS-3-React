@@ -25,31 +25,20 @@ const starsValues = [
 ];
 
 function PropretyFormReview(): JSX.Element {
-
   const [commentText, setCommentText] = useState('');
   const [rating, setRating] = useState(0);
-
   const handlerCommentTextInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentText(evt.target.value);
   }
-
   const handlerStarsChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = +evt.target.value;
     setRating(value);
   };
-
   const handlerFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     alert(`комментарий: ${commentText} рейтинг : ${rating}`);
   };
-
-  const checkCommentAndStars = () => {
-    if (commentText === '' || rating === 0) {
-      return true;
-    }
-    return false;
-  };
-
+  const isDisabled: boolean = rating === 0 || commentText.length < 50;
   return (
     <form
       className="reviews__form form"
@@ -93,7 +82,7 @@ function PropretyFormReview(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={checkCommentAndStars()}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isDisabled}>Submit</button>
       </div>
     </form>
   );

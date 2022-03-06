@@ -1,22 +1,17 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerType} from '../../types/offer-type';
-import {useState,} from 'react';
+import {offerType} from '../../types/offer-types';
+import {generatePath} from "react-router";
 
 type PlaceCardProps = {
   offer: offerType;
+  handlerMouseEnterCard: () => void;
+  handlerMouseLeaveCard: () => void;
 }
 
-function PlaceCard({offer} : PlaceCardProps): JSX.Element {
-
-  const [id, setId] = useState(0);
-
-  const handlerMouseOverCard = () => { //пока не очень понятен сакральный смылс, но по заданию надо было сделать. А так то айди можно просто передать через offer.id
-    setId(offer.id);
-  };
-
+function PlaceCard({offer, handlerMouseEnterCard, handlerMouseLeaveCard} : PlaceCardProps): JSX.Element {
   return (
-    <article className="cities__place-card place-card" onMouseOver={handlerMouseOverCard} >
+    <article className="cities__place-card place-card" onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >
       {
         offer.isPremium === true
         ?
@@ -26,7 +21,7 @@ function PlaceCard({offer} : PlaceCardProps): JSX.Element {
         : null
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link  to={`${AppRoute.Proprety}/${id}`}>
+        <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -50,7 +45,7 @@ function PlaceCard({offer} : PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link  to={`${AppRoute.Proprety}/${id}`}>{offer.title}</Link>
+          <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

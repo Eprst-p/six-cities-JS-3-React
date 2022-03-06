@@ -1,5 +1,5 @@
 import {commentType} from '../types/comment-type';
-import {offerType} from '../types/offer-type';
+import {offerType} from '../types/offer-types';
 import {getRandomPositiveNumber, getRandomElement} from './randomaizers';
 import {descriptions} from './sources';
 

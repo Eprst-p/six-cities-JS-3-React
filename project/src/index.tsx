@@ -2,19 +2,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import {cities} from './mocks/sources';
+import statickComments from './mocks/statick-comments.json'
+import statickFavorites from './mocks/statick-favorites.json'
+import offers from './fixtures/offers'
+
+//console.log(offers);
+
+/*
 import {generateOffers} from './mocks/offers';
 import {generateAllComments} from './mocks/comments';
-import {allCities} from './mocks/sources';
+import {getFavorites} from './components/favorites-screen/favorites-get-data';
 
-const allOffers = generateOffers();
-const allComments = generateAllComments(allOffers);
+const offers = generateOffers();
+const comments = generateAllComments(offers);
+const favorites = getFavorites(offers);
+console.log(offers);
+console.log(JSON.stringify(offers));
+console.log(comments);
+console.log(JSON.stringify(comments));
+console.log(favorites);
+console.log(JSON.stringify(favorites));
+*/
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      allCities = {allCities}
-      allOffers = {allOffers}
-      allComments = {allComments}
+      cities = {cities}
+      offers = {offers}
+      comments = {statickComments}
+      favorites = {statickFavorites}
     />
   </React.StrictMode>,
   document.getElementById('root'));

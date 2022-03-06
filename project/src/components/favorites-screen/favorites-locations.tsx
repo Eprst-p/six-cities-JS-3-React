@@ -1,14 +1,21 @@
+/* eslint-disable no-console */
 import FavoriteCard from './favorite-card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerType} from '../../types/offer-type';
+import {offerTypes, offerType} from '../../types/offer-types';
+import {useState,} from 'react';
 
 type FavoritesLocationsProps = {
   city: string;
-  locationsPerCity: offerType[];
+  locationsPerCity: offerTypes;
 }
 
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
+  const [id, setId] = useState(0);
+  const handlerMouseEnterCard = (offer?: offerType) => {
+    setId(offer ? offer.id : 0)
+  };
+  console.log(id)
 
   return (
     <>
@@ -21,7 +28,13 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
       </div>
       <div className="favorites__places">
         {
-          locationsPerCity.map((location) => (<FavoriteCard key={`favorite-card-${location.id}`} offer={location} />))
+          locationsPerCity.map((location) => (
+            <FavoriteCard
+              key={`favorite-card-${location.id}`}
+              offer={location}
+              handlerMouseEnterCard={() => handlerMouseEnterCard(location)}
+              handlerMouseLeaveCard={() => handlerMouseEnterCard()}
+              />))
         }
       </div>
     </>

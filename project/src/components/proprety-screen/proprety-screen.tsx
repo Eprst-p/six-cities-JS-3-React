@@ -3,49 +3,35 @@ import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
 import PropretyNearPlaceCard from './proprety-near-place-card';
-import {offerType} from '../../types/offer-type';
+import {offerType, offerTypes} from '../../types/offer-types';
 import {commentType} from '../../types/comment-type';
 import {useParams} from 'react-router-dom';
 
 type PropretyScreenProps = {
-  allOffers: offerType[];
-  allComments: commentType[][];
+  offers: offerTypes;
+  comments: commentType[][];
 }
 
-function PropretyScreen({allOffers, allComments}: PropretyScreenProps): JSX.Element {
-
+function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
   const currentId = useParams().id;
-
-  const getCurrentOffer = (): offerType | null => {
-    let offerForId = null;
-    allOffers.forEach((offer) => {
-      if (offer.id.toString() === currentId) {
-        offerForId = offer;
-      }
-    })
-    return offerForId;
-  }
+  const getCurrentOffer = (): offerType | undefined => offers.find(offer => offer.id.toString() === currentId);
   const currentOffer = getCurrentOffer();
-
   const apartmentFeatures = [
     currentOffer?.type,
     `${currentOffer?.bedrooms} Bedrooms`,
     `Max ${currentOffer?.maxAdults} adults`,
   ];
-
-  const nearPlaces = allOffers.slice(0, 2);
-
+  const nearPlaces = offers.slice(0, 2);
   const getCurrentComments = (): commentType[] | null => {
     let commentsForOffer = null;
-    allOffers.forEach((offer, index) => {
+    offers.forEach((offer, index) => {
       if (offer.id.toString() === currentId) {
-        commentsForOffer = allComments[index];
+        commentsForOffer = comments[index];
       }
     })
     return commentsForOffer;
   }
   const currentComments = getCurrentComments();
-
   return (
     <main className="page__main page__main--property">
       <section className="property">

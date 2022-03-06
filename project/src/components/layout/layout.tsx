@@ -36,7 +36,7 @@ pagesDifferences
 
 function Layout(): JSX.Element {
   const currentLocation = useLocation().pathname;
-  const pageSettings = pagesDifferences.get(currentLocation) || pagesDifferences.get('Default');
+  const pageSettings = pagesDifferences.get(currentLocation ) || pagesDifferences.get('Default');
 
   return (
       <div className={pageSettings.outerDivClass}>

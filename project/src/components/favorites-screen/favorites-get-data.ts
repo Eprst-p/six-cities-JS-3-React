@@ -1,37 +1,17 @@
-import {offerType} from '../../types/offer-type';
+import {offerTypes} from '../../types/offer-types';
 
-const getFavorites = (allOffers:offerType[]):offerType[] => {
-  const favorites :offerType[] = [];
-  allOffers.forEach((offer) => {
-    if (offer.isFavorite === true) {
-      favorites.push(offer);
-    }
-  });
+const getFavorites = (allOffers:offerTypes):offerTypes => allOffers.filter((offer) => offer.isFavorite);
 
-  return favorites;
-};
-
-const getFavoriteCities = (allFavorites:offerType[]) => {
+const getFavoriteCities = (allFavorites:offerTypes) => {
   const favoriteCities :string[] = [];
   allFavorites.forEach((offer) => {
     if (!favoriteCities.includes(offer.city.name)) {
       favoriteCities.push(offer.city.name);
     }
   });
-
   return favoriteCities;
 };
 
-const getLocationsPerCity = (allFavorites:offerType[], city:string) => {
-  const locationsPerCity :offerType[] = [];
-
-  allFavorites.forEach((favoriteOffer) => {
-    if (favoriteOffer.city.name === city) {
-      locationsPerCity.push(favoriteOffer);
-    }
-  });
-
-  return locationsPerCity;
-};
+const getLocationsPerCity = (allFavorites:offerTypes, city:string) => allFavorites.filter((favoriteOffer) => favoriteOffer.city.name === city);
 
 export {getFavorites, getFavoriteCities, getLocationsPerCity};

@@ -1,24 +1,20 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerType} from '../../types/offer-type';
-import {useState,} from 'react';
+import {offerType} from '../../types/offer-types';
+import {generatePath} from "react-router";
 
 type FavoriteCardProps = {
   offer: offerType;
+  handlerMouseEnterCard: () => void;
+  handlerMouseLeaveCard: () => void;
 }
 
-function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
-
-  const [id, setId] = useState(0);
-
-  const handlerMouseOverCard = () => { //аналогично place-card
-    setId(offer.id);
-  };
+function FavoriteCard({offer, handlerMouseEnterCard, handlerMouseLeaveCard} : FavoriteCardProps): JSX.Element {
 
   return (
-    <article className="favorites__card place-card" onMouseOver={handlerMouseOverCard}>
+    <article className="favorites__card place-card" onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard}>
       {
-        offer.isPremium === true
+        offer.isPremium
         ?
         <div className="place-card__mark">
           <span>Premium</span>
@@ -26,7 +22,7 @@ function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
         : null
       }
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Proprety}/${id}`}>
+        <Link to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place" />
         </Link>
       </div>
@@ -50,7 +46,7 @@ function FavoriteCard({offer} : FavoriteCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Proprety}/${id}`}>{offer.title}</Link>
+          <Link to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

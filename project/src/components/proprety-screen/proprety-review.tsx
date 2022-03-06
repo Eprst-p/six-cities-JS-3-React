@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {commentType} from '../../types/comment-type';
 
 type PropretyReviewProps = {
@@ -5,8 +6,17 @@ type PropretyReviewProps = {
 }
 
 function PropretyReview({comment} : PropretyReviewProps): JSX.Element {
+  const date = new Date(comment.date);
+  const year = date.getFullYear();
+  const mounth = date.getMonth();
+  const day = date.getDate();
 
-  //тут надо дату преобразовать в нужный формат. Я пока не понял, как это сделать с дефолтным Date
+  type optionsType = {
+    year: 'numeric';
+    month: 'long';
+  }
+  const options :optionsType = {year: 'numeric', month: 'long'};
+  const dateInFormat = new Intl.DateTimeFormat('en-US', options).format(date);
 
   return (
     <>
@@ -28,7 +38,7 @@ function PropretyReview({comment} : PropretyReviewProps): JSX.Element {
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime={`${year}-${mounth}-${day}`}>{dateInFormat}</time>
       </div>
     </>
   );

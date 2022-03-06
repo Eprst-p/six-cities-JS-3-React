@@ -1,6 +1,6 @@
-import {offerType} from '../types/offer-type';
-import {getRandomPositiveNumber, getRandomFloatNumber, getRandomElement} from './randomaizers';
-import {apartmentPhotos, insideItems, allCities, titles, roomTypes, descriptions} from './sources';
+import {offerType} from '../types/offer-types';
+import {getRandomPositiveNumber, getRandomFloatNumber, getRandomElement, getRandomCoordinate} from './randomaizers';
+import {apartmentPhotos, insideItems, cities, titles, roomTypes, descriptions, coordinates} from './sources';
 
 const generateGoods = ():string[] => {
   const randomIndex = getRandomPositiveNumber(0, 9);
@@ -12,16 +12,18 @@ const generateImges = ():string[] => {
   return apartmentPhotos.slice(0, randomIndex);
 };
 
-const generateOffer = ():offerType => (
+const generateOffer = ():offerType => {
+    const locationCoordinates:number[] = getRandomCoordinate(coordinates);
+    return (
     {
       bedrooms: getRandomPositiveNumber(1, 5),
       city: {
         location: {
-        latitude: getRandomFloatNumber(1, 50),
-        longitude: getRandomFloatNumber(1, 50),
+        latitude: locationCoordinates[0],
+        longitude: locationCoordinates[1],
         zoom: getRandomPositiveNumber(5, 10)
         },
-        name: getRandomElement(allCities),
+        name: getRandomElement(cities),
       },
       description: getRandomElement(descriptions),
       goods: generateGoods(),
@@ -46,11 +48,11 @@ const generateOffer = ():offerType => (
       rating: getRandomPositiveNumber(10,50)/10,
       title: getRandomElement(titles),
       type: getRandomElement(roomTypes)
-    }
-);
+    });
+  };
 
 const generateOffers = () => {
-  const offersAmount = getRandomPositiveNumber(1, 30);
+  const offersAmount = getRandomPositiveNumber(20, 35);
   const offers = [];
   for (let i = 0; i< offersAmount; i++) {
     offers.push(generateOffer());

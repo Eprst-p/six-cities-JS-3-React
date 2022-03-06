@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerType} from '../../types/offer-type';
+import {offerType} from '../../types/offer-types';
 
 type PropretyNearPlaceCardProps = {
   offer: offerType;

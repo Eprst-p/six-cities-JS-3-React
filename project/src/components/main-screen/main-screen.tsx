@@ -1,12 +1,27 @@
+/* eslint-disable no-console */
 import PlaceCard from './place-card';
-import {offerType} from '../../types/offer-type';
+import Map from './map';
+import {offerTypes, offerType} from '../../types/offer-types';
+import {useState} from 'react';
 
 type MainScreenProps = {
-  allOffers: offerType[];
-  allCities: string[];
+  offers: offerTypes;
+  cities: string[];
 }
 
-function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
+function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
+  const [chosenCity, setCity] = useState('Amsterdam');
+  const offersForCity = offers.filter((offer) => offer.city.name === chosenCity);
+  const handlerOnCityClick = (city: string) => {
+    setCity(city)
+  };
+
+  const [id, setId] = useState(offersForCity[0].id);
+  const handlerMouseEnterCard = (offer?: offerType) => {
+    setId(offer ? offer.id : 0)
+  };
+
+  const chosenOffer = offersForCity.find((offer) => offer.id === id);
 
   return (
     <main className="page__main page__main--index">
@@ -15,10 +30,10 @@ function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
         <section className="locations container">
           <ul className="locations__list tabs__list">
             {
-              allCities.map((city) =>
+              cities.map((city) =>
                 (
                   <li className="locations__item" key={city}>
-                    <a className="locations__item-link tabs__item" href="/#">
+                    <a className="locations__item-link tabs__item" href="/#" onClick = {() => handlerOnCityClick(city)}>
                       <span>{city}</span>
                     </a>
                   </li>
@@ -32,7 +47,7 @@ function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">312 places to stay in Amsterdam</b>
+            <b className="places__found">{`${offersForCity.length} places to stay in ${chosenCity}`}</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
@@ -50,12 +65,20 @@ function MainScreen({allOffers, allCities}: MainScreenProps): JSX.Element {
             </form>
             <div className="cities__places-list places__list tabs__content">
               {
-                allOffers.map((location) => (<PlaceCard key={`place-card-${location.id}`} offer={location} />))
+                offersForCity.map((location) => (
+                  <PlaceCard
+                    key={`place-card-${location.id}`}
+                    offer={location}
+                    handlerMouseEnterCard={() => handlerMouseEnterCard(location)}
+                    handlerMouseLeaveCard={() => handlerMouseEnterCard()}
+                  />))
               }
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <section className="cities__map map">
+              <Map chosenOffer={chosenOffer} offers={offersForCity} />
+            </section>
           </div>
         </div>
       </div>
