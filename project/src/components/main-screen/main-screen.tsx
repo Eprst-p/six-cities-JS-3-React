@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import PlaceCard from './place-card';
-import Map from './map';
+import MainMap from '../map/main-map';
 import {offerTypes} from '../../types/offer-types';
 import {useState} from 'react';
 
@@ -77,7 +77,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map chosenOffer={chosenOffer} offers={offersForCity} />
+              <MainMap chosenOffer={chosenOffer} offers={offersForCity} />
             </section>
           </div>
         </div>

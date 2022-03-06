@@ -1,61 +1,50 @@
 /* eslint-disable no-console */
 import {useEffect, useState, MutableRefObject} from 'react';
 import {offerType, offerTypes} from '../types/offer-types';
-import {Map, Icon, Marker, LayerGroup} from 'leaflet';
+import {Map, Marker, LayerGroup} from 'leaflet';
 import {City} from '../types/city';
+import {defaultPin, chosenPin} from '../settings/map-settings';
 import leaflet from 'leaflet';
 
-const defaultPin = new Icon({
-  iconUrl: 'img/pin.svg',
-  iconSize: [25, 35],
-  iconAnchor: [20, 35]
-});
-
-const chosenPin = new Icon({
-  iconUrl: 'img/pin-active.svg',
-  iconSize: [25, 35],
-  iconAnchor: [20, 35]
-});
-
-function useMap(
+function useMainMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  city: City | undefined,
   chosenOffer: offerType | undefined,
   offers: offerTypes,
 ): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);
+  const city: City | undefined = offers[0].city;
 
-  const createMap = () => {
-    if (mapRef.current !== null && city !== undefined) {
-    const instance = leaflet.map(mapRef.current, {
-      center: {
-        lat: city.location.latitude,
-        lng: city.location.longitude,
-      },
-      zoom: city.location.zoom,
-    });
-
-    leaflet
-      .tileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-        {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  const createMainMap = () => {
+    if (mapRef.current !== null) {
+      const instance = leaflet.map(mapRef.current, {
+        center: {
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
-      )
-      .addTo(instance);
+        zoom: city.location.zoom,
+      });
 
-    setMap(instance);
-  }
+      leaflet
+        .tileLayer(
+          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+          {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          },
+        )
+        .addTo(instance);
+
+      setMap(instance);
+    };
   };
 
-  const updateMap = (newCity: City | undefined, viewedMap: Map) :void => {
+  const moveMapToCity = (newCity: City | undefined, viewedMap: Map) :void => {
     if (newCity) {
       viewedMap.flyTo({lat: newCity.location.latitude, lng: newCity.location.longitude}, newCity.location.zoom);
     }
   };
 
-  const setMarkers = (viewedMap: Map):LayerGroup => {
+  const setMainMarkers = (viewedMap: Map):LayerGroup => {
     const groupMarkers = new LayerGroup();
     offers.forEach((offer) => {
       const marker = new Marker({
@@ -78,11 +67,11 @@ function useMap(
   useEffect(() => {
     let groupMarkers: LayerGroup;
     if (map === null) {
-      createMap();
+      createMainMap();
     }
     if (map) {
-      updateMap(city, map);
-      groupMarkers = setMarkers(map);
+      moveMapToCity(city, map);
+      groupMarkers = setMainMarkers(map);
     }
     return () => {
         map?.removeLayer(groupMarkers);
@@ -90,6 +79,6 @@ function useMap(
   }, [map, offers]);
 
   return map;
-}
+};
 
-export default useMap;
+export default useMainMap;
