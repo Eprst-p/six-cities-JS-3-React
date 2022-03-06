@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import PlaceCard from './place-card';
 import Map from './map';
-import {offerTypes, offerType} from '../../types/offer-types';
+import {offerTypes} from '../../types/offer-types';
 import {useState} from 'react';
 
 type MainScreenProps = {
@@ -17,8 +17,8 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
   };
 
   const [id, setId] = useState(offersForCity[0].id);
-  const handlerMouseEnterCard = (offer?: offerType) => {
-    setId(offer ? offer.id : 0)
+  const handlerMouseEnterCard = (CardId?: number) => {
+    setId(CardId ? CardId : 0)
   };
 
   const chosenOffer = offersForCity.find((offer) => offer.id === id);
@@ -69,7 +69,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
                   <PlaceCard
                     key={`place-card-${location.id}`}
                     offer={location}
-                    handlerMouseEnterCard={() => handlerMouseEnterCard(location)}
+                    handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
                     handlerMouseLeaveCard={() => handlerMouseEnterCard()}
                   />))
               }

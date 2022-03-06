@@ -4,16 +4,15 @@ import {offerType, offerTypes} from '../types/offer-types';
 import {Map, Icon, Marker, LayerGroup} from 'leaflet';
 import {City} from '../types/city';
 import leaflet from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 
 const defaultPin = new Icon({
-  iconUrl: '/img/pin.svg',
+  iconUrl: 'img/pin.svg',
   iconSize: [25, 35],
   iconAnchor: [20, 35]
 });
 
 const chosenPin = new Icon({
-  iconUrl: '/img/pin-active.svg',
+  iconUrl: 'img/pin-active.svg',
   iconSize: [25, 35],
   iconAnchor: [20, 35]
 });
@@ -25,30 +24,29 @@ function useMap(
   offers: offerTypes,
 ): Map | null {
 
-
   const [map, setMap] = useState<Map | null>(null);
 
   const createMap = () => {
-      if (mapRef.current !== null && city !== undefined) {
-      const instance = leaflet.map(mapRef.current, {
-        center: {
-          lat: city.location.latitude,
-          lng: city.location.longitude,
+    if (mapRef.current !== null && city !== undefined) {
+    const instance = leaflet.map(mapRef.current, {
+      center: {
+        lat: city.location.latitude,
+        lng: city.location.longitude,
+      },
+      zoom: city.location.zoom,
+    });
+
+    leaflet
+      .tileLayer(
+        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         },
-        zoom: city.location.zoom,
-      });
+      )
+      .addTo(instance);
 
-      leaflet
-        .tileLayer(
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-          {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          },
-        )
-        .addTo(instance);
-
-      setMap(instance);
-    }
+    setMap(instance);
+  }
   };
 
   const updateMap = (newCity: City | undefined, viewedMap: Map) :void => {
@@ -58,23 +56,23 @@ function useMap(
   };
 
   const setMarkers = (viewedMap: Map):LayerGroup => {
-      const groupMarkers = new LayerGroup();
-      offers.forEach((offer) => {
-        const marker = new Marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
-        });
-
-        marker
-          .setIcon(
-            chosenOffer !== undefined  && offer.id === chosenOffer.id
-              ? chosenPin
-              : defaultPin
-          )
-          .addTo(groupMarkers)
+    const groupMarkers = new LayerGroup();
+    offers.forEach((offer) => {
+      const marker = new Marker({
+        lat: offer.location.latitude,
+        lng: offer.location.longitude
       });
-      groupMarkers.addTo(viewedMap);
-      return groupMarkers;
+
+      marker
+        .setIcon(
+          chosenOffer !== undefined  && offer.id === chosenOffer.id
+            ? chosenPin
+            : defaultPin
+        )
+        .addTo(groupMarkers)
+    });
+    groupMarkers.addTo(viewedMap);
+    return groupMarkers;
   };
 
   useEffect(() => {

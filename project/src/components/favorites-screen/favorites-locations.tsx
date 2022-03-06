@@ -2,7 +2,7 @@
 import FavoriteCard from './favorite-card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerTypes, offerType} from '../../types/offer-types';
+import {offerTypes} from '../../types/offer-types';
 import {useState,} from 'react';
 
 type FavoritesLocationsProps = {
@@ -12,8 +12,8 @@ type FavoritesLocationsProps = {
 
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
   const [id, setId] = useState(0);
-  const handlerMouseEnterCard = (offer?: offerType) => {
-    setId(offer ? offer.id : 0)
+  const handlerMouseEnterCard = (CardId?: number) => {
+    setId(CardId ? CardId : 0)
   };
   console.log(id)
 
@@ -32,7 +32,7 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
             <FavoriteCard
               key={`favorite-card-${location.id}`}
               offer={location}
-              handlerMouseEnterCard={() => handlerMouseEnterCard(location)}
+              handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
               handlerMouseLeaveCard={() => handlerMouseEnterCard()}
               />))
         }

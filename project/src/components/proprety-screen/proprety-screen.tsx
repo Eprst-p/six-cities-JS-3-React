@@ -14,7 +14,7 @@ type PropretyScreenProps = {
 
 function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
   const currentId = useParams().id;
-  const getCurrentOffer = (): offerType | undefined => offers.find(offer => offer.id.toString() === currentId);
+  const getCurrentOffer = (): offerType | undefined => currentId ? offers.find(offer => offer.id === +currentId) : undefined;
   const currentOffer = getCurrentOffer();
   const apartmentFeatures = [
     currentOffer?.type,
@@ -22,6 +22,7 @@ function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
     `Max ${currentOffer?.maxAdults} adults`,
   ];
   const nearPlaces = offers.slice(0, 2);
+  //тут find вроде не совсем ложится, т.к. но и еще находим в другом массиве (comments) комменты на основании индекса найденного элемента. Надо посмотреть, какая будет связь у данных с сервера, и тогда наверн переделать
   const getCurrentComments = (): commentType[] | null => {
     let commentsForOffer = null;
     offers.forEach((offer, index) => {
