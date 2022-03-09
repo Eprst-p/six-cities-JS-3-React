@@ -2,7 +2,8 @@
 import PlaceCard from './place-card';
 import MainMap from '../map/main-map';
 import {offerTypes} from '../../types/offer-types';
-import {useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import {changeCity, chooseOfferID} from '../../store/action';
 
 type MainScreenProps = {
   offers: offerTypes;
@@ -10,18 +11,24 @@ type MainScreenProps = {
 }
 
 function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
-  const [chosenCity, setCity] = useState('Paris');
-  const offersForCity = offers.filter((offer) => offer.city.name === chosenCity);
+  const newCity = useAppSelector((state) => state.city);
+  const offerID = useAppSelector((state) => state.chosenOfferID);
+  const offersForCity = offers.filter((offer) => offer.city.name === newCity);
+  const chosenOffer = offersForCity.find((offer) => offer.id === offerID);
+  const dispatch = useAppDispatch();
+
   const handlerOnCityClick = (city: string) => {
-    setCity(city)
+    dispatch(changeCity(city));
+    console.log(changeCity(city));
   };
 
-  const [id, setId] = useState(offersForCity[0].id);
-  const handlerMouseEnterCard = (CardId?: number) => {
-    setId(CardId ? CardId : 0)
+  const handlerMouseEnterCard = (CardId: number) => {
+    dispatch(chooseOfferID(CardId));
   };
 
-  const chosenOffer = offersForCity.find((offer) => offer.id === id);
+  const handlerMouseLeaveCard = () => {
+    dispatch(chooseOfferID(0));
+  };
 
   return (
     <main className="page__main page__main--index">
@@ -47,7 +54,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{`${offersForCity.length} places to stay in ${chosenCity}`}</b>
+            <b className="places__found">{`${offersForCity.length} places to stay in ${newCity}`}</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
@@ -70,7 +77,7 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
                     key={`place-card-${location.id}`}
                     offer={location}
                     handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
-                    handlerMouseLeaveCard={() => handlerMouseEnterCard()}
+                    handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
                   />))
               }
             </div>
