@@ -1,16 +1,13 @@
 /* eslint-disable no-console */
 import PlaceCard from './place-card';
 import MainMap from '../map/main-map';
-import {offerTypes} from '../../types/offer-types';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {changeCity, chooseOfferID} from '../../store/action';
 
-type MainScreenProps = {
-  offers: offerTypes;
-  cities: string[];
-}
 
-function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const cities = useAppSelector((state) => state.cities);
   const newCity = useAppSelector((state) => state.city);
   const offerID = useAppSelector((state) => state.chosenOfferID);
   const offersForCity = offers.filter((offer) => offer.city.name === newCity);
@@ -21,11 +18,9 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
     dispatch(changeCity(city));
     console.log(changeCity(city));
   };
-
   const handlerMouseEnterCard = (CardId: number) => {
     dispatch(chooseOfferID(CardId));
   };
-
   const handlerMouseLeaveCard = () => {
     dispatch(chooseOfferID(0));
   };

@@ -8,17 +8,9 @@ import PropretyScreen from '../proprety-screen/proprety-screen';
 import LoginScreen from '../login-screen/login-sreen';
 import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
-import {offerTypes} from '../../types/offer-types';
-import {commentType} from '../../types/comment-type';
 
-type AppScreenProps = {
-  cities: string[];
-  offers: offerTypes;
-  comments: commentType[][];
-  favorites: offerTypes;
-}
 
-function App({cities, offers, comments, favorites}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   return (
       <BrowserRouter>
       <Routes>
@@ -28,7 +20,7 @@ function App({cities, offers, comments, favorites}: AppScreenProps): JSX.Element
         >
           <Route
             path={AppRoute.Main}
-            element={<MainScreen offers={offers} cities={cities}/>}
+            element={<MainScreen/>}
           />
           <Route
             path={AppRoute.Login}
@@ -40,13 +32,13 @@ function App({cities, offers, comments, favorites}: AppScreenProps): JSX.Element
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth} //чтобы попасть на favorites надо заменить на .Auth
               >
-                <FavoritesScreen favorites={favorites} />
+                <FavoritesScreen />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Proprety}
-            element={<PropretyScreen offers={offers} comments={comments} />}
+            element={<PropretyScreen />}
           />
         </Route>
         <Route path="*" element={<NotFound404 />} />

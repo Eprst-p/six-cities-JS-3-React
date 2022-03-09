@@ -1,14 +1,19 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, getOffersForCity, chooseOfferID} from './action';
+import {changeCity, chooseOfferID} from './action';
 import {cities} from '../mocks/sources';
 import offers from '../fixtures/offers'
-import {offerTypes, offerType} from '../types/offer-types';
 import {State} from '../types/state'
+import statickComments from '../mocks/statick-comments.json'
+import statickFavorites from '../mocks/statick-favorites.json'
+
 
 const initialState: State = {
   city: 'Paris',
   chosenOfferID: 0,
-  offersForCity: offers.filter((offer:offerType) => offer.city.name === 'Paris'),
+  offers: offers,
+  cities: cities,
+  comments: statickComments,
+  favorites: statickFavorites,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -21,9 +26,6 @@ const reducer = createReducer(initialState, (builder) => {
       const id = chosenOfferID.payload;
       state.chosenOfferID = id;
     })
-    .addCase(getOffersForCity, (state) => {
-      state.offersForCity = offers.filter((offer:offerType) => offer.city.name === state.city);
-    });
 });
 
 export {reducer};

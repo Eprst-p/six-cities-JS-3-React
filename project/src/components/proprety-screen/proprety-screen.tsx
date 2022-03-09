@@ -4,16 +4,15 @@ import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
 import PropretyNearPlaceCard from './proprety-near-place-card';
 import RoomMap from '../map/room-map';
-import {offerType, offerTypes} from '../../types/offer-types';
+import {offerType} from '../../types/offer-types';
 import {commentType} from '../../types/comment-type';
 import {useParams} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/redux-hooks';
 
-type PropretyScreenProps = {
-  offers: offerTypes;
-  comments: commentType[][];
-}
 
-function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
+function PropretyScreen(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const comments = useAppSelector((state) => state.comments);
   const currentId = useParams().id;
   const getCurrentOffer = (): offerType | undefined => currentId ? offers.find(offer => offer.id === +currentId) : undefined;
   const currentOffer = getCurrentOffer();

@@ -1,10 +1,14 @@
 import {store} from '../store/index.js';
-import {offerType, offerTypes, } from './offer-types';
+import {offerTypes} from './offer-types';
+import {commentType} from './comment-type';
 
 export type State = {
   city: string;
   chosenOfferID: number;
-  offersForCity: offerTypes;
+  offers: offerTypes;
+  cities: string[];
+  comments: commentType[][],
+  favorites: offerTypes,
 };
 
 export type AppDispatch = typeof store.dispatch;

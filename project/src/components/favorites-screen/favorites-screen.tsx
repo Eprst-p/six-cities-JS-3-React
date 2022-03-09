@@ -1,14 +1,12 @@
 import FavoritesLocations from './favorites-locations';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerTypes} from '../../types/offer-types';
 import {getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
+import {useAppSelector} from '../../hooks/redux-hooks';
 
-type FavoriteScreenProps = {
-  favorites: offerTypes;
-}
+function FavoritesScreen(): JSX.Element {
+  const favorites = useAppSelector((state) => state.favorites);
 
-function FavoritesScreen({favorites}: FavoriteScreenProps): JSX.Element {
   const favoriteCities = getFavoriteCities(favorites);
   return (
     <>
