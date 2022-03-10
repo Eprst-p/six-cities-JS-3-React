@@ -21,8 +21,10 @@ function PropretyScreen(): JSX.Element {
     `${currentOffer?.bedrooms} Bedrooms`,
     `Max ${currentOffer?.maxAdults} adults`,
   ];
-  const offersForCurrentCity = offers.filter((offer) => offer.city.name === currentOffer?.city.name && offer.id !== currentOffer.id);
-  const nearPlaces = offersForCurrentCity.slice(0, 3);
+
+  const offersForCity = offers.filter((offer) => offer.city.name === currentOffer?.city.name);
+  const offersWithoutCurrentOffer = offersForCity.filter((offer) => offer.id !== currentOffer?.id);
+  const nearPlaces = offersWithoutCurrentOffer.slice(0, 3);
 
   //тут find вроде не совсем ложится, т.к. мы еще находим в другом массиве (comments) комменты на основании индекса найденного элемента. Надо посмотреть, какая будет связь у данных с сервера, и тогда наверн переделать
   const getCurrentComments = (): commentType[] | null => {

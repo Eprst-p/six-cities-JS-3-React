@@ -17,8 +17,7 @@ function MainMap({chosenOffer, offers} : MainMapProps): JSX.Element {
     <div
       style={{height: MapHeights.MainMap}}
       ref={mapRef}
-    >
-    </div>
+    />
   );
 }
 

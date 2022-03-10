@@ -19,8 +19,8 @@ function MainScreen(): JSX.Element {
     dispatch(changeCity(city));
     console.log(changeCity(city));
   };
-  const handlerMouseEnterCard = (CardId: number) => {
-    dispatch(chooseOfferID(CardId));
+  const handlerMouseEnterCard = (id: number) => {
+    dispatch(chooseOfferID(id));
   };
   const handlerMouseLeaveCard = () => {
     dispatch(chooseOfferID(0));

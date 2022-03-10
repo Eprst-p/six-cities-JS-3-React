@@ -13,8 +13,8 @@ type FavoritesLocationsProps = {
 
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const handlerMouseEnterCard = (CardId: number) => {
-    dispatch(chooseOfferID(CardId));
+  const handlerMouseEnterCard = (id: number) => {
+    dispatch(chooseOfferID(id));
   };
   const handlerMouseLeaveCard = () => {
     dispatch(chooseOfferID(0));
