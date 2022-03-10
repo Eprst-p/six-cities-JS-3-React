@@ -6,19 +6,14 @@ import {cities} from './mocks/sources';
 import statickComments from './mocks/statick-comments.json'
 import statickFavorites from './mocks/statick-favorites.json'
 import offers from './fixtures/offers'
-
-//console.log(offers);
+import 'leaflet/dist/leaflet.css';
 
 /*
-import {generateOffers} from './mocks/offers';
 import {generateAllComments} from './mocks/comments';
 import {getFavorites} from './components/favorites-screen/favorites-get-data';
 
-const offers = generateOffers();
 const comments = generateAllComments(offers);
 const favorites = getFavorites(offers);
-console.log(offers);
-console.log(JSON.stringify(offers));
 console.log(comments);
 console.log(JSON.stringify(comments));
 console.log(favorites);

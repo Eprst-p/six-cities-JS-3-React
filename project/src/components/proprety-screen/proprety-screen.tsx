@@ -3,6 +3,7 @@ import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
 import PropretyNearPlaceCard from './proprety-near-place-card';
+import RoomMap from '../map/room-map';
 import {offerType, offerTypes} from '../../types/offer-types';
 import {commentType} from '../../types/comment-type';
 import {useParams} from 'react-router-dom';
@@ -14,14 +15,17 @@ type PropretyScreenProps = {
 
 function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
   const currentId = useParams().id;
-  const getCurrentOffer = (): offerType | undefined => offers.find(offer => offer.id.toString() === currentId);
+  const getCurrentOffer = (): offerType | undefined => currentId ? offers.find(offer => offer.id === +currentId) : undefined;
   const currentOffer = getCurrentOffer();
   const apartmentFeatures = [
     currentOffer?.type,
     `${currentOffer?.bedrooms} Bedrooms`,
     `Max ${currentOffer?.maxAdults} adults`,
   ];
-  const nearPlaces = offers.slice(0, 2);
+  const offersForCurrentCity = offers.filter((offer) => offer.city.name === currentOffer?.city.name && offer.id !== currentOffer.id);
+  const nearPlaces = offersForCurrentCity.slice(0, 3);
+
+  //тут find вроде не совсем ложится, т.к. мы еще находим в другом массиве (comments) комменты на основании индекса найденного элемента. Надо посмотреть, какая будет связь у данных с сервера, и тогда наверн переделать
   const getCurrentComments = (): commentType[] | null => {
     let commentsForOffer = null;
     offers.forEach((offer, index) => {
@@ -121,7 +125,9 @@ function PropretyScreen({offers, comments}: PropretyScreenProps): JSX.Element {
             </section>
           </div>
         </div>
-        <section className="property__map map"></section>
+        <section className="property__map map">
+          <RoomMap chosenOffer={currentOffer} offers={nearPlaces} />
+        </section>
       </section>
       <div className="container">
         <section className="near-places places">
