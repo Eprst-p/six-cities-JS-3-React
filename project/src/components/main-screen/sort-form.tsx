@@ -8,7 +8,7 @@ import {changeSortOption} from '../../store/action';
 function SortForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const [isOpened, setOpenedStatus] = useState(false);
-  const handlerSortCLick = () => {
+  const handlerSortFormCLick = () => {
     setOpenedStatus(!isOpened);
  };
 
@@ -19,7 +19,7 @@ function SortForm(): JSX.Element {
   };
 
   return (
-    <form className="places__sorting" action="#" method="get" onClick={handlerSortCLick}>
+    <form className="places__sorting" action="#" method="get" onClick={handlerSortFormCLick}>
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0}>
         {sortOption}

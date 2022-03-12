@@ -20,18 +20,9 @@ const initialState: State = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, city) => {
-      const newCity = city.payload;
-      state.city = newCity;
-    })
-    .addCase(chooseOfferID, (state, chosenOfferID) => {
-      const id = chosenOfferID.payload;
-      state.chosenOfferID = id;
-    })
-    .addCase(changeSortOption, (state, activeSortOption) => {
-      const sortOption = activeSortOption.payload;
-      state.sortOption = sortOption;
-    })
+    .addCase(changeCity, (state, {payload}) => {state.city = payload})
+    .addCase(chooseOfferID, (state, {payload}) => {state.chosenOfferID = payload})
+    .addCase(changeSortOption, (state, {payload}) => {state.sortOption = payload})
 });
 
 export {reducer};

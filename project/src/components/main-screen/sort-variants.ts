@@ -1,21 +1,9 @@
 import {offerType} from '../../types/offer-types'
 
-const sortByLowerPrice = (first:offerType, second:offerType) => {
-  const firstPrice = first.price;
-  const secondPrice = second.price;
-  return firstPrice - secondPrice;
-};
+const sortByLowerPrice = (first:offerType, second:offerType) => first.price - second.price;
 
-const sortByHigherPrice = (first:offerType, second:offerType) => {
-  const firstPrice = first.price;
-  const secondPrice = second.price;
-  return secondPrice - firstPrice;
-};
+const sortByHigherPrice = (first:offerType, second:offerType) => second.price - first.price;
 
-const sortByTopRate = (first:offerType, second:offerType) => {
-  const firstRate = first.rating;
-  const secondRate = second.rating;
-  return secondRate - firstRate;
-};
+const sortByTopRate = (first:offerType, second:offerType) => second.rating - first.rating;
 
 export {sortByLowerPrice, sortByHigherPrice, sortByTopRate};
