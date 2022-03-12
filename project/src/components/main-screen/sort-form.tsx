@@ -1,24 +1,28 @@
 /* eslint-disable no-console */
 import {useState, MouseEvent} from 'react';
 import {SortOptions} from '../../settings/sort-options';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import {changeSortOption} from '../../store/action';
+
 
 function SortForm(): JSX.Element {
+  const dispatch = useAppDispatch();
   const [isOpened, setOpenedStatus] = useState(false);
   const handlerSortCLick = () => {
     setOpenedStatus(!isOpened);
  };
 
-  const [activeOption, setActiveOption] = useState(SortOptions.Popular.toString());//корявая toString, но иначе TS с типами ругается
+  const sortOption = useAppSelector((state) => state.sortOption);
   const placesOptions = Array.from(Object.values(SortOptions));
   const handlerOptionClick = (evt:MouseEvent<HTMLLIElement>) => {
-    setActiveOption(evt.currentTarget.id);
+    dispatch(changeSortOption(evt.currentTarget.id));
   };
 
   return (
-    <form className="places__sorting" action="#" method="get" onClick = {handlerSortCLick}>
+    <form className="places__sorting" action="#" method="get" onClick={handlerSortCLick}>
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0}>
-        {activeOption}
+        {sortOption}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -27,7 +31,7 @@ function SortForm(): JSX.Element {
         {
           placesOptions.map((option) =>
             (
-              <li id={option} className={`places__option ${activeOption === option ? 'places__option--active' : ''} `} tabIndex={0} onClick={handlerOptionClick} key={option}>{option}</li>
+              <li id={option} className={`places__option ${sortOption === option ? 'places__option--active' : ''} `} tabIndex={0} onClick={handlerOptionClick} key={option}>{option}</li>
             ),
           )
         }

@@ -1,10 +1,11 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, chooseOfferID} from './action';
+import {changeCity, chooseOfferID, changeSortOption} from './action';
 import {cities} from '../mocks/sources';
 import offers from '../fixtures/offers'
 import {State} from '../types/state'
 import statickComments from '../mocks/statick-comments.json'
 import statickFavorites from '../mocks/statick-favorites.json'
+import {SortOptions} from '../settings/sort-options';
 
 
 const initialState: State = {
@@ -14,6 +15,7 @@ const initialState: State = {
   cities: cities,
   comments: statickComments,
   favorites: statickFavorites,
+  sortOption: SortOptions.Popular,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -25,6 +27,10 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(chooseOfferID, (state, chosenOfferID) => {
       const id = chosenOfferID.payload;
       state.chosenOfferID = id;
+    })
+    .addCase(changeSortOption, (state, activeSortOption) => {
+      const sortOption = activeSortOption.payload;
+      state.sortOption = sortOption;
     })
 });
 

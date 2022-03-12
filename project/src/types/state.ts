@@ -9,6 +9,7 @@ export type State = {
   cities: string[];
   comments: commentType[][],
   favorites: offerTypes,
+  sortOption: string;
 };
 
 export type AppDispatch = typeof store.dispatch;

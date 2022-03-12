@@ -4,6 +4,8 @@ import SortForm from './sort-form';
 import MainMap from '../map/main-map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {changeCity, chooseOfferID} from '../../store/action';
+import {sortByLowerPrice, sortByHigherPrice, sortByTopRate} from './sort-variants';
+import {SortOptions} from '../../settings/sort-options';
 
 
 function MainScreen(): JSX.Element {
@@ -11,13 +13,28 @@ function MainScreen(): JSX.Element {
   const cities = useAppSelector((state) => state.cities);
   const newCity = useAppSelector((state) => state.city);
   const offerID = useAppSelector((state) => state.chosenOfferID);
+  const sortOption = useAppSelector((state) => state.sortOption);
   const offersForCity = offers.filter((offer) => offer.city.name === newCity);
   const chosenOffer = offersForCity.find((offer) => offer.id === offerID);
   const dispatch = useAppDispatch();
 
+  const getSortedOffers = () => {
+    switch (sortOption) {
+      case SortOptions.PriceHigh:
+        return offersForCity.sort(sortByHigherPrice);
+      case SortOptions.PriceLow:
+        return offersForCity.sort(sortByLowerPrice);
+      case SortOptions.TopRated:
+        return offersForCity.sort(sortByTopRate);
+      case SortOptions.Popular:
+        return offersForCity;
+    }
+    return offersForCity;
+  };
+  getSortedOffers();
+
   const handlerOnCityClick = (city: string) => {
     dispatch(changeCity(city));
-    console.log(changeCity(city));
   };
   const handlerMouseEnterCard = (id: number) => {
     dispatch(chooseOfferID(id));
