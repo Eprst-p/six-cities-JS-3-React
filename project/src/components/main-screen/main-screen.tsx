@@ -4,34 +4,15 @@ import SortForm from './sort-form';
 import MainMap from '../map/main-map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {changeCity, chooseOfferID} from '../../store/action';
-import {sortByLowerPrice, sortByHigherPrice, sortByTopRate} from './sort-variants';
-import {SortOptions} from '../../settings/sort-options';
-
+import {getOffersForCity, getChosenOffer, getSortedOffers} from '../../store/selectors';
 
 function MainScreen(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
   const cities = useAppSelector((state) => state.cities);
   const newCity = useAppSelector((state) => state.city);
-  const offerID = useAppSelector((state) => state.chosenOfferID);
-  const sortOption = useAppSelector((state) => state.sortOption);
-  const offersForCity = offers.filter((offer) => offer.city.name === newCity);
-  const chosenOffer = offersForCity.find((offer) => offer.id === offerID);
+  const offersForCity = useAppSelector(getOffersForCity);
+  const chosenOffer = useAppSelector(getChosenOffer);
+  const sortedOffers = useAppSelector(getSortedOffers);
   const dispatch = useAppDispatch();
-
-  const getSortedOffers = () => {
-    switch (sortOption) {
-      case SortOptions.PriceHigh:
-        return offersForCity.sort(sortByHigherPrice);
-      case SortOptions.PriceLow:
-        return offersForCity.sort(sortByLowerPrice);
-      case SortOptions.TopRated:
-        return offersForCity.sort(sortByTopRate);
-      case SortOptions.Popular:
-        return offersForCity;
-    }
-    return offersForCity;
-  };
-  getSortedOffers();
 
   const handlerOnCityClick = (city: string) => {
     dispatch(changeCity(city));
@@ -71,7 +52,7 @@ function MainScreen(): JSX.Element {
               <SortForm />
             <div className="cities__places-list places__list tabs__content">
               {
-                offersForCity.map((location) => (
+                sortedOffers.map((location) => (
                   <PlaceCard
                     key={`place-card-${location.id}`}
                     offer={location}

@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import {Provider} from 'react-redux';
 import {store} from './store';
 
+
 /*
 import {generateAllComments} from './mocks/comments';
 import {getFavorites} from './components/favorites-screen/favorites-get-data';
