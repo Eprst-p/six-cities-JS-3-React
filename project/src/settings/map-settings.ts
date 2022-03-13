@@ -5,7 +5,7 @@ export enum MapVariants  {
   RoomMap = 'ROOM_MAP',
 };
 
-export enum MapHeights {
+export enum MapHeight {
   MainMap = '794px',
   RoomMap = '579px',
 };

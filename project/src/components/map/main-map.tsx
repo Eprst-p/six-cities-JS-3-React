@@ -1,7 +1,7 @@
 import {useRef} from 'react';
 import useMainMap from '../../hooks/useMainMap';
 import {offerType, offerTypes} from '../../types/offer-types';
-import {MapHeights} from '../../settings/map-settings';
+import {MapHeight} from '../../settings/map-settings';
 
 type MainMapProps = {
   chosenOffer: offerType | undefined;
@@ -15,7 +15,7 @@ function MainMap({chosenOffer, offers} : MainMapProps): JSX.Element {
 
   return (
     <div
-      style={{height: MapHeights.MainMap}}
+      style={{height: MapHeight.MainMap}}
       ref={mapRef}
     />
   );

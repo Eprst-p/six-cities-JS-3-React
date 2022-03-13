@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import {useState, MouseEvent} from 'react';
-import {SortOptions} from '../../settings/sort-options';
+import {SortOption} from '../../settings/sort-options';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {changeSortOption} from '../../store/action';
 
@@ -13,7 +13,7 @@ function SortForm(): JSX.Element {
  };
 
   const sortOption = useAppSelector((state) => state.sortOption);
-  const placesOptions = Array.from(Object.values(SortOptions));
+  const placesOptions = Array.from(Object.values(SortOption));
   const handlerOptionClick = (evt:MouseEvent<HTMLLIElement>) => {
     dispatch(changeSortOption(evt.currentTarget.id));
   };

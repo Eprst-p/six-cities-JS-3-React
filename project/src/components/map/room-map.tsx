@@ -1,7 +1,7 @@
 import {useRef} from 'react';
 import useRoomMap from '../../hooks/useRoomMap';
 import {offerType, offerTypes} from '../../types/offer-types';
-import {MapHeights} from '../../settings/map-settings';
+import {MapHeight} from '../../settings/map-settings';
 
 type RoomMapProps = {
   chosenOffer: offerType | undefined;
@@ -15,7 +15,7 @@ function RoomMap({chosenOffer, offers} : RoomMapProps): JSX.Element {
 
   return (
     <div
-      style={{height: MapHeights.RoomMap}}
+      style={{height: MapHeight.RoomMap}}
       ref={mapRef}
     />
   );
