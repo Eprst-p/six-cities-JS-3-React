@@ -3,7 +3,8 @@ import FavoriteCard from './favorite-card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {offerTypes} from '../../types/offer-types';
-import {useState,} from 'react';
+import {useAppDispatch} from '../../hooks/redux-hooks';
+import {chooseOfferID} from '../../store/action';
 
 type FavoritesLocationsProps = {
   city: string;
@@ -11,11 +12,13 @@ type FavoritesLocationsProps = {
 }
 
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
-  const [id, setId] = useState(0);
-  const handlerMouseEnterCard = (CardId?: number) => {
-    setId(CardId ? CardId : 0)
+  const dispatch = useAppDispatch();
+  const handlerMouseEnterCard = (id: number) => {
+    dispatch(chooseOfferID(id));
   };
-  console.log(id)
+  const handlerMouseLeaveCard = () => {
+    dispatch(chooseOfferID(0));
+  };
 
   return (
     <>
@@ -33,7 +36,7 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
               key={`favorite-card-${location.id}`}
               offer={location}
               handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
-              handlerMouseLeaveCard={() => handlerMouseEnterCard()}
+              handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
               />))
         }
       </div>

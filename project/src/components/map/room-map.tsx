@@ -17,8 +17,7 @@ function RoomMap({chosenOffer, offers} : RoomMapProps): JSX.Element {
     <div
       style={{height: MapHeights.RoomMap}}
       ref={mapRef}
-    >
-    </div>
+    />
   );
 }
 

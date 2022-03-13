@@ -1,27 +1,28 @@
 /* eslint-disable no-console */
 import PlaceCard from './place-card';
+import SortForm from './sort-form';
 import MainMap from '../map/main-map';
-import {offerTypes} from '../../types/offer-types';
-import {useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import {changeCity, chooseOfferID} from '../../store/action';
+import {getOffersForCity, getChosenOffer, getSortedOffers} from '../../store/selectors';
 
-type MainScreenProps = {
-  offers: offerTypes;
-  cities: string[];
-}
+function MainScreen(): JSX.Element {
+  const cities = useAppSelector((state) => state.cities);
+  const newCity = useAppSelector((state) => state.city);
+  const offersForCity = useAppSelector(getOffersForCity);
+  const chosenOffer = useAppSelector(getChosenOffer);
+  const sortedOffers = useAppSelector(getSortedOffers);
+  const dispatch = useAppDispatch();
 
-function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
-  const [chosenCity, setCity] = useState('Paris');
-  const offersForCity = offers.filter((offer) => offer.city.name === chosenCity);
   const handlerOnCityClick = (city: string) => {
-    setCity(city)
+    dispatch(changeCity(city));
   };
-
-  const [id, setId] = useState(offersForCity[0].id);
-  const handlerMouseEnterCard = (CardId?: number) => {
-    setId(CardId ? CardId : 0)
+  const handlerMouseEnterCard = (id: number) => {
+    dispatch(chooseOfferID(id));
   };
-
-  const chosenOffer = offersForCity.find((offer) => offer.id === id);
+  const handlerMouseLeaveCard = () => {
+    dispatch(chooseOfferID(0));
+  };
 
   return (
     <main className="page__main page__main--index">
@@ -47,30 +48,16 @@ function MainScreen({offers, cities}: MainScreenProps): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{`${offersForCity.length} places to stay in ${chosenCity}`}</b>
-            <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by</span>
-              <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                <svg className="places__sorting-arrow" width="7" height="4">
-                  <use xlinkHref="#icon-arrow-select"></use>
-                </svg>
-              </span>
-              <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                <li className="places__option" tabIndex={0}>Price: low to high</li>
-                <li className="places__option" tabIndex={0}>Price: high to low</li>
-                <li className="places__option" tabIndex={0}>Top rated first</li>
-              </ul>
-            </form>
+            <b className="places__found">{`${offersForCity.length} places to stay in ${newCity}`}</b>
+              <SortForm />
             <div className="cities__places-list places__list tabs__content">
               {
-                offersForCity.map((location) => (
+                sortedOffers.map((location) => (
                   <PlaceCard
                     key={`place-card-${location.id}`}
                     offer={location}
                     handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
-                    handlerMouseLeaveCard={() => handlerMouseEnterCard()}
+                    handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
                   />))
               }
             </div>
