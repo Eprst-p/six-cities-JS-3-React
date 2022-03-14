@@ -5,7 +5,7 @@ import {offerType} from '../../types/offer-types';
 import {generatePath} from "react-router";
 
 type CardProps = {
-  cardVariant: string;
+  cardVariant: Variant;
   offer: offerType;
   handlerMouseEnterCard?: () => void;
   handlerMouseLeaveCard?: () => void;
@@ -19,7 +19,7 @@ type cardClasses = {
   imgHeigh: string,
 }
 
-const cardDifferences:Map<string, cardClasses> = new Map();
+const cardDifferences:Map<Variant, cardClasses> = new Map();
 
 cardDifferences
   .set(

@@ -8,7 +8,7 @@ type LayoutSettings = {
   isNavElement: boolean,
 }
 
-const pagesDifferences:Map<string, LayoutSettings> = new Map();
+const pagesDifferences:Map<AppRoute | string, LayoutSettings> = new Map();
 
 pagesDifferences
   .set(
