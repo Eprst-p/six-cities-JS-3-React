@@ -140,7 +140,7 @@ function PropretyScreen(): JSX.Element {
                 <li className="reviews__item" key={`near-card-${location.id}`}>
                   <Card
                     key={`place-card-${location.id}`}
-                    cardVariant={Variant.NearPlaceCard}
+                    variant={Variant.NearPlaceCard}
                     offer={location}
                   />
                 </li>)

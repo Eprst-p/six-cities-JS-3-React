@@ -35,7 +35,7 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
           locationsPerCity.map((location) => (
             <Card
               key={`favorite-card-${location.id}`}
-              cardVariant={Variant.FavoriteCard}
+              variant={Variant.FavoriteCard}
               offer={location}
               handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
               handlerMouseLeaveCard={() => handlerMouseLeaveCard()}

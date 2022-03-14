@@ -5,7 +5,7 @@ import {offerType} from '../../types/offer-types';
 import {generatePath} from "react-router";
 
 type CardProps = {
-  cardVariant: Variant;
+  variant: Variant;
   offer: offerType;
   handlerMouseEnterCard?: () => void;
   handlerMouseLeaveCard?: () => void;
@@ -50,8 +50,8 @@ cardDifferences
     }
   );
 
-function Card({cardVariant, offer, handlerMouseEnterCard, handlerMouseLeaveCard} : CardProps): JSX.Element {
-  const cardSettings = cardDifferences.get(cardVariant);
+function Card({variant, offer, handlerMouseEnterCard, handlerMouseLeaveCard} : CardProps): JSX.Element {
+  const cardSettings = cardDifferences.get(variant);
 
   return (
     <article className={cardSettings?.articleClass} onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >

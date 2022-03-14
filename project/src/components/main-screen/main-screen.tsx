@@ -57,7 +57,7 @@ function MainScreen(): JSX.Element {
                 sortedOffers.map((location) => (
                   <Card
                     key={`place-card-${location.id}`}
-                    cardVariant={Variant.PlaceCard}
+                    variant={Variant.PlaceCard}
                     offer={location}
                     handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
                     handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
