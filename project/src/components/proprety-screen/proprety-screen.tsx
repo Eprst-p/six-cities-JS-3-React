@@ -4,7 +4,7 @@ import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
 import Card from '../card/card';
 import RoomMap from '../map/room-map';
-import {CardVariant} from '../../settings/card-variants'
+import {Variant} from '../../settings/card-variants'
 import {offerType} from '../../types/offer-types';
 import {commentType} from '../../types/comment-type';
 import {useParams} from 'react-router-dom';
@@ -140,7 +140,7 @@ function PropretyScreen(): JSX.Element {
                 <li className="reviews__item" key={`near-card-${location.id}`}>
                   <Card
                     key={`place-card-${location.id}`}
-                    cardVariant={CardVariant.NearPlaceCard}
+                    cardVariant={Variant.NearPlaceCard}
                     offer={location}
                   />
                 </li>)

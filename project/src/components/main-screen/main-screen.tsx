@@ -5,7 +5,7 @@ import MainMap from '../map/main-map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {changeCity, chooseOfferID} from '../../store/action';
 import {getOffersForCity, getChosenOffer, getSortedOffers} from '../../store/selectors';
-import {CardVariant} from '../../settings/card-variants';
+import {Variant} from '../../settings/card-variants';
 
 
 function MainScreen(): JSX.Element {
@@ -57,7 +57,7 @@ function MainScreen(): JSX.Element {
                 sortedOffers.map((location) => (
                   <Card
                     key={`place-card-${location.id}`}
-                    cardVariant={CardVariant.PlaceCard}
+                    cardVariant={Variant.PlaceCard}
                     offer={location}
                     handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
                     handlerMouseLeaveCard={() => handlerMouseLeaveCard()}

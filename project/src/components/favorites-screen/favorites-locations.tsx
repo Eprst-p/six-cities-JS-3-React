@@ -5,7 +5,7 @@ import {AppRoute} from '../../settings/app-routes';
 import {offerTypes} from '../../types/offer-types';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {chooseOfferID} from '../../store/action';
-import {CardVariant} from '../../settings/card-variants'
+import {Variant} from '../../settings/card-variants'
 
 type FavoritesLocationsProps = {
   city: string;
@@ -35,7 +35,7 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
           locationsPerCity.map((location) => (
             <Card
               key={`favorite-card-${location.id}`}
-              cardVariant={CardVariant.FavoriteCard}
+              cardVariant={Variant.FavoriteCard}
               offer={location}
               handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
               handlerMouseLeaveCard={() => handlerMouseLeaveCard()}

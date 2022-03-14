@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {CardVariant} from '../../settings/card-variants';
+import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
 import {generatePath} from "react-router";
 
@@ -11,31 +11,39 @@ type CardProps = {
   handlerMouseLeaveCard?: () => void;
 }
 
-const cardDifferences = new Map();
+type cardClasses = {
+  articleClass: string,
+  divImgWrapperClass: string,
+  divInfoClass: string,
+  imgWidth: string,
+  imgHeigh: string,
+}
+
+const cardDifferences:Map<string, cardClasses> = new Map();
 
 cardDifferences
   .set(
-    CardVariant.PlaceCard, {
-      articleClass: "cities__place-card",
-      divImgWrapperClass: "cities",
+    Variant.PlaceCard, {
+      articleClass: "cities__place-card place-card",
+      divImgWrapperClass: "cities__image-wrapper place-card__image-wrapper",
       divInfoClass: "place-card__info",
       imgWidth: "260",
       imgHeigh: "200",
     }
   )
   .set(
-    CardVariant.FavoriteCard, {
-      articleClass: "favorites__card",
-      divImgWrapperClass: "favorites",
+    Variant.FavoriteCard, {
+      articleClass: "favorites__card place-card",
+      divImgWrapperClass: "favorites__image-wrapper place-card__image-wrapper",
       divInfoClass: "favorites__card-info place-card__info",
       imgWidth: "150",
       imgHeigh: "110",
     }
   )
   .set(
-    CardVariant.NearPlaceCard, {
-      articleClass: "near-places__card",
-      divImgWrapperClass: "near-places",
+    Variant.NearPlaceCard, {
+      articleClass: "near-places__card place-card",
+      divImgWrapperClass: "near-places__image-wrapper place-card__image-wrapper",
       divInfoClass: "place-card__info",
       imgWidth: "260",
       imgHeigh: "200",
@@ -46,7 +54,7 @@ function Card({cardVariant, offer, handlerMouseEnterCard, handlerMouseLeaveCard}
   const cardSettings = cardDifferences.get(cardVariant);
 
   return (
-    <article className={`${cardSettings.articleClass} place-card`} onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >
+    <article className={cardSettings?.articleClass} onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >
       {
         offer.isPremium === true
         ?
@@ -55,12 +63,12 @@ function Card({cardVariant, offer, handlerMouseEnterCard, handlerMouseLeaveCard}
         </div>
         : null
       }
-      <div className={`${cardSettings.divImgWrapperClass}__image-wrapper place-card__image-wrapper`}>
+      <div className={cardSettings?.divImgWrapperClass}>
         <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>
-          <img className="place-card__image" src={offer.previewImage} width={cardSettings.imgWidth} height={cardSettings.imgHeigh} alt="Place" />
+          <img className="place-card__image" src={offer.previewImage} width={cardSettings?.imgWidth} height={cardSettings?.imgHeigh} alt="Place" />
         </Link>
       </div>
-      <div className={cardSettings.divInfoClass}>
+      <div className={cardSettings?.divInfoClass}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>

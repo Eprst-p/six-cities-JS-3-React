@@ -14,10 +14,9 @@ const getSortedOffers = (state:State) => {
       return getOffersForCity(state).sort(sortByLowerPrice);
     case SortOption.TopRated:
       return getOffersForCity(state).sort(sortByTopRate);
-    case SortOption.Popular:
+    default:
       return getOffersForCity(state);
   }
-  return getOffersForCity(state);
 };
 
 export {getOffersForCity, getChosenOffer, getSortedOffers};

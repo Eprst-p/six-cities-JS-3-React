@@ -1,4 +1,4 @@
-export enum CardVariant {
+export enum Variant {
   PlaceCard = 'PlaceCard',
   FavoriteCard = 'FavoriteCard',
   NearPlaceCard = 'NearPlaceCard',
