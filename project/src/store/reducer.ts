@@ -5,7 +5,7 @@ import offers from '../fixtures/offers'
 import {State} from '../types/state'
 import statickComments from '../mocks/statick-comments.json'
 import statickFavorites from '../mocks/statick-favorites.json'
-import {SortOptions} from '../settings/sort-options';
+import {SortOption} from '../settings/sort-options';
 
 
 const initialState: State = {
@@ -15,7 +15,7 @@ const initialState: State = {
   cities: cities,
   comments: statickComments,
   favorites: statickFavorites,
-  sortOption: SortOptions.Popular,
+  sortOption: SortOption.Popular,
 };
 
 const reducer = createReducer(initialState, (builder) => {

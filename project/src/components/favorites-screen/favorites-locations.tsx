@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
-import FavoriteCard from './favorite-card';
+import Card from '../card/card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {offerTypes} from '../../types/offer-types';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {chooseOfferID} from '../../store/action';
+import {Variant} from '../../settings/card-variants'
 
 type FavoritesLocationsProps = {
   city: string;
@@ -32,8 +33,9 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
       <div className="favorites__places">
         {
           locationsPerCity.map((location) => (
-            <FavoriteCard
+            <Card
               key={`favorite-card-${location.id}`}
+              variant={Variant.FavoriteCard}
               offer={location}
               handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
               handlerMouseLeaveCard={() => handlerMouseLeaveCard()}

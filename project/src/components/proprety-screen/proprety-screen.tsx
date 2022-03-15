@@ -2,8 +2,9 @@
 import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
-import PropretyNearPlaceCard from './proprety-near-place-card';
+import Card from '../card/card';
 import RoomMap from '../map/room-map';
+import {Variant} from '../../settings/card-variants'
 import {offerType} from '../../types/offer-types';
 import {commentType} from '../../types/comment-type';
 import {useParams} from 'react-router-dom';
@@ -137,7 +138,11 @@ function PropretyScreen(): JSX.Element {
             {
               nearPlaces.map((location) => (
                 <li className="reviews__item" key={`near-card-${location.id}`}>
-                  <PropretyNearPlaceCard key={`near-card-${location.id}`} offer={location}/>
+                  <Card
+                    key={`place-card-${location.id}`}
+                    variant={Variant.NearPlaceCard}
+                    offer={location}
+                  />
                 </li>)
                 )
             }

@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
-import PlaceCard from './place-card';
+import Card from '../card/card';
 import SortForm from './sort-form';
 import MainMap from '../map/main-map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {changeCity, chooseOfferID} from '../../store/action';
 import {getOffersForCity, getChosenOffer, getSortedOffers} from '../../store/selectors';
+import {Variant} from '../../settings/card-variants';
+
 
 function MainScreen(): JSX.Element {
   const cities = useAppSelector((state) => state.cities);
@@ -53,8 +55,9 @@ function MainScreen(): JSX.Element {
             <div className="cities__places-list places__list tabs__content">
               {
                 sortedOffers.map((location) => (
-                  <PlaceCard
+                  <Card
                     key={`place-card-${location.id}`}
+                    variant={Variant.PlaceCard}
                     offer={location}
                     handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
                     handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
