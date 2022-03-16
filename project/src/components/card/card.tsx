@@ -11,15 +11,15 @@ type CardProps = {
   handlerMouseLeaveCard?: () => void;
 }
 
-type cardClasses = {
+type CardClasses = {
   articleClass: string,
   divImgWrapperClass: string,
   divInfoClass: string,
-  imgWidth: string,
-  imgHeigh: string,
+  imgWidth: number,
+  imgHeigh: number,
 }
 
-const cardDifferences:Map<Variant, cardClasses> = new Map();
+const cardDifferences:Map<Variant, CardClasses> = new Map();
 
 cardDifferences
   .set(
@@ -27,8 +27,8 @@ cardDifferences
       articleClass: "cities__place-card place-card",
       divImgWrapperClass: "cities__image-wrapper place-card__image-wrapper",
       divInfoClass: "place-card__info",
-      imgWidth: "260",
-      imgHeigh: "200",
+      imgWidth: 260,
+      imgHeigh: 200,
     }
   )
   .set(
@@ -36,8 +36,8 @@ cardDifferences
       articleClass: "favorites__card place-card",
       divImgWrapperClass: "favorites__image-wrapper place-card__image-wrapper",
       divInfoClass: "favorites__card-info place-card__info",
-      imgWidth: "150",
-      imgHeigh: "110",
+      imgWidth: 150,
+      imgHeigh: 110,
     }
   )
   .set(
@@ -45,8 +45,8 @@ cardDifferences
       articleClass: "near-places__card place-card",
       divImgWrapperClass: "near-places__image-wrapper place-card__image-wrapper",
       divInfoClass: "place-card__info",
-      imgWidth: "260",
-      imgHeigh: "200",
+      imgWidth: 260,
+      imgHeigh: 200,
     }
   );
 
@@ -56,7 +56,7 @@ function Card({variant, offer, handlerMouseEnterCard, handlerMouseLeaveCard} : C
   return (
     <article className={cardSettings?.articleClass} onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >
       {
-        offer.isPremium === true
+        offer.isPremium
         ?
         <div className="place-card__mark">
           <span>Premium</span>
