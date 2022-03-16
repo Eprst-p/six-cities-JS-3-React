@@ -7,9 +7,10 @@ export type State = {
   chosenOfferID: number;
   offers: offerTypes;
   cities: string[];
-  comments: commentType[][],
-  favorites: offerTypes,
+  comments: commentType[][];
+  favorites: offerTypes;
   sortOption: string;
+  isDataLoaded: boolean;
 };
 
 export type AppDispatch = typeof store.dispatch;

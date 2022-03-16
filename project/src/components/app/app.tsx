@@ -8,9 +8,19 @@ import PropretyScreen from '../proprety-screen/proprety-screen';
 import LoginScreen from '../login-screen/login-sreen';
 import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {useAppSelector} from '../../hooks/redux-hooks';
 
 
 function App(): JSX.Element {
+  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
       <BrowserRouter>
       <Routes>

@@ -5,8 +5,12 @@ import App from './components/app/app';
 import 'leaflet/dist/leaflet.css';
 import {Provider} from 'react-redux';
 import {store} from './store';
+import {fetchOffersAction} from './store/api-actions';
 
+store.dispatch(fetchOffersAction());
+console.log(store.getState());
 
+//store.dispatch(checkAuthAction());
 /*
 import {generateAllComments} from './mocks/comments';
 import {getFavorites} from './components/favorites-screen/favorites-get-data';
