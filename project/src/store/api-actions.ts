@@ -1,12 +1,14 @@
+/* eslint-disable no-console */
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
-import {offerTypes} from '../types/offer-types';
+import {offerTypes, offerType} from '../types/offer-types';
 import {commentType} from '../types/comment-type';
-import {loadOfffers, loadFavorites, loadComments} from './action';
+import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute} from '../settings/api-routes';
-import {useParams} from 'react-router-dom';
+import {generatePath} from "react-router";
+
 //import {AuthData} from '../types/auth-data';
 //import {UserData} from '../types/user-data';
 
@@ -15,6 +17,22 @@ export const fetchOffersAction = createAsyncThunk(
   async () => {
     const {data} = await api.get<offerTypes>(APIRoute.Hotels);
     store.dispatch(loadOfffers(data));
+  },
+);
+
+export const fetchOfferAction = createAsyncThunk(
+  'data/loadOffer',
+  async (id:number) => {
+    const {data} = await api.get<offerType>(generatePath(APIRoute.Hotel, {id: `${id}`}));
+    store.dispatch(loadOffer(data));
+  },
+);
+
+export const fetchOffersNearByAction = createAsyncThunk(
+  'data/loadOffer',
+  async (id:number) => {
+    const {data} = await api.get<offerTypes>(generatePath(APIRoute.HotelsNearby, {id: `${id}`}));
+    store.dispatch(loadOffersNearBy(data));
   },
 );
 
@@ -28,9 +46,8 @@ export const fetchFavoritesAction = createAsyncThunk(
 
 export const fetchCommentsAction = createAsyncThunk(
   'data/loadComments',
-  async () => {
-    const currentId = useParams().id;
-    const {data} = await api.get<commentType[]>(`${APIRoute.Comments}/${currentId}`);
+  async (id:number) => {
+    const {data} = await api.get<commentType[]>(generatePath(APIRoute.Comments, {id: `${id}`}));
     store.dispatch(loadComments(data));
   },
 );

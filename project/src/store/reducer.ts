@@ -1,9 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, chooseOfferID, changeSortOption, loadOfffers, loadFavorites, loadComments, refreshComments} from './action';
+import {changeCity, chooseOfferID, changeSortOption, loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy} from './action';
 import {cities} from '../mocks/sources';
 import {State} from '../types/state'
-import statickComments from '../mocks/statick-comments.json'
-import statickFavorites from '../mocks/statick-favorites.json'
 import {SortOption} from '../settings/sort-options';
 
 
@@ -16,7 +14,8 @@ const initialState: State = {
   favorites: [],
   sortOption: SortOption.Popular,
   isDataLoaded: false,
-  isCommentsLoaded: false,
+  offer: undefined,
+  offersNearBy: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -28,12 +27,10 @@ const reducer = createReducer(initialState, (builder) => {
       state.offers = payload;
       state.isDataLoaded = true;
     })
+    .addCase(loadOffer,(state, {payload}) => {state.offer = payload})
+    .addCase(loadOffersNearBy,(state, {payload}) => {state.offersNearBy = payload})
     .addCase(loadFavorites,(state, {payload}) => {state.favorites = payload})
-    .addCase(loadComments,(state, {payload}) => {
-      state.comments = payload;
-      state.isCommentsLoaded = true;
-    })
-    .addCase(refreshComments, (state, {payload}) => {state.isCommentsLoaded = !payload})
+    .addCase(loadComments,(state, {payload}) => {state.comments = payload})
 });
 
 export {reducer};

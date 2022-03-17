@@ -10,8 +10,6 @@ import {fetchOffersAction, fetchFavoritesAction} from './store/api-actions';
 store.dispatch(fetchOffersAction());
 store.dispatch(fetchFavoritesAction());
 
-console.log(store.getState());
-
 //store.dispatch(checkAuthAction());
 /*
 import {generateAllComments} from './mocks/comments';
