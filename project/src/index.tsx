@@ -11,17 +11,6 @@ store.dispatch(fetchOffersAction());
 store.dispatch(fetchFavoritesAction());
 
 //store.dispatch(checkAuthAction());
-/*
-import {generateAllComments} from './mocks/comments';
-import {getFavorites} from './components/favorites-screen/favorites-get-data';
-
-const comments = generateAllComments(offers);
-const favorites = getFavorites(offers);
-console.log(comments);
-console.log(JSON.stringify(comments));
-console.log(favorites);
-console.log(JSON.stringify(favorites));
-*/
 
 ReactDOM.render(
   <React.StrictMode>
