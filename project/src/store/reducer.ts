@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, chooseOfferID, changeSortOption, loadOfffers} from './action';
+import {changeCity, chooseOfferID, changeSortOption, loadOfffers, loadFavorites, loadComments, refreshComments} from './action';
 import {cities} from '../mocks/sources';
 import {State} from '../types/state'
 import statickComments from '../mocks/statick-comments.json'
@@ -12,10 +12,11 @@ const initialState: State = {
   chosenOfferID: 0,
   offers: [],
   cities: cities,
-  comments: statickComments,
-  favorites: statickFavorites,
+  comments: [],
+  favorites: [],
   sortOption: SortOption.Popular,
   isDataLoaded: false,
+  isCommentsLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -27,6 +28,12 @@ const reducer = createReducer(initialState, (builder) => {
       state.offers = payload;
       state.isDataLoaded = true;
     })
+    .addCase(loadFavorites,(state, {payload}) => {state.favorites = payload})
+    .addCase(loadComments,(state, {payload}) => {
+      state.comments = payload;
+      state.isCommentsLoaded = true;
+    })
+    .addCase(refreshComments, (state, {payload}) => {state.isCommentsLoaded = !payload})
 });
 
 export {reducer};

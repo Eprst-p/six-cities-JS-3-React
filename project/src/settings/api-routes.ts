@@ -3,7 +3,7 @@ export enum APIRoute {
   Hotel = '/hotels/{hotelId}',
   HotelsNearby = '/hotels/{hotelId}/nearby',
   Favorite = '/favorite',
-  Comments = '/comments/{hotelId}',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
 }

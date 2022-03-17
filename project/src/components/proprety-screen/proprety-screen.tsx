@@ -1,14 +1,21 @@
+/* eslint-disable no-console */
 /* eslint-disable react/no-array-index-key */
 import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Card from '../card/card';
 import RoomMap from '../map/room-map';
 import {Variant} from '../../settings/card-variants'
 import {offerType} from '../../types/offer-types';
 import {commentType} from '../../types/comment-type';
 import {useParams} from 'react-router-dom';
-import {useAppSelector} from '../../hooks/redux-hooks';
+import {useState} from 'react';
+import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
+import {store} from '../../store';
+import {fetchCommentsAction} from '../../store/api-actions';
+import {refreshComments} from '../../store/action';
+
 
 
 function PropretyScreen(): JSX.Element {
@@ -37,7 +44,26 @@ function PropretyScreen(): JSX.Element {
     })
     return commentsForOffer;
   }
-  const currentComments = getCurrentComments();
+  const currentComments = comments;
+  console.log(currentComments);
+
+
+
+  //const [isCommentsLoaded, setCommentsLoaded] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const isCommentsLoaded = useAppSelector((state) => state.isCommentsLoaded);
+  if (!isCommentsLoaded) {
+    dispatch(fetchCommentsAction());
+    console.log(store.getState());
+    return (
+      <LoadingScreen />
+    );
+  }
+  //dispatch(refreshComments(isCommentsLoaded));//не работает - зацикливается
+  console.log(store.getState());
+
+
   return (
     <main className="page__main page__main--property">
       <section className="property">
