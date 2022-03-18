@@ -16,7 +16,8 @@ function PropretyScreen(): JSX.Element {
   const offer = useAppSelector((state) => state.offer);
   const offersNearBy = useAppSelector((state) => state.offersNearBy);;
   const comments = useAppSelector((state) => state.comments);
-  const id = useParams().id;
+  const {id} = useParams();
+  const currentId = Number(id);
   const dispatch = useAppDispatch();
   const apartmentFeatures = [
     offer?.type,
@@ -25,14 +26,14 @@ function PropretyScreen(): JSX.Element {
   ];
 
   useEffect(() => {
-    if (offer === undefined || offer.id !== Number(id)) {
-      dispatch(fetchOfferAction(Number(id)));
-      dispatch(fetchCommentsAction(Number(id)));
-      dispatch(fetchOffersNearByAction(Number(id)));
+    if (offer === undefined || offer.id !== currentId) {
+      dispatch(fetchOfferAction(currentId));
+      dispatch(fetchCommentsAction(currentId));
+      dispatch(fetchOffersNearByAction(currentId));
     }
-  }, [id, dispatch, comments, offer, offersNearBy]);
+  }, [currentId, dispatch, comments, offer, offersNearBy]);
 
-  if (!offer || offer.id !== Number(id)) {
+  if (!offer || offer.id !== currentId) {
     return (
       <LoadingScreen />
     );
