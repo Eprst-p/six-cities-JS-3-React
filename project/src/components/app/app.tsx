@@ -1,6 +1,5 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {AuthorizationStatus} from '../../settings/auth-status'
 import Layout from '../layout/layout';
 import MainScreen from '../main-screen/main-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
