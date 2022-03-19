@@ -4,14 +4,15 @@ import {api} from '../store';
 import {store} from '../store';
 import {offerTypes, offerType} from '../types/offer-types';
 import {commentType} from '../types/comment-type';
-import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy} from './action';
+import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, requireAuthorization, saveUserEmail} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute} from '../settings/api-routes';
 import {generatePath} from "react-router";
+import {AuthData} from '../types/auth-data';
+import {UserData} from '../types/user-data';
+import {AuthorizationStatus} from '../settings/auth-status';
 
 const setPromiseWaiter = (timer = 700) => new Promise(resolve => setTimeout(resolve, timer));
-//import {AuthData} from '../types/auth-data';
-//import {UserData} from '../types/user-data';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
@@ -56,7 +57,6 @@ export const fetchCommentsAction = createAsyncThunk(
   },
 );
 
-/*
 export const checkAuthAction = createAsyncThunk(
   'user/checkAuth',
   async () => {
@@ -71,6 +71,7 @@ export const loginAction = createAsyncThunk(
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
     store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    store.dispatch(saveUserEmail(email));
   },
 );
 
@@ -80,6 +81,6 @@ export const logoutAction = createAsyncThunk(
     await api.delete(APIRoute.Logout);
     dropToken();
     store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    store.dispatch(saveUserEmail(''));
   },
 );
-*/

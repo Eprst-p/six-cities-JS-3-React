@@ -14,13 +14,13 @@ import {useAppSelector} from '../../hooks/redux-hooks';
 
 function App(): JSX.Element {
   const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (!isDataLoaded) {
     return (
       <LoadingScreen />
     );
   }
-
 
   return (
       <BrowserRouter>
@@ -41,7 +41,7 @@ function App(): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth} //чтобы попасть на favorites надо заменить на .Auth
+                authorizationStatus={authStatus}
               >
                 <FavoritesScreen />
               </PrivateRoute>

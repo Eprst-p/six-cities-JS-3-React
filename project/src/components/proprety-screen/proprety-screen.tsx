@@ -14,7 +14,7 @@ import {fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '..
 
 function PropretyScreen(): JSX.Element {
   const offer = useAppSelector((state) => state.offer);
-  const offersNearBy = useAppSelector((state) => state.offersNearBy);;
+  const offersNearBy = useAppSelector((state) => state.offersNearBy);
   const comments = useAppSelector((state) => state.comments);
   const {id} = useParams();
   const currentId = Number(id);
