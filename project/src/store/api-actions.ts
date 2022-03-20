@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';

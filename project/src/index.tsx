@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
@@ -11,8 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(fetchOffersAction());
 store.dispatch(fetchFavoritesAction());
-
-//store.dispatch(checkAuthAction());
 
 ReactDOM.render(
   <React.StrictMode>

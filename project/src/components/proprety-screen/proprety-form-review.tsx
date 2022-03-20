@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {Fragment, useState, FormEvent, ChangeEvent} from "react";
 import {NewCommentType, CommentData} from "../../types/comment-type";
 import {useAppDispatch} from '../../hooks/redux-hooks';
