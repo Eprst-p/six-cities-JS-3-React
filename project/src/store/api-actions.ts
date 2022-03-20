@@ -3,7 +3,7 @@ import {api} from '../store';
 import {store} from '../store';
 import {offerTypes, offerType} from '../types/offer-types';
 import {CommentType, NewCommentType, CommentData} from '../types/comment-type';
-import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, requireAuthorization, saveUserEmail, userCommentPush} from './action';
+import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, requireAuthorization, saveUserEmail, userCommentPush, redirectToRoute} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute} from '../settings/api-routes';
 import {generatePath} from "react-router";
@@ -100,10 +100,10 @@ export const loginAction = createAsyncThunk(
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
       store.dispatch(saveUserEmail(email));
-      //const navigate = useNavigate();
-      //navigate(AppRoute.Main);
+      store.dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
 );

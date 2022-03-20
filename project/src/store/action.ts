@@ -2,6 +2,7 @@ import {createAction} from '@reduxjs/toolkit';
 import {offerTypes, offerType} from '../types/offer-types';
 import {CommentType, NewCommentType} from '../types/comment-type';
 import {AuthorizationStatus} from '../settings/auth-status';
+import {AppRoute} from '../settings/app-routes';
 import {Email} from '../types/email';
 
 export const changeCity = createAction<string>('main/changeCity');
@@ -15,3 +16,4 @@ export const loadComments = createAction<CommentType[]>('data/loadComments');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const saveUserEmail = createAction<Email>('user/saveUserEmail');
 export const userCommentPush = createAction<NewCommentType>('user/commentPush');
+export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');

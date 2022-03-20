@@ -1,5 +1,7 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history/browser-history';
 import Layout from '../layout/layout';
 import MainScreen from '../main-screen/main-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -22,7 +24,7 @@ function App(): JSX.Element {
   }
 
   return (
-      <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
             path={AppRoute.Root}
@@ -53,7 +55,7 @@ function App(): JSX.Element {
         </Route>
         <Route path="*" element={<NotFound404 />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
