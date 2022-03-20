@@ -1,6 +1,6 @@
 import {Email} from "./email";
 
-export type AuthData = {
+export interface AuthData {
   login: Email;
   password: string;
 };

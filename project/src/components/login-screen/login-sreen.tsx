@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {useRef, FormEvent} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
@@ -11,7 +10,6 @@ function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -26,7 +24,6 @@ function LoginScreen(): JSX.Element {
         password: passwordRef.current.value,
       });
     }
-    navigate(AppRoute.Main)
   };
 
   return (

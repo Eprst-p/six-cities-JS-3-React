@@ -1,7 +1,10 @@
 import {Email} from "./email";
 
-export type UserData = {
+export interface UserData {
+  avatarUrl: string;
   id: number;
   email: Email;
   token: string;
+  isPro: boolean;
+  name: string;
 };

@@ -11,6 +11,9 @@ import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {AuthorizationStatus} from '../settings/auth-status';
 import {errorHandle} from '../services/error-handle';
+import {useNavigate} from 'react-router-dom';
+import {AppRoute} from '../settings/app-routes';
+
 
 const setPromiseWaiter = (timer = 500) => new Promise(resolve => setTimeout(resolve, timer));
 
@@ -97,6 +100,8 @@ export const loginAction = createAsyncThunk(
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
       store.dispatch(saveUserEmail(email));
+      //const navigate = useNavigate();
+      //navigate(AppRoute.Main);
     } catch (error) {
       errorHandle(error);
     }

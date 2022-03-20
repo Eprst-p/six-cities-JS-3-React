@@ -4,7 +4,7 @@ import {CommentType} from './comment-type';
 import {AuthorizationStatus} from '../settings/auth-status';
 import {Email} from "./email";
 
-export type State = {
+export interface State {
   city: string;
   chosenOfferID: number;
   offers: offerTypes;
@@ -13,7 +13,7 @@ export type State = {
   favorites: offerTypes;
   sortOption: string;
   isDataLoaded: boolean;
-  offer: offerType | undefined;
+  offer?: offerType;
   offersNearBy: offerTypes;
   authorizationStatus: AuthorizationStatus;
   userEmail: Email;
