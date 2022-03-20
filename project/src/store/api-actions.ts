@@ -3,8 +3,8 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
 import {offerTypes, offerType} from '../types/offer-types';
-import {commentType} from '../types/comment-type';
-import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, requireAuthorization, saveUserEmail} from './action';
+import {CommentType, NewCommentType, CommentData} from '../types/comment-type';
+import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, requireAuthorization, saveUserEmail, userCommentPush} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute} from '../settings/api-routes';
 import {generatePath} from "react-router";
@@ -13,14 +13,14 @@ import {UserData} from '../types/user-data';
 import {AuthorizationStatus} from '../settings/auth-status';
 import {errorHandle} from '../services/error-handle';
 
-const setPromiseWaiter = (timer = 700) => new Promise(resolve => setTimeout(resolve, timer));
+const setPromiseWaiter = (timer = 500) => new Promise(resolve => setTimeout(resolve, timer));
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
   async () => {
     try {
       const {data} = await api.get<offerTypes>(APIRoute.Hotels);
-      await setPromiseWaiter(1000);
+      await setPromiseWaiter(800);
       store.dispatch(loadOfffers(data));
     } catch (error) {
       errorHandle(error);
@@ -70,7 +70,7 @@ export const fetchCommentsAction = createAsyncThunk(
   'data/loadComments',
   async (id:number) => {
     try {
-      const {data} = await api.get<commentType[]>(generatePath(APIRoute.Comments, {id: `${id}`}));
+      const {data} = await api.get<CommentType[]>(generatePath(APIRoute.Comments, {id: `${id}`}));
       store.dispatch(loadComments(data));
     } catch (error) {
       errorHandle(error);
@@ -117,3 +117,16 @@ export const logoutAction = createAsyncThunk(
     }
   },
 );
+
+export const pushCommentAction = createAsyncThunk(
+  'user/commentPush',
+  async (newComment: CommentData) => {
+    try {
+      await api.post<NewCommentType>(generatePath(APIRoute.Comments, {id: `${newComment.id}`}), newComment.newComment);
+      store.dispatch(userCommentPush(newComment.newComment));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+

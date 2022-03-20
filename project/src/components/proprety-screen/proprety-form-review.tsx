@@ -1,5 +1,9 @@
-/* eslint-disable no-alert */
+/* eslint-disable no-console */
 import {Fragment, useState, FormEvent, ChangeEvent} from "react";
+import {NewCommentType, CommentData} from "../../types/comment-type";
+import {useAppDispatch} from '../../hooks/redux-hooks';
+import {pushCommentAction, fetchCommentsAction} from '../../store/api-actions';
+
 
 const starsValues = [
   {
@@ -24,9 +28,16 @@ const starsValues = [
   },
 ];
 
-function PropretyFormReview(): JSX.Element {
+type PropretyFormReviewProps = {
+  id: number;
+}
+
+function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   const [commentText, setCommentText] = useState('');
   const [rating, setRating] = useState(0);
+  const isDisabled: boolean = rating === 0 || commentText.length < 50;
+  const dispatch = useAppDispatch();
+
   const handlerCommentTextInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentText(evt.target.value);
   }
@@ -36,9 +47,18 @@ function PropretyFormReview(): JSX.Element {
   };
   const handlerFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    alert(`комментарий: ${commentText} рейтинг : ${rating}`);
+    const newComment:NewCommentType = {
+      comment: commentText,
+      rating: rating,
+    };
+    const commentData:CommentData = {
+      newComment: newComment,
+      id: id
+    };
+    dispatch(pushCommentAction(commentData));
+    dispatch(fetchCommentsAction(id));
   };
-  const isDisabled: boolean = rating === 0 || commentText.length < 50;
+
   return (
     <form
       className="reviews__form form"

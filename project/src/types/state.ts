@@ -1,6 +1,6 @@
 import {store} from '../store/index.js';
 import {offerTypes, offerType} from './offer-types';
-import {commentType} from './comment-type';
+import {CommentType} from './comment-type';
 import {AuthorizationStatus} from '../settings/auth-status';
 import {Email} from "./email";
 
@@ -9,7 +9,7 @@ export type State = {
   chosenOfferID: number;
   offers: offerTypes;
   cities: string[];
-  comments: commentType[];
+  comments: CommentType[];
   favorites: offerTypes;
   sortOption: string;
   isDataLoaded: boolean;

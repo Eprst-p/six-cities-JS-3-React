@@ -10,6 +10,7 @@ import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
+import {AuthorizationStatus} from '../../settings/auth-status'
 
 
 function PropretyScreen(): JSX.Element {
@@ -19,11 +20,13 @@ function PropretyScreen(): JSX.Element {
   const {id} = useParams();
   const currentId = Number(id);
   const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
   const apartmentFeatures = [
     offer?.type,
     `${offer?.bedrooms} Bedrooms`,
     `Max ${offer?.maxAdults} adults`,
   ];
+  console.log(comments);
 
   useEffect(() => {
     if (offer === undefined || offer.id !== currentId) {
@@ -124,7 +127,12 @@ function PropretyScreen(): JSX.Element {
                   )
                 }
               </ul>
-              <PropretyFormReview />
+              {
+                authStatus === AuthorizationStatus.Auth
+                ?
+                <PropretyFormReview id={currentId} />
+                : null
+              }
             </section>
           </div>
         </div>

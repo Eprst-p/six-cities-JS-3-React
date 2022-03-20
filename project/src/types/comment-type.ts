@@ -1,4 +1,4 @@
-export type commentType = {
+export type CommentType = {
   comment: string
   date: string
   id: number
@@ -9,4 +9,14 @@ export type commentType = {
     isPro: boolean
     name: string
   }
+};
+
+export type NewCommentType = {
+  comment: string
+  rating: number
+};
+
+export type CommentData = {
+  newComment: NewCommentType
+  id: number
 };
