@@ -3,7 +3,7 @@ import {api} from '../store';
 import {store} from '../store';
 import {offerTypes, offerType} from '../types/offer-types';
 import {CommentType, NewCommentType, CommentData} from '../types/comment-type';
-import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, requireAuthorization, saveUserEmail, userCommentPush, redirectToRoute} from './action';
+import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, setAuthorizationStatus, saveUserEmail, userCommentPush, redirectToRoute} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute} from '../settings/api-routes';
 import {generatePath} from "react-router";
@@ -11,7 +11,6 @@ import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {AuthorizationStatus} from '../settings/auth-status';
 import {errorHandle} from '../services/error-handle';
-import {useNavigate} from 'react-router-dom';
 import {AppRoute} from '../settings/app-routes';
 
 
@@ -84,8 +83,9 @@ export const checkAuthAction = createAsyncThunk(
   'user/checkAuth',
   async () => {
     try {
-      await api.get(APIRoute.Login);
-      store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      const {data} = await api.get<UserData>(APIRoute.Login);
+      store.dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+      store.dispatch(saveUserEmail(data.email))
     } catch (error) {
       errorHandle(error);
     }
@@ -98,12 +98,12 @@ export const loginAction = createAsyncThunk(
     try {
       const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
-      store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
       store.dispatch(saveUserEmail(email));
       store.dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
       errorHandle(error);
-      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     }
   },
 );
@@ -114,7 +114,7 @@ export const logoutAction = createAsyncThunk(
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
-      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
       store.dispatch(saveUserEmail(''));
     } catch (error) {
       errorHandle(error);

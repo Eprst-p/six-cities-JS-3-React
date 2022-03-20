@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, chooseOfferID, changeSortOption, loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, requireAuthorization, saveUserEmail, userCommentPush} from './action';
+import {changeCity, chooseOfferID, changeSortOption, loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, setAuthorizationStatus, saveUserEmail} from './action';
 import {cities} from '../mocks/sources';
 import {State} from '../types/state'
 import {SortOption} from '../settings/sort-options';
@@ -34,7 +34,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffersNearBy,(state, {payload}) => {state.offersNearBy = payload})
     .addCase(loadFavorites,(state, {payload}) => {state.favorites = payload})
     .addCase(loadComments,(state, {payload}) => {state.comments = payload})
-    .addCase(requireAuthorization,(state, {payload}) => {state.authorizationStatus = payload})
+    .addCase(setAuthorizationStatus,(state, {payload}) => {state.authorizationStatus = payload})
     .addCase(saveUserEmail,(state, {payload}) => {state.userEmail = payload})
 });
 
