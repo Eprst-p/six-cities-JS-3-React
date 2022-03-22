@@ -1,30 +1,18 @@
 /* eslint-disable no-console */
-import Card from '../card/card';
-import SortForm from './sort-form';
-import Map from '../map/map';
+import PlacesAndMap from './places-and-map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {changeCity, chooseOfferID} from '../../store/action';
-import {getOffersForCity, getChosenOffer, getSortedOffers} from '../../store/selectors';
-import {Variant} from '../../settings/card-variants';
-import {MapVariant} from '../../settings/map-settings';
+import {changeCity} from '../../store/action';
+import {getOffersForCity} from '../../store/selectors';
 
 
 function MainScreen(): JSX.Element {
   const cities = useAppSelector((state) => state.cities);
   const newCity = useAppSelector((state) => state.city);
   const offersForCity = useAppSelector(getOffersForCity);
-  const chosenOffer = useAppSelector(getChosenOffer);
-  const sortedOffers = useAppSelector(getSortedOffers);
   const dispatch = useAppDispatch();
 
   const handlerOnCityClick = (city: string) => {
     dispatch(changeCity(city));
-  };
-  const handlerMouseEnterCard = (id: number) => {
-    dispatch(chooseOfferID(id));
-  };
-  const handlerMouseLeaveCard = () => {
-    dispatch(chooseOfferID(0));
   };
 
   return (
@@ -48,30 +36,7 @@ function MainScreen(): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{`${offersForCity.length} places to stay in ${newCity}`}</b>
-              <SortForm />
-            <div className="cities__places-list places__list tabs__content">
-              {
-                sortedOffers.map((location) => (
-                  <Card
-                    key={`place-card-${location.id}`}
-                    variant={Variant.PlaceCard}
-                    offer={location}
-                    handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
-                    handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
-                  />))
-              }
-            </div>
-          </section>
-          <div className="cities__right-section">
-            <section className="cities__map map">
-              <Map chosenOffer={chosenOffer} offers={offersForCity} variant={MapVariant.MainMap} />
-            </section>
-          </div>
-        </div>
+        <PlacesAndMap offers={offersForCity} city={newCity} />
       </div>
     </main>
   );

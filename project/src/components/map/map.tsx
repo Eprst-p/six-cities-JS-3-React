@@ -3,6 +3,7 @@ import useMap from '../../hooks/useMap';
 import {offerType, offerTypes} from '../../types/offer-types';
 import {MapHeight} from '../../settings/map-settings';
 import {MapVariant} from '../../settings/map-settings';
+import React from 'react';
 
 
 type MapProps = {
@@ -33,4 +34,8 @@ function Map({chosenOffer, offers, variant} : MapProps): JSX.Element {
   );
 }
 
-export default Map;
+function equalProps(prevProps:MapProps, nextProps:MapProps) {
+  return prevProps.offers === nextProps.offers && prevProps.chosenOffer === nextProps.chosenOffer
+};
+
+export default React.memo(Map, equalProps);

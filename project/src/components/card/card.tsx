@@ -3,6 +3,8 @@ import {AppRoute} from '../../settings/app-routes';
 import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
 import {generatePath} from "react-router";
+import React from 'react';
+
 
 type CardProps = {
   variant: Variant;
@@ -96,4 +98,8 @@ function Card({variant, offer, handlerMouseEnterCard, handlerMouseLeaveCard} : C
   );
 }
 
-export default Card;
+function equalProps(prevProps:CardProps, nextProps:CardProps) {
+  return prevProps.offer === nextProps.offer && prevProps.variant === nextProps.variant;
+};
+
+export default React.memo(Card, equalProps) ;
