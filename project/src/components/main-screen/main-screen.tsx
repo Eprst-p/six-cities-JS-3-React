@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
 import Card from '../card/card';
 import SortForm from './sort-form';
-import MainMap from '../map/main-map';
+import Map from '../map/map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {changeCity, chooseOfferID} from '../../store/action';
 import {getOffersForCity, getChosenOffer, getSortedOffers} from '../../store/selectors';
 import {Variant} from '../../settings/card-variants';
+import {MapVariant} from '../../settings/map-settings';
 
 
 function MainScreen(): JSX.Element {
@@ -67,7 +68,7 @@ function MainScreen(): JSX.Element {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <MainMap chosenOffer={chosenOffer} offers={offersForCity} />
+              <Map chosenOffer={chosenOffer} offers={offersForCity} variant={MapVariant.MainMap} />
             </section>
           </div>
         </div>

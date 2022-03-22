@@ -1,6 +1,6 @@
 import {Icon} from 'leaflet';
 
-export enum MapVariants  {
+export enum MapVariant  {
   MainMap = 'MAIN_MAP',
   RoomMap = 'ROOM_MAP',
 };

@@ -3,8 +3,9 @@ import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Card from '../card/card';
-import RoomMap from '../map/room-map';
+import Map from '../map/map';
 import {Variant} from '../../settings/card-variants'
+import {MapVariant} from '../../settings/map-settings';
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
@@ -135,7 +136,7 @@ function PropretyScreen(): JSX.Element {
           </div>
         </div>
         <section className="property__map map">
-          <RoomMap chosenOffer={offer} offers={offersNearBy} />
+          <Map chosenOffer={offer} offers={offersNearBy} variant={MapVariant.RoomMap} />
         </section>
       </section>
       <div className="container">

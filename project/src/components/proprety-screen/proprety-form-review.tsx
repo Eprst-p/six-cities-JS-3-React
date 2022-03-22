@@ -51,8 +51,8 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
       rating: rating,
     };
     const commentData:CommentData = {
-      newComment: newComment,
-      id: id
+      newComment,
+      id
     };
     dispatch(pushCommentAction(commentData));
     dispatch(fetchCommentsAction(id));
