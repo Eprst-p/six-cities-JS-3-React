@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
@@ -10,15 +9,17 @@ import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
+import {AuthorizationStatus} from '../../settings/auth-status'
 
 
 function PropretyScreen(): JSX.Element {
   const offer = useAppSelector((state) => state.offer);
-  const offersNearBy = useAppSelector((state) => state.offersNearBy);;
+  const offersNearBy = useAppSelector((state) => state.offersNearBy);
   const comments = useAppSelector((state) => state.comments);
   const {id} = useParams();
   const currentId = Number(id);
   const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
   const apartmentFeatures = [
     offer?.type,
     `${offer?.bedrooms} Bedrooms`,
@@ -124,7 +125,12 @@ function PropretyScreen(): JSX.Element {
                   )
                 }
               </ul>
-              <PropretyFormReview />
+              {
+                authStatus === AuthorizationStatus.Auth
+                ?
+                <PropretyFormReview id={currentId} />
+                : null
+              }
             </section>
           </div>
         </div>

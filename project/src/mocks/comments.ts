@@ -1,11 +1,11 @@
-import {commentType} from '../types/comment-type';
+import {CommentType} from '../types/comment-type';
 import {offerType} from '../types/offer-types';
 import {getRandomPositiveNumber, getRandomElement} from './randomaizers';
 import {descriptions} from './sources';
 
 const currentDate = new Date();
 
-const generateComment = ():commentType => (
+const generateComment = ():CommentType => (
   {
     comment: getRandomElement(descriptions),
     date: currentDate.toString(),
@@ -20,7 +20,7 @@ const generateComment = ():commentType => (
   }
 );
 
-const generateCommentsPerOffer = ():commentType[] => {
+const generateCommentsPerOffer = ():CommentType[] => {
   const commentsAmount = getRandomPositiveNumber(1, 10);
   const comments = [];
   for (let i = 0; i< commentsAmount; i++) {
@@ -29,7 +29,7 @@ const generateCommentsPerOffer = ():commentType[] => {
   return comments;
 };
 
-const generateAllComments = (allOffers:offerType[]):commentType[][] => {
+const generateAllComments = (allOffers:offerType[]):CommentType[][] => {
   const allComments = [];
   for (let i = 0; i < allOffers.length; i++) {
     allComments.push(generateCommentsPerOffer());

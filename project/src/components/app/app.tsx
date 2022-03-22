@@ -1,6 +1,7 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {AuthorizationStatus} from '../../settings/auth-status'
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history/browser-history';
 import Layout from '../layout/layout';
 import MainScreen from '../main-screen/main-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -14,6 +15,7 @@ import {useAppSelector} from '../../hooks/redux-hooks';
 
 function App(): JSX.Element {
   const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (!isDataLoaded) {
     return (
@@ -21,9 +23,8 @@ function App(): JSX.Element {
     );
   }
 
-
   return (
-      <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
             path={AppRoute.Root}
@@ -41,7 +42,7 @@ function App(): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth} //чтобы попасть на favorites надо заменить на .Auth
+                authorizationStatus={authStatus}
               >
                 <FavoritesScreen />
               </PrivateRoute>
@@ -54,7 +55,7 @@ function App(): JSX.Element {
         </Route>
         <Route path="*" element={<NotFound404 />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

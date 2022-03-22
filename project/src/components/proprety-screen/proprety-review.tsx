@@ -1,7 +1,7 @@
-import {commentType} from '../../types/comment-type';
+import {CommentType} from '../../types/comment-type';
 
 type PropretyReviewProps = {
-  comment: commentType;
+  comment: CommentType;
 }
 
 function PropretyReview({comment} : PropretyReviewProps): JSX.Element {
