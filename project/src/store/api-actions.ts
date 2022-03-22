@@ -38,6 +38,7 @@ export const fetchOfferAction = createAsyncThunk(
       store.dispatch(loadOffer(data));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(redirectToRoute(AppRoute.NotFound));
     }
   },
 );
@@ -63,6 +64,7 @@ export const fetchFavoritesAction = createAsyncThunk(
       store.dispatch(loadFavorites(data));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(redirectToRoute(AppRoute.NotFound));
     }
   },
 );

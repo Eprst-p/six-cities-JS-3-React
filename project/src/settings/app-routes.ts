@@ -1,7 +1,8 @@
 export enum AppRoute {
-  Root = '/',     //пока одинаковые пути для различия main и layout, может стоит и объединить, пока не понял
+  Root = '/',
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Proprety = '/proprety/:id'
+  Proprety = '/proprety/:id',
+  NotFound = '/not-found'
 }
