@@ -30,10 +30,16 @@ function PropretyScreen(): JSX.Element {
   useEffect(() => {
     if (offer === undefined || offer.id !== currentId) {
       dispatch(fetchOfferAction(currentId));
-      dispatch(fetchCommentsAction(currentId));
       dispatch(fetchOffersNearByAction(currentId));
     }
-  }, [currentId, dispatch, comments, offer, offersNearBy]);
+  }, [offer]);
+
+  useEffect(() => {
+    if (offer === undefined || offer.id !== currentId) {
+      dispatch(fetchCommentsAction(currentId));
+    }
+  }, [comments]);
+
 
   if (!offer || offer.id !== currentId) {
     return (

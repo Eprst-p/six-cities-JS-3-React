@@ -1,7 +1,9 @@
 import {Fragment, useState, FormEvent, ChangeEvent} from "react";
 import {NewCommentType, CommentData} from "../../types/comment-type";
-import {useAppDispatch} from '../../hooks/redux-hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {pushCommentAction, fetchCommentsAction} from '../../store/api-actions';
+import {CommentLength} from "../../settings/comment-length";
+import {formSubmit} from "../../store/action";
 
 
 const starsValues = [
@@ -34,8 +36,10 @@ type PropretyFormReviewProps = {
 function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   const [commentText, setCommentText] = useState('');
   const [rating, setRating] = useState(0);
-  const isDisabled: boolean = rating === 0 || commentText.length < 50;
+  const isButtonDisabled: boolean = rating === 0 || commentText.length < CommentLength.min || commentText.length > CommentLength.max;
   const dispatch = useAppDispatch();
+  const isFormDisabled = useAppSelector((state) => state.isFormDisabled);
+
 
   const handlerCommentTextInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentText(evt.target.value);
@@ -54,8 +58,13 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
       newComment,
       id
     };
+    dispatch(formSubmit(true))
     dispatch(pushCommentAction(commentData));
     dispatch(fetchCommentsAction(id));
+    setCommentText('');
+    setRating(0);
+    const stars = document.querySelectorAll('.form__star-image');
+    stars.forEach((star) => {star.setAttribute('style', `${{fill: '#c7c7c7'}}`)});//не работает. Через ремув атрибут checked также не работает. Чет не пойму вообще, как они закрашиваются, как то мутно.
   };
 
   return (
@@ -78,10 +87,11 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
                   id={`${star.value}-stars`}
                   type="radio"
                   onChange={handlerStarsChange}
-                  />
+                  disabled={isFormDisabled}
+                />
                 <label htmlFor={`${star.value}-stars`} className="reviews__rating-label form__rating-label" title={star.title}>
                   <svg className="form__star-image" width="37" height="33" >
-                    <use xlinkHref="#icon-star" ></use>
+                    <use xlinkHref="#icon-star"  ></use>
                   </svg>
                 </label>
               </Fragment>
@@ -95,13 +105,15 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onInput={handlerCommentTextInput}
+        value={commentText}
+        disabled={isFormDisabled}
         >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={isDisabled}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isButtonDisabled}>Submit</button>
       </div>
     </form>
   );

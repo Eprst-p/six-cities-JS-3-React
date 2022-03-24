@@ -11,7 +11,7 @@ function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
   chosenOffer: offerType | undefined,
   offers: offerTypes,
-  variant: MapVariant,
+  variant: string,
 ): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);

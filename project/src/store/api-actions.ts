@@ -3,7 +3,7 @@ import {api} from '../store';
 import {store} from '../store';
 import {offerTypes, offerType} from '../types/offer-types';
 import {CommentType, NewCommentType, CommentData} from '../types/comment-type';
-import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, setAuthorizationStatus, saveUserEmail, userCommentPush, redirectToRoute} from './action';
+import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, setAuthorizationStatus, saveUserEmail, redirectToRoute, formSubmit} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute} from '../settings/api-routes';
 import {generatePath} from "react-router";
@@ -64,7 +64,6 @@ export const fetchFavoritesAction = createAsyncThunk(
       store.dispatch(loadFavorites(data));
     } catch (error) {
       errorHandle(error);
-      store.dispatch(redirectToRoute(AppRoute.NotFound));
     }
   },
 );
@@ -74,6 +73,7 @@ export const fetchCommentsAction = createAsyncThunk(
   async (id:number) => {
     try {
       const {data} = await api.get<CommentType[]>(generatePath(APIRoute.Comments, {id: `${id}`}));
+      await setPromiseWaiter();
       store.dispatch(loadComments(data));
     } catch (error) {
       errorHandle(error);
@@ -129,9 +129,10 @@ export const pushCommentAction = createAsyncThunk(
   async (newComment: CommentData) => {
     try {
       await api.post<NewCommentType>(generatePath(APIRoute.Comments, {id: `${newComment.id}`}), newComment.newComment);
-      store.dispatch(userCommentPush(newComment.newComment));
+      store.dispatch(formSubmit(false));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(formSubmit(false));
     }
   },
 );

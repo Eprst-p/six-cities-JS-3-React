@@ -55,10 +55,12 @@ function App(): JSX.Element {
         </Route>
         <Route
           path="*"
-          element={<NotFound404 />} />
+          element={<NotFound404 />}
+        />
         <Route
           path={AppRoute.NotFound}
-          element={<NotFound404 />} />
+          element={<NotFound404 />}
+        />
       </Routes>
     </HistoryRouter>
   );
