@@ -63,8 +63,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
     dispatch(fetchCommentsAction(id));
     setCommentText('');
     setRating(0);
-    const stars = document.querySelectorAll('.form__star-image');
-    stars.forEach((star) => {star.setAttribute('style', `${{fill: '#c7c7c7'}}`)});//не работает. Через ремув атрибут checked также не работает. Чет не пойму вообще, как они закрашиваются, как то мутно.
+    //не забыть потом в оптимизации исправить перерисовку - звезды перекрашиваются при любом вводе текста, т.к форма постоянно перерисовывается видимо
   };
 
   return (
@@ -88,10 +87,11 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
                   type="radio"
                   onChange={handlerStarsChange}
                   disabled={isFormDisabled}
+                  checked={false}
                 />
                 <label htmlFor={`${star.value}-stars`} className="reviews__rating-label form__rating-label" title={star.title}>
                   <svg className="form__star-image" width="37" height="33" >
-                    <use xlinkHref="#icon-star"  ></use>
+                    <use xlinkHref="#icon-star" />
                   </svg>
                 </label>
               </Fragment>
