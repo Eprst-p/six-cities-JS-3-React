@@ -17,3 +17,5 @@ export const setAuthorizationStatus = createAction<AuthorizationStatus>('user/se
 export const saveUserEmail = createAction<Email>('user/saveUserEmail');
 export const userCommentPush = createAction<NewCommentType>('user/commentPush');
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
+export const formSubmit = createAction<boolean>('form/formSubmit');
+

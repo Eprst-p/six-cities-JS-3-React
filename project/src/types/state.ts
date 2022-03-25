@@ -17,6 +17,7 @@ export interface State {
   offersNearBy: offerTypes;
   authorizationStatus: AuthorizationStatus;
   userEmail: Email;
+  isFormDisabled: boolean;
 };
 
 export type AppDispatch = typeof store.dispatch;

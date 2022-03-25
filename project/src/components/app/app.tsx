@@ -53,7 +53,10 @@ function App(): JSX.Element {
             element={<PropretyScreen />}
           />
         </Route>
-        <Route path="*" element={<NotFound404 />} />
+        <Route
+          path="*"
+          element={<NotFound404 />}
+        />
       </Routes>
     </HistoryRouter>
   );
