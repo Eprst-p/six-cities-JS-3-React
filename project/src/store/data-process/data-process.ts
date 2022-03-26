@@ -10,7 +10,6 @@ const initialState: DataProcess = {
   favorites: [],
   offersNearBy: [],
   isDataLoaded: false,
-  city: 'Paris',
 };
 
 export const dataProcess = createSlice({
@@ -25,8 +24,7 @@ export const dataProcess = createSlice({
     loadComments: (state, {payload}) => {state.comments = payload},
     loadFavorites: (state, {payload}) => {state.favorites = payload},
     loadOffersNearBy: (state, {payload}) => {state.offersNearBy = payload},
-    changeCity: (state, {payload}) => {state.city = payload},
   },
 });
 
-export const {loadOfffers, loadOffer, loadComments, loadFavorites, loadOffersNearBy, changeCity} = dataProcess.actions;
+export const {loadOfffers, loadOffer, loadComments, loadFavorites, loadOffersNearBy} = dataProcess.actions;

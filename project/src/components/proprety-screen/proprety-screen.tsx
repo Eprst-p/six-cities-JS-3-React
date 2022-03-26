@@ -14,13 +14,13 @@ import {AuthorizationStatus} from '../../settings/auth-status'
 
 
 function PropretyScreen(): JSX.Element {
-  const offer = useAppSelector((state) => state.offer);
-  const offersNearBy = useAppSelector((state) => state.offersNearBy);
-  const comments = useAppSelector((state) => state.comments);
+  const offer = useAppSelector(({DATA}) => DATA.offer);
+  const offersNearBy = useAppSelector(({DATA}) => DATA.offersNearBy);
+  const comments = useAppSelector(({DATA}) => DATA.comments);
   const {id} = useParams();
   const currentId = Number(id);
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(({USER}) => USER.authorizationStatus);
   const apartmentFeatures = [
     offer?.type,
     `${offer?.bedrooms} Bedrooms`,
@@ -32,7 +32,7 @@ function PropretyScreen(): JSX.Element {
       dispatch(fetchOfferAction(currentId));
       dispatch(fetchOffersNearByAction(currentId));
     }
-  }, [offer]);
+  }, [offer, comments]);
 
   useEffect(() => {
     if (offer === undefined || offer.id !== currentId) {

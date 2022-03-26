@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import PlacesAndMap from './places-and-map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {changeCity} from '../../store/action';
+import { changeCity } from '../../store/interface-process/interface-process';
 import {getOffersForCity} from '../../store/selectors';
 
 
 function MainScreen(): JSX.Element {
-  const cities = useAppSelector((state) => state.cities);
-  const newCity = useAppSelector((state) => state.city);
+  const cities = useAppSelector(({INTERFACE}) => INTERFACE.cities);
+  const newCity = useAppSelector(({INTERFACE}) => INTERFACE.city);
   const offersForCity = useAppSelector(getOffersForCity);
   const dispatch = useAppDispatch();
 

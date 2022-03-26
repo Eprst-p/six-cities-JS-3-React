@@ -1,20 +1,20 @@
-import {DataProcess, InterfaceProcess} from '../types/state'
+import {State} from '../types/state'
 import {SortOption} from '../settings/sort-options';
 import {sortByLowerPrice, sortByHigherPrice, sortByTopRate} from '../components/main-screen/sort-variants';
 
-const getOffersForCity = (data:DataProcess) => data.offers.filter((offer) => offer.city.name === data.city);
-const getChosenOffer = (data:DataProcess, chosen:InterfaceProcess) => getOffersForCity(data).find((offer) => offer.id === chosen.chosenOfferID);
+const getOffersForCity = (state:State) => state.DATA.offers.filter((offer) => offer.city.name === state.INTERFACE.city);
+const getChosenOffer = (state:State) => getOffersForCity(state).find((offer) => offer.id === state.INTERFACE.chosenOfferID);
 
-const getSortedOffers = (data:DataProcess, chosen:InterfaceProcess) => {
-  switch (chosen.sortOption) {
+const getSortedOffers = (state:State) => {
+  switch (state.INTERFACE.sortOption) {
     case SortOption.PriceHigh:
-      return getOffersForCity(data).sort(sortByHigherPrice);
+      return getOffersForCity(state).sort(sortByHigherPrice);
     case SortOption.PriceLow:
-      return getOffersForCity(data).sort(sortByLowerPrice);
+      return getOffersForCity(state).sort(sortByLowerPrice);
     case SortOption.TopRated:
-      return getOffersForCity(data).sort(sortByTopRate);
+      return getOffersForCity(state).sort(sortByTopRate);
     default:
-      return getOffersForCity(data);
+      return getOffersForCity(state);
   }
 };
 

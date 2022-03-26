@@ -2,7 +2,7 @@
 import {useState, MouseEvent} from 'react';
 import {SortOption} from '../../settings/sort-options';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {changeSortOption} from '../../store/action';
+import { changeSortOption } from '../../store/interface-process/interface-process';
 
 
 function SortForm(): JSX.Element {
@@ -12,7 +12,7 @@ function SortForm(): JSX.Element {
     setOpenedStatus(!isOpened);
  };
 
-  const sortOption = useAppSelector((state) => state.sortOption);
+  const sortOption = useAppSelector(({INTERFACE}) => INTERFACE.sortOption);
   const placesOptions = Array.from(Object.values(SortOption));
   const handlerOptionClick = (evt:MouseEvent<HTMLLIElement>) => {
     dispatch(changeSortOption(evt.currentTarget.id));

@@ -6,8 +6,8 @@ import {AuthorizationStatus} from '../../settings/auth-status'
 
 
 function NavLinkProfile(): JSX.Element {
-  const userEmail = useAppSelector((state) => state.userEmail);
-  const authStatus =  useAppSelector((state) => state.authorizationStatus);
+  const userEmail = useAppSelector(({USER}) => USER.userEmail);
+  const authStatus =  useAppSelector(({USER}) => USER.authorizationStatus);
   const dispatch = useAppDispatch();
 
   const handlerSignOutClick = () => {

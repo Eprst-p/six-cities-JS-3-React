@@ -17,7 +17,6 @@ export type DataProcess = {
   favorites: offerTypes;
   offersNearBy: offerTypes;
   isDataLoaded: boolean;
-  city: string;
 };
 
 export type InterfaceProcess = {
@@ -25,6 +24,7 @@ export type InterfaceProcess = {
   chosenOfferID: number;
   cities: string[];
   sortOption: string;
+  city: string;
 };
 
 export type State = ReturnType<typeof store.getState>;

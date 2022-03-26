@@ -3,7 +3,7 @@ import {NewCommentType, CommentData} from "../../types/comment-type";
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {pushCommentAction, fetchCommentsAction} from '../../store/api-actions';
 import {CommentLength} from "../../settings/comment-length";
-import {formSubmit} from "../../store/action";
+import {formSubmit} from "../../store/interface-process/interface-process";
 
 
 const starsValues = [
@@ -38,7 +38,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   const [rating, setRating] = useState(0);
   const isButtonDisabled: boolean = rating === 0 || commentText.length < CommentLength.min || commentText.length > CommentLength.max;
   const dispatch = useAppDispatch();
-  const isFormDisabled = useAppSelector((state) => state.isFormDisabled);
+  const isFormDisabled = useAppSelector(({INTERFACE}) => INTERFACE.isFormDisabled);
 
 
   const handlerCommentTextInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {

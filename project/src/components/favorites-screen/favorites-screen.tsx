@@ -5,7 +5,7 @@ import {getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
 import {useAppSelector} from '../../hooks/redux-hooks';
 
 function FavoritesScreen(): JSX.Element {
-  const favorites = useAppSelector((state) => state.favorites);
+  const favorites = useAppSelector(({DATA}) => DATA.favorites);
 
   const favoriteCities = getFavoriteCities(favorites);
   return (

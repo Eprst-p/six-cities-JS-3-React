@@ -10,6 +10,7 @@ const initialState: InterfaceProcess = {
   chosenOfferID: 0,
   cities: cities,
   sortOption: SortOption.Popular,
+  city: 'Paris',
 };
 
 export const interfaceProcess = createSlice({
@@ -19,7 +20,8 @@ export const interfaceProcess = createSlice({
     formSubmit: (state, {payload}) => {state.isFormDisabled = payload},
     chooseOfferID: (state, {payload}) => {state.chosenOfferID = payload},
     changeSortOption: (state, {payload}) => {state.sortOption = payload},
+    changeCity: (state, {payload}) => {state.city = payload},
   },
 });
 
-export const {formSubmit, chooseOfferID, changeSortOption} = interfaceProcess.actions;
+export const {formSubmit, chooseOfferID, changeSortOption, changeCity} = interfaceProcess.actions;

@@ -3,7 +3,7 @@ import Card from '../card/card';
 import SortForm from './sort-form';
 import Map from '../map/map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {chooseOfferID} from '../../store/action';
+import {chooseOfferID} from '../../store/interface-process/interface-process';
 import {getChosenOffer, getSortedOffers} from '../../store/selectors';
 import {Variant} from '../../settings/card-variants';
 import {MapVariant} from '../../settings/map-settings';

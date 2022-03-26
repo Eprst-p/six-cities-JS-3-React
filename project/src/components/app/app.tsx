@@ -14,8 +14,8 @@ import {useAppSelector} from '../../hooks/redux-hooks';
 
 
 function App(): JSX.Element {
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isDataLoaded = useAppSelector(({DATA}) => DATA.isDataLoaded);
+  const authStatus = useAppSelector(({USER}) => USER.authorizationStatus);
 
   if (!isDataLoaded) {
     return (

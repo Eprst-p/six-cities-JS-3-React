@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {offerTypes} from '../../types/offer-types';
 import {useAppDispatch} from '../../hooks/redux-hooks';
-import {chooseOfferID} from '../../store/action';
+import {chooseOfferID} from '../../store/interface-process/interface-process';
 import {Variant} from '../../settings/card-variants'
 
 type FavoritesLocationsProps = {
