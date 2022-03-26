@@ -1,21 +1,20 @@
-//import {createSelector} from '@reduxjs/toolkit';
-import {State} from '../types/state'
+import {DataProcess, InterfaceProcess} from '../types/state'
 import {SortOption} from '../settings/sort-options';
 import {sortByLowerPrice, sortByHigherPrice, sortByTopRate} from '../components/main-screen/sort-variants';
 
-const getOffersForCity = (state:State) => state.offers.filter((offer) => offer.city.name === state.city);
-const getChosenOffer = (state:State) => getOffersForCity(state).find((offer) => offer.id === state.chosenOfferID);
+const getOffersForCity = (data:DataProcess) => data.offers.filter((offer) => offer.city.name === data.city);
+const getChosenOffer = (data:DataProcess, chosen:InterfaceProcess) => getOffersForCity(data).find((offer) => offer.id === chosen.chosenOfferID);
 
-const getSortedOffers = (state:State) => {
-  switch (state.sortOption) {
+const getSortedOffers = (data:DataProcess, chosen:InterfaceProcess) => {
+  switch (chosen.sortOption) {
     case SortOption.PriceHigh:
-      return getOffersForCity(state).sort(sortByHigherPrice);
+      return getOffersForCity(data).sort(sortByHigherPrice);
     case SortOption.PriceLow:
-      return getOffersForCity(state).sort(sortByLowerPrice);
+      return getOffersForCity(data).sort(sortByLowerPrice);
     case SortOption.TopRated:
-      return getOffersForCity(state).sort(sortByTopRate);
+      return getOffersForCity(data).sort(sortByTopRate);
     default:
-      return getOffersForCity(state);
+      return getOffersForCity(data);
   }
 };
 

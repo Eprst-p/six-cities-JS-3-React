@@ -4,20 +4,29 @@ import {CommentType} from './comment-type';
 import {AuthorizationStatus} from '../settings/auth-status';
 import {Email} from "./email";
 
-export interface State {
-  city: string;
-  chosenOfferID: number;
-  offers: offerTypes;
-  cities: string[];
-  comments: CommentType[];
-  favorites: offerTypes;
-  sortOption: string;
-  isDataLoaded: boolean;
-  offer?: offerType;
-  offersNearBy: offerTypes;
+
+export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   userEmail: Email;
-  isFormDisabled: boolean;
 };
+
+export type DataProcess = {
+  offers: offerTypes;
+  offer?: offerType;
+  comments: CommentType[];
+  favorites: offerTypes;
+  offersNearBy: offerTypes;
+  isDataLoaded: boolean;
+  city: string;
+};
+
+export type InterfaceProcess = {
+  isFormDisabled: boolean;
+  chosenOfferID: number;
+  cities: string[];
+  sortOption: string;
+};
+
+export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
