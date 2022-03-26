@@ -15,17 +15,8 @@ function useMap(
 ): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);
-  const city: City | undefined = offers[0].city;
-
-  let centralLocation:City | offerType | undefined;
-  if (variant===MapVariant.MainMap) {
-    centralLocation = city;
-  }
-  if (variant===MapVariant.RoomMap) {
-    centralLocation = chosenOffer;
-  }
-
-
+  const city:City | undefined = offers[0].city;
+  const centralLocation:City | offerType | undefined = variant===MapVariant.MainMap ? city : chosenOffer;
 
   const createMap = () => {
     if (mapRef.current !== null && centralLocation!==undefined) {
@@ -61,20 +52,12 @@ function useMap(
           lat: offer.location.latitude,
           lng: offer.location.longitude
         });
-        if (variant===MapVariant.MainMap) {
           marker
           .setIcon(
-            chosenOffer !== undefined  && offer.id === chosenOffer.id
+            chosenOffer !== undefined  && offer.id === chosenOffer.id && variant===MapVariant.MainMap
               ? chosenPin
               : defaultPin
           )
-          .addTo(groupMarkers)
-        }
-        if (variant===MapVariant.RoomMap) {
-          marker
-          .setIcon(defaultPin)
-          .addTo(groupMarkers)
-        }
         if (variant===MapVariant.RoomMap && chosenOffer) {
           const  orangeMarker = new Marker({
             lat: chosenOffer.location.latitude,
@@ -84,6 +67,7 @@ function useMap(
             .setIcon(chosenPin)
             .addTo(groupMarkers)
         }
+        marker.addTo(groupMarkers)
       });
     groupMarkers.addTo(viewedMap);
     return groupMarkers;
