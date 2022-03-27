@@ -132,6 +132,7 @@ export const pushCommentAction = createAsyncThunk(
   async (newComment: CommentData) => {
     try {
       await api.post<NewCommentType>(generatePath(APIRoute.Comments, {id: `${newComment.id}`}), newComment.newComment);
+      await setPromiseWaiter();
       store.dispatch(formSubmit(false));
     } catch (error) {
       errorHandle(error);

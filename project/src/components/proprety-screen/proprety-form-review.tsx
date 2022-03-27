@@ -1,4 +1,5 @@
-import {Fragment, useState, FormEvent, ChangeEvent} from "react";
+/* eslint-disable no-console */
+import {Fragment, useState, FormEvent, ChangeEvent, useRef} from "react";
 import {NewCommentType, CommentData} from "../../types/comment-type";
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {pushCommentAction, fetchCommentsAction} from '../../store/api-actions';
@@ -34,16 +35,15 @@ type PropretyFormReviewProps = {
 }
 
 function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
-  const [commentText, setCommentText] = useState('');
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const commentTextRef = textAreaRef.current !== null ? textAreaRef.current.value : '';
+  console.log(commentTextRef);
   const [rating, setRating] = useState(0);
-  const isButtonDisabled: boolean = rating === 0 || commentText.length < CommentLength.min || commentText.length > CommentLength.max;
+  const isButtonDisabled: boolean = rating === 0 || commentTextRef.length < CommentLength.min || commentTextRef.length > CommentLength.max;
   const dispatch = useAppDispatch();
   const isFormDisabled = useAppSelector(({INTERFACE}) => INTERFACE.isFormDisabled);
 
 
-  const handlerCommentTextInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentText(evt.target.value);
-  }
   const handlerStarsChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = +evt.target.value;
     setRating(value);
@@ -51,19 +51,20 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   const handlerFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const newComment:NewCommentType = {
-      comment: commentText,
+      comment: commentTextRef,
       rating: rating,
     };
     const commentData:CommentData = {
       newComment,
       id
     };
+    dispatch(pushCommentAction(commentData))
+    .then(() => dispatch(fetchCommentsAction(id)))
     dispatch(formSubmit(true))
-    dispatch(pushCommentAction(commentData));
-    dispatch(fetchCommentsAction(id));
-    setCommentText('');
+    if (textAreaRef.current !== null) {
+      textAreaRef.current.value = '';
+    }
     setRating(0);
-    //не забыть потом в оптимизации исправить перерисовку - звезды перекрашиваются при любом вводе текста, т.к форма постоянно перерисовывается видимо
   };
 
   return (
@@ -104,8 +105,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onInput={handlerCommentTextInput}
-        value={commentText}
+        ref={textAreaRef}
         disabled={isFormDisabled}
         >
       </textarea>
