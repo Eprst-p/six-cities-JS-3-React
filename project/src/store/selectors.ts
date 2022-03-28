@@ -18,4 +18,5 @@ const getSortedOffers = (state:State) => {
   }
 };
 
+
 export {getOffersForCity, getChosenOffer, getSortedOffers};

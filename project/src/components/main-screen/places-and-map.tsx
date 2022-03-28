@@ -10,6 +10,7 @@ import {MapVariant} from '../../settings/map-settings';
 import {offerTypes} from '../../types/offer-types';
 import React from 'react';
 
+
 type PlacesAndMapProps = {
   offers: offerTypes;
   city: string;
@@ -20,13 +21,8 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
   const sortedOffers = useAppSelector(getSortedOffers);
   const dispatch = useAppDispatch();
 
-  const handlerMouseEnterCard = (id: number) => {
-    dispatch(chooseOfferID(id));
-  };
-  const handlerMouseLeaveCard = () => {
-    dispatch(chooseOfferID(0));
-  };
-
+  const handlerMouseEnterCard = React.useCallback((id: number) => dispatch(chooseOfferID(id)), []);
+  const handlerMouseLeaveCard = React.useCallback(() => dispatch(chooseOfferID(0)), []);
 
   return (
     <div className="cities__places-container container">

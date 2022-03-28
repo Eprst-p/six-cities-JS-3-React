@@ -3,20 +3,18 @@ import {useState, MouseEvent} from 'react';
 import {SortOption} from '../../settings/sort-options';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import { changeSortOption } from '../../store/interface-process/interface-process';
+import React from 'react';
 
 
 function SortForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const [isOpened, setOpenedStatus] = useState(false);
-  const handlerSortFormCLick = () => {
-    setOpenedStatus(!isOpened);
- };
+
+  const handlerOptionClick = React.useCallback((evt:MouseEvent<HTMLLIElement>) => dispatch(changeSortOption(evt.currentTarget.id)), []);
+  const handlerSortFormCLick = React.useCallback(() => setOpenedStatus(!isOpened), []);
 
   const sortOption = useAppSelector(({INTERFACE}) => INTERFACE.sortOption);
   const placesOptions = Array.from(Object.values(SortOption));
-  const handlerOptionClick = (evt:MouseEvent<HTMLLIElement>) => {
-    dispatch(changeSortOption(evt.currentTarget.id));
-  };
 
   return (
     <form className="places__sorting" action="#" method="get" onClick={handlerSortFormCLick}>

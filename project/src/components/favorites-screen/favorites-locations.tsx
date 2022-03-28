@@ -6,6 +6,7 @@ import {offerTypes} from '../../types/offer-types';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {chooseOfferID} from '../../store/interface-process/interface-process';
 import {Variant} from '../../settings/card-variants'
+import React from 'react';
 
 type FavoritesLocationsProps = {
   city: string;
@@ -14,12 +15,9 @@ type FavoritesLocationsProps = {
 
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const handlerMouseEnterCard = (id: number) => {
-    dispatch(chooseOfferID(id));
-  };
-  const handlerMouseLeaveCard = () => {
-    dispatch(chooseOfferID(0));
-  };
+
+  const handlerMouseEnterCard = React.useCallback((id: number) => dispatch(chooseOfferID(id)), []);
+  const handlerMouseLeaveCard = React.useCallback(() => dispatch(chooseOfferID(0)), []);
 
   return (
     <>

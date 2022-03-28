@@ -3,6 +3,8 @@ import PlacesAndMap from './places-and-map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import { changeCity } from '../../store/interface-process/interface-process';
 import {getOffersForCity} from '../../store/selectors';
+import React from 'react';
+import {createSelector} from 'reselect';
 
 
 function MainScreen(): JSX.Element {
@@ -11,9 +13,7 @@ function MainScreen(): JSX.Element {
   const offersForCity = useAppSelector(getOffersForCity);
   const dispatch = useAppDispatch();
 
-  const handlerOnCityClick = (city: string) => {
-    dispatch(changeCity(city));
-  };
+  const handlerOnCityClick = React.useCallback((city: string) =>dispatch(changeCity(city)), []);
 
   return (
     <main className="page__main page__main--index">

@@ -3,6 +3,7 @@ import {AppRoute} from '../../settings/app-routes';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {logoutAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status'
+import React from 'react';
 
 
 function NavLinkProfile(): JSX.Element {
@@ -10,9 +11,7 @@ function NavLinkProfile(): JSX.Element {
   const authStatus =  useAppSelector(({USER}) => USER.authorizationStatus);
   const dispatch = useAppDispatch();
 
-  const handlerSignOutClick = () => {
-    dispatch(logoutAction());
-  };
+  const handlerSignOutClick = React.useCallback(() =>dispatch(logoutAction()), []);
 
   return (
     <nav className="header__nav">
