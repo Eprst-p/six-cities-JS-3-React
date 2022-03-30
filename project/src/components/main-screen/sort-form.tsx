@@ -11,7 +11,7 @@ function SortForm(): JSX.Element {
   const [isOpened, setOpenedStatus] = useState(false);
 
   const handlerOptionClick = React.useCallback((evt:MouseEvent<HTMLLIElement>) => dispatch(changeSortOption(evt.currentTarget.id)), []);
-  const handlerSortFormCLick = React.useCallback(() => setOpenedStatus(!isOpened), []);
+  const handlerSortFormCLick = React.useCallback(() => setOpenedStatus(!isOpened), [isOpened]);
 
   const sortOption = useAppSelector(({INTERFACE}) => INTERFACE.sortOption);
   const placesOptions = Array.from(Object.values(SortOption));

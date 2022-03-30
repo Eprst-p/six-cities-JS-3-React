@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import PlacesAndMap from './places-and-map';
+import EmptyPlaces from './empty-places';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import { changeCity } from '../../store/interface-process/interface-process';
 import {getOffersForCity, getCities, getCity, getCitiesMemo, getCityMemo, getOffersForCityMemo} from '../../store/selectors';
@@ -21,7 +22,7 @@ function MainScreen(): JSX.Element {
   const handlerOnCityClick = React.useCallback((city: string) =>dispatch(changeCity(city)), []);
 
   return (
-    <main className="page__main page__main--index">
+    <main className={`page__main page__main--index ${offersForCity.length === 0 ? 'page__main--index-empty' : ''}`}>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
@@ -41,7 +42,13 @@ function MainScreen(): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        <PlacesAndMap offers={offersForCity} city={newCity} />
+        {
+          offersForCity.length === 0
+          ?
+          <EmptyPlaces city={newCity} />
+          :
+          <PlacesAndMap offers={offersForCity} city={newCity} />
+        }
       </div>
     </main>
   );
