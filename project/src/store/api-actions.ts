@@ -15,6 +15,7 @@ import {UserData} from '../types/user-data';
 import {AuthorizationStatus} from '../settings/auth-status';
 import {errorHandle} from '../services/error-handle';
 import {AppRoute} from '../settings/app-routes';
+import {Favorite} from '../settings/favorite-status';
 
 
 const setPromiseWaiter = (timer = 500) => new Promise(resolve => setTimeout(resolve, timer));
@@ -62,7 +63,7 @@ export const fetchFavoritesAction = createAsyncThunk(
   'data/loadFavorites',
   async () => {
     try {
-      const {data} = await api.get<offerTypes>(APIRoute.Favorite);
+      const {data} = await api.get<offerTypes>(generatePath(APIRoute.Favorite));
       await setPromiseWaiter();
       store.dispatch(loadFavorites(data));
     } catch (error) {
@@ -137,6 +138,18 @@ export const pushCommentAction = createAsyncThunk(
     } catch (error) {
       errorHandle(error);
       store.dispatch(formSubmit(false));
+    }
+  },
+);
+
+export const changeFavoritesAction = createAsyncThunk(
+  'user/commentPush',
+  async (offer: offerType) => {
+    const favoriteStatus = offer.isFavorite;
+    try {
+      await api.post<offerType>(generatePath(APIRoute.FavoriteHotel, {id: `${offer.id}`, status: `${favoriteStatus ? Favorite.Remove : Favorite.Add}` }), offer);
+    } catch (error) {
+      errorHandle(error);
     }
   },
 );

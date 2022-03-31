@@ -2,11 +2,12 @@
 import Card from '../card/card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerTypes} from '../../types/offer-types';
+import {offerTypes, offerType} from '../../types/offer-types';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {chooseOfferID} from '../../store/interface-process/interface-process';
 import {Variant} from '../../settings/card-variants'
 import React from 'react';
+import {changeFavoritesAction, fetchFavoritesAction} from '../../store/api-actions';
 
 type FavoritesLocationsProps = {
   city: string;
@@ -18,6 +19,11 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
 
   const handlerMouseEnterCard = React.useCallback((id: number) => dispatch(chooseOfferID(id)), []);
   const handlerMouseLeaveCard = React.useCallback(() => dispatch(chooseOfferID(0)), []);
+  const handlerBookmarkClick = React.useCallback((offer:offerType) => {
+    dispatch(changeFavoritesAction(offer))
+    .then(() => dispatch(fetchFavoritesAction()));
+  }, []);
+
 
   return (
     <>
@@ -37,6 +43,7 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
               offer={location}
               handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
               handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
+              handlerBookmarkClick={() => handlerBookmarkClick(location)}
               />))
         }
       </div>

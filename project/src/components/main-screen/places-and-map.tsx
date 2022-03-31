@@ -4,10 +4,11 @@ import SortForm from './sort-form';
 import Map from '../map/map';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {chooseOfferID} from '../../store/interface-process/interface-process';
+import {changeFavoritesAction, fetchOffersAction} from '../../store/api-actions';
 import {getChosenOffer, getSortedOffers} from '../../store/selectors';
 import {Variant} from '../../settings/card-variants';
 import {MapVariant} from '../../settings/map-settings';
-import {offerTypes} from '../../types/offer-types';
+import {offerTypes, offerType} from '../../types/offer-types';
 import React from 'react';
 
 
@@ -23,6 +24,11 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
 
   const handlerMouseEnterCard = React.useCallback((id: number) => dispatch(chooseOfferID(id)), []);
   const handlerMouseLeaveCard = React.useCallback(() => dispatch(chooseOfferID(0)), []);
+  const handlerBookmarkClick = React.useCallback((offer:offerType) => {
+    dispatch(changeFavoritesAction(offer))
+    .then(() => dispatch(fetchOffersAction()));
+  }, []);
+
 
   return (
     <div className="cities__places-container container">
@@ -39,6 +45,7 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
                 offer={location}
                 handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
                 handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
+                handlerBookmarkClick={() => handlerBookmarkClick(location)}
               />))
           }
         </div>

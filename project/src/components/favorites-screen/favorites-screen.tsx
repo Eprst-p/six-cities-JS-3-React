@@ -2,9 +2,15 @@ import FavoritesLocations from './favorites-locations';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
-import {useAppSelector} from '../../hooks/redux-hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import {useEffect} from 'react';
+import {fetchFavoritesAction} from '../../store/api-actions';
 
 function FavoritesScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchFavoritesAction());
+  }, []);
   const favorites = useAppSelector(({DATA}) => DATA.favorites);
 
   const favoriteCities = getFavoriteCities(favorites);
