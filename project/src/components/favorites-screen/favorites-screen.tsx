@@ -1,7 +1,7 @@
-import FavoritesLocations from './favorites-locations';
+import FavoritesList from './favorites-list';
+import FavoritesEmpty from './favorites-empty';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {useEffect} from 'react';
 import {fetchFavoritesAction} from '../../store/api-actions';
@@ -13,24 +13,17 @@ function FavoritesScreen(): JSX.Element {
   }, []);
   const favorites = useAppSelector(({DATA}) => DATA.favorites);
 
-  const favoriteCities = getFavoriteCities(favorites);
   return (
     <>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {
-                favoriteCities.map((city) =>
-                  (
-                    <li className="favorites__locations-items" key={city}>
-                      <FavoritesLocations key={city} city={city} locationsPerCity ={getLocationsPerCity(favorites, city)}/>
-                    </li>)
-                )
-              }
-            </ul>
-          </section>
+        {
+          favorites.length === 0
+          ?
+          <FavoritesEmpty />
+          :
+          <FavoritesList favorites={favorites}/>
+        }
         </div>
       </main>
       <footer className="footer container">
