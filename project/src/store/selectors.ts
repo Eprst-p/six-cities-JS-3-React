@@ -4,9 +4,6 @@ import {sortByLowerPrice, sortByHigherPrice, sortByTopRate} from '../components/
 import {createSelector} from 'reselect';
 
 
-//export const getOffersForCity2 = (state:State) => state.DATA.offers.filter((offer) => offer.city.name === state.INTERFACE.city);
-//export const getChosenOffer2 = (state:State) => getOffersForCity(state).find((offer) => offer.id === state.INTERFACE.chosenOfferID);
-
 export const getSortedOffers = (state:State) => {
   switch (state.INTERFACE.sortOption) {
     case SortOption.PriceHigh:
@@ -35,13 +32,8 @@ export const getChosenOfferID = (state:State) => state.INTERFACE.chosenOfferID;
 //export const getCitiesMemo = createSelector(getCities, cities => cities);
 //export const getCityMemo = createSelector(getCity, city => city);
 //export const getOffersForCityMemo = createSelector(getOffersForCity, offers => offers);
-
 export const getOffersForCity = createSelector(getOffers, getCity, (offers, city) => offers.filter((offer) => offer.city.name === city));
 export const getChosenOffer = createSelector(getOffersForCity, getChosenOfferID, (offers, chosenId) => offers.find((offer) => offer.id === chosenId));
 
-
 export const getAuthStatus = (state:State) => state.USER.authorizationStatus;
 export const getUserEmail = (state:State) => state.USER.userEmail;
-
-
-

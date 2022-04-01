@@ -38,7 +38,6 @@ type PropretyFormReviewProps = {
 function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const commentTextRef = textAreaRef.current !== null ? textAreaRef.current.value : '';
-  console.log(commentTextRef);
   const [rating, setRating] = useState(0);
   const isButtonDisabled: boolean = rating === 0 || commentTextRef.length < CommentLength.min || commentTextRef.length > CommentLength.max;
   const dispatch = useAppDispatch();

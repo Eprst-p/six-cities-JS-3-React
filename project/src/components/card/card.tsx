@@ -4,7 +4,7 @@ import {AppRoute} from '../../settings/app-routes';
 import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
 import {generatePath} from "react-router";
-import React from 'react';
+import React, { useMemo } from 'react';
 
 
 type CardProps = {
@@ -55,7 +55,7 @@ cardDifferences
   );
 
 function Card({variant, offer, handlerMouseEnterCard, handlerMouseLeaveCard, handlerBookmarkClick} : CardProps): JSX.Element {
-  const cardSettings = cardDifferences.get(variant);
+  const cardSettings = useMemo(() => cardDifferences.get(variant), [variant]);
   const favoriteStatus = offer.isFavorite;
 
   return (

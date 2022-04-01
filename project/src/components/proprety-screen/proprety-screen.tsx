@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
@@ -7,11 +8,13 @@ import Map from '../map/map';
 import {Variant} from '../../settings/card-variants'
 import {MapVariant} from '../../settings/map-settings';
 import {useParams} from 'react-router-dom';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
-import {fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
+import {changeFavoritesAction, fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status'
 import {getAuthStatus, getOffer, getOffersNearBy, getComments } from '../../store/selectors';
+import { offerType } from '../../types/offer-types';
+import React from 'react';
 
 
 function PropretyScreen(): JSX.Element {
@@ -22,11 +25,18 @@ function PropretyScreen(): JSX.Element {
   const currentId = Number(id);
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthStatus);
+  const [favoriteStatus, setFavoriteStatus] = useState(offer?.isFavorite)
   const apartmentFeatures = [
     offer?.type,
     `${offer?.bedrooms} Bedrooms`,
     `Max ${offer?.maxAdults} adults`,
   ];
+  const handlerBookmarkClick = React.useCallback((currentOffer:offerType) => {
+    dispatch(changeFavoritesAction(currentOffer))
+    .then(() => fetchOfferAction(currentId))
+    setFavoriteStatus(!favoriteStatus);
+  }, [favoriteStatus]);
+
 
   useEffect(() => {
     if (offer === undefined || offer.id !== currentId) {
@@ -77,7 +87,11 @@ function PropretyScreen(): JSX.Element {
               <h1 className="property__name">
                 {offer?.title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
+              <button
+                className={`property__bookmark-button button ${favoriteStatus ? 'property__bookmark-button--active' : ''}`}
+                type="button"
+                onClick={() => handlerBookmarkClick(offer)}
+              >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
                 </svg>
