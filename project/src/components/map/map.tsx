@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {useRef} from 'react';
 import useMap from '../../hooks/useMap';
 import {offerType, offerTypes} from '../../types/offer-types';

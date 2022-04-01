@@ -5,13 +5,14 @@ import {AppRoute} from '../../settings/app-routes';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {useEffect} from 'react';
 import {fetchFavoritesAction} from '../../store/api-actions';
+import {getFavorites} from '../../store/selectors';
 
 function FavoritesScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchFavoritesAction());
   }, []);
-  const favorites = useAppSelector(({DATA}) => DATA.favorites);
+  const favorites = useAppSelector(getFavorites);
 
   return (
     <>

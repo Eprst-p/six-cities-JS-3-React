@@ -3,19 +3,14 @@ import PlacesAndMap from './places-and-map';
 import EmptyPlaces from './empty-places';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import { changeCity } from '../../store/interface-process/interface-process';
-import {getOffersForCity, getCities, getCity, getCitiesMemo, getCityMemo, getOffersForCityMemo} from '../../store/selectors';
+import {getOffersForCity, getCities, getCity} from '../../store/selectors';
 import React from 'react';
 
 
 function MainScreen(): JSX.Element {
-  //вариант с мемоизацией самого useSelect, не срабаывает
-  //const cities = useAppSelector(getCities, (prev, next) => prev===next);
-  //const newCity = useAppSelector(getCity, (prev, next) => prev===next);
-  //const offersForCity = useAppSelector(getOffersForCity, (prev, next) => prev===next);
-
-  const cities = useAppSelector(getCitiesMemo);
-  const newCity = useAppSelector(getCityMemo);
-  const offersForCity = useAppSelector(getOffersForCityMemo);
+  const cities = useAppSelector(getCities);
+  const newCity = useAppSelector(getCity);
+  const offersForCity = useAppSelector(getOffersForCity);
 
   const dispatch = useAppDispatch();
 

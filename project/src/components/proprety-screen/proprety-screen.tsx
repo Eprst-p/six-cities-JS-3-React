@@ -11,16 +11,17 @@ import {useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status'
+import {getAuthStatus, getOffer, getOffersNearBy, getComments } from '../../store/selectors';
 
 
 function PropretyScreen(): JSX.Element {
-  const offer = useAppSelector(({DATA}) => DATA.offer);
-  const offersNearBy = useAppSelector(({DATA}) => DATA.offersNearBy);
-  const comments = useAppSelector(({DATA}) => DATA.comments);
+  const offer = useAppSelector(getOffer);
+  const offersNearBy = useAppSelector(getOffersNearBy);
+  const comments = useAppSelector(getComments);
   const {id} = useParams();
   const currentId = Number(id);
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector(({USER}) => USER.authorizationStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const apartmentFeatures = [
     offer?.type,
     `${offer?.bedrooms} Bedrooms`,

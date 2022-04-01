@@ -19,6 +19,7 @@ type PlacesAndMapProps = {
 
 function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
   const chosenOffer = useAppSelector(getChosenOffer);
+  //console.log(chosenOffer);
   const sortedOffers = useAppSelector(getSortedOffers);
   const dispatch = useAppDispatch();
 

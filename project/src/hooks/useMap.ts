@@ -87,7 +87,7 @@ function useMap(
     return () => {
         map?.removeLayer(groupMarkers);
     };
-  }, [map, offers, variant]);
+  }, [map, offers, variant, chosenOffer]);
 
   return map;
 };
