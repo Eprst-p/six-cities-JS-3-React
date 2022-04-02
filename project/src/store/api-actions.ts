@@ -143,7 +143,7 @@ export const pushCommentAction = createAsyncThunk(
 );
 
 export const changeFavoritesAction = createAsyncThunk(
-  'user/commentPush',
+  'data/changeFavorite',
   async (offer: offerType) => {
     const favoriteStatus = offer.isFavorite;
     try {

@@ -15,7 +15,7 @@ function useMap(
 ): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);
-  const city:City | undefined = offers[0].city;
+  const city:City | undefined = offers[0]?.city;
   const centralLocation:City | offerType | undefined = variant===MapVariant.MainMap ? city : chosenOffer;
 
   const createMap = () => {
