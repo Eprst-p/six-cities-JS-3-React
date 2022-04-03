@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import {Fragment, useState, FormEvent, ChangeEvent, useRef} from "react";
+import {Fragment, useState, FormEvent, ChangeEvent, useRef, memo} from "react";
 import {NewCommentType, CommentData} from "../../types/comment-type";
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {pushCommentAction, fetchCommentsAction} from '../../store/api-actions';
@@ -119,4 +119,4 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   );
 }
 
-export default PropretyFormReview;
+export default memo(PropretyFormReview);

@@ -9,7 +9,7 @@ import {getChosenOffer, getSortedOffers} from '../../store/selectors';
 import {Variant} from '../../settings/card-variants';
 import {MapVariant} from '../../settings/map-settings';
 import {offerTypes, offerType} from '../../types/offer-types';
-import React from 'react';
+import {memo, useCallback } from 'react';
 
 
 type PlacesAndMapProps = {
@@ -22,12 +22,11 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
   const sortedOffers = useAppSelector(getSortedOffers);
   const dispatch = useAppDispatch();
 
-  const handlerMouseEnterCard = React.useCallback((id: number) => dispatch(chooseOfferID(id)), []);
-  const handlerMouseLeaveCard = React.useCallback(() => dispatch(chooseOfferID(0)), []);
-  const handlerBookmarkClick = React.useCallback((offer:offerType) => {
+  const handlerMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
+  const handlerBookmarkClick = useCallback((offer:offerType) => {
     dispatch(changeFavoritesAction(offer))
     .then(() => dispatch(fetchOffersAction()));
-  }, []);
+  }, [dispatch]);
 
 
   return (
@@ -43,8 +42,8 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
                 key={`place-card-${location.id}`}
                 variant={Variant.PlaceCard}
                 offer={location}
-                handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
-                handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
+                handlerMouseEnterCard={() => handlerMouseOverCard(location.id)}
+                handlerMouseLeaveCard={() => handlerMouseOverCard()}
                 handlerBookmarkClick={() => handlerBookmarkClick(location)}
               />))
           }
@@ -59,8 +58,4 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
   );
 }
 
-function equalProps(prevProps:PlacesAndMapProps, nextProps:PlacesAndMapProps) {
-  return prevProps.offers === nextProps.offers
-};
-
-export default React.memo(PlacesAndMap, equalProps);
+export default memo(PlacesAndMap);

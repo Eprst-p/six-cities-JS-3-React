@@ -20,7 +20,6 @@ function PropretyScreen(): JSX.Element {
   const {id} = useParams();
   const currentId = Number(id);
   const currentOffer = useAppSelector(getOffer);
-  console.log(currentOffer);
   const offersNearBy = useAppSelector(getOffersNearBy);
   const comments = useAppSelector(getComments);
   const dispatch = useAppDispatch();
@@ -37,7 +36,7 @@ function PropretyScreen(): JSX.Element {
       .then(() => dispatch(fetchOfferAction(currentId)))
       .then(() => setFavoriteStatus(!favoriteStatus));
     }
-  }, [favoriteStatus, currentOffer, currentId]);
+  }, [favoriteStatus, currentOffer, currentId, dispatch]);
 
 
   useEffect(() => {
@@ -45,13 +44,13 @@ function PropretyScreen(): JSX.Element {
       dispatch(fetchOfferAction(currentId));
       dispatch(fetchOffersNearByAction(currentId));
     }
-  }, [currentOffer, currentId]);
+  }, [currentOffer, currentId, dispatch]);
 
   useEffect(() => {
     if (currentOffer === undefined || currentOffer.id !== currentId) {
       dispatch(fetchCommentsAction(currentId));
     }
-  }, [comments]);
+  }, [comments, dispatch, currentId, currentOffer]);
 
 
   if (!currentOffer || currentOffer.id !== currentId) {
@@ -78,7 +77,7 @@ function PropretyScreen(): JSX.Element {
         <div className="property__container container">
           <div className="property__wrapper">
             {
-              currentOffer?.isPremium === true
+              currentOffer?.isPremium
               ?
               <div className="property__mark">
                 <span>Premium</span>

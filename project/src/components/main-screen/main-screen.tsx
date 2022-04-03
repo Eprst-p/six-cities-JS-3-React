@@ -4,17 +4,16 @@ import EmptyPlaces from './empty-places';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import { changeCity } from '../../store/interface-process/interface-process';
 import {getOffersForCity, getCities, getCity} from '../../store/selectors';
-import React from 'react';
+import {memo, useCallback} from 'react';
 
 
 function MainScreen(): JSX.Element {
   const cities = useAppSelector(getCities);
   const newCity = useAppSelector(getCity);
   const offersForCity = useAppSelector(getOffersForCity);
-
   const dispatch = useAppDispatch();
 
-  const handlerOnCityClick = React.useCallback((city: string) =>dispatch(changeCity(city)), []);
+  const handlerOnCityClick = useCallback((city: string) =>dispatch(changeCity(city)), [dispatch]);
 
   return (
     <main className={`page__main page__main--index ${offersForCity.length === 0 ? 'page__main--index-empty' : ''}`}>
@@ -49,4 +48,4 @@ function MainScreen(): JSX.Element {
   );
 }
 
-export default MainScreen;
+export default memo(MainScreen);
