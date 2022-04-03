@@ -1,13 +1,11 @@
-//import {createSelector} from '@reduxjs/toolkit';
 import {State} from '../types/state'
 import {SortOption} from '../settings/sort-options';
 import {sortByLowerPrice, sortByHigherPrice, sortByTopRate} from '../components/main-screen/sort-variants';
+import {createSelector} from 'reselect';
 
-const getOffersForCity = (state:State) => state.offers.filter((offer) => offer.city.name === state.city);
-const getChosenOffer = (state:State) => getOffersForCity(state).find((offer) => offer.id === state.chosenOfferID);
 
-const getSortedOffers = (state:State) => {
-  switch (state.sortOption) {
+export const getSortedOffers = (state:State) => {
+  switch (state.INTERFACE.sortOption) {
     case SortOption.PriceHigh:
       return getOffersForCity(state).sort(sortByHigherPrice);
     case SortOption.PriceLow:
@@ -19,4 +17,23 @@ const getSortedOffers = (state:State) => {
   }
 };
 
-export {getOffersForCity, getChosenOffer, getSortedOffers};
+export const getOffer = (state:State) => state.DATA.offer;
+export const getOffers = (state:State) => state.DATA.offers;
+export const getOffersNearBy = (state:State) => state.DATA.offersNearBy;
+export const getComments = (state:State) => state.DATA.comments;
+export const getFavorites = (state:State) => state.DATA.favorites;
+export const getIsDataLoaded = (state:State) => state.DATA.isDataLoaded;
+
+export const getCities = (state:State) => state.INTERFACE.cities;
+export const getCity = (state:State) => state.INTERFACE.city;
+export const getSortOption = (state:State) => state.INTERFACE.sortOption;
+export const getIsFormDisabled = (state:State) => state.INTERFACE.isFormDisabled;
+export const getChosenOfferID = (state:State) => state.INTERFACE.chosenOfferID;
+//export const getCitiesMemo = createSelector(getCities, cities => cities);
+//export const getCityMemo = createSelector(getCity, city => city);
+//export const getOffersForCityMemo = createSelector(getOffersForCity, offers => offers);
+export const getOffersForCity = createSelector(getOffers, getCity, (offers, city) => offers.filter((offer) => offer.city.name === city));
+export const getChosenOffer = createSelector(getOffersForCity, getChosenOfferID, (offers, chosenId) => offers.find((offer) => offer.id === chosenId));
+
+export const getAuthStatus = (state:State) => state.USER.authorizationStatus;
+export const getUserEmail = (state:State) => state.USER.userEmail;

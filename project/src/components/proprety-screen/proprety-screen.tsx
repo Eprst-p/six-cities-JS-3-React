@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';
@@ -7,41 +8,53 @@ import Map from '../map/map';
 import {Variant} from '../../settings/card-variants'
 import {MapVariant} from '../../settings/map-settings';
 import {useParams} from 'react-router-dom';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
-import {fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
+import {changeFavoritesAction, fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status'
+import {getAuthStatus, getOffer, getOffersNearBy, getComments} from '../../store/selectors';
+import React from 'react';
 
 
 function PropretyScreen(): JSX.Element {
-  const offer = useAppSelector((state) => state.offer);
-  const offersNearBy = useAppSelector((state) => state.offersNearBy);
-  const comments = useAppSelector((state) => state.comments);
   const {id} = useParams();
   const currentId = Number(id);
+  const currentOffer = useAppSelector(getOffer);
+  console.log(currentOffer);
+  const offersNearBy = useAppSelector(getOffersNearBy);
+  const comments = useAppSelector(getComments);
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(getAuthStatus);
+  const [favoriteStatus, setFavoriteStatus] = useState(currentOffer?.isFavorite)
   const apartmentFeatures = [
-    offer?.type,
-    `${offer?.bedrooms} Bedrooms`,
-    `Max ${offer?.maxAdults} adults`,
+    currentOffer?.type,
+    `${currentOffer?.bedrooms} Bedrooms`,
+    `Max ${currentOffer?.maxAdults} adults`,
   ];
+  const handlerBookmarkClick = React.useCallback(() => {
+    if(currentOffer) {
+      dispatch(changeFavoritesAction(currentOffer))
+      .then(() => dispatch(fetchOfferAction(currentId)))
+      .then(() => setFavoriteStatus(!favoriteStatus));
+    }
+  }, [favoriteStatus, currentOffer, currentId]);
+
 
   useEffect(() => {
-    if (offer === undefined || offer.id !== currentId) {
+    if(currentOffer === undefined || currentOffer.id !== currentId) {
       dispatch(fetchOfferAction(currentId));
       dispatch(fetchOffersNearByAction(currentId));
     }
-  }, [offer]);
+  }, [currentOffer, currentId]);
 
   useEffect(() => {
-    if (offer === undefined || offer.id !== currentId) {
+    if (currentOffer === undefined || currentOffer.id !== currentId) {
       dispatch(fetchCommentsAction(currentId));
     }
   }, [comments]);
 
 
-  if (!offer || offer.id !== currentId) {
+  if (!currentOffer || currentOffer.id !== currentId) {
     return (
       <LoadingScreen />
     );
@@ -53,7 +66,7 @@ function PropretyScreen(): JSX.Element {
         <div className="property__gallery-container container">
           <div className="property__gallery">
             {
-              offer?.images.map((photo) =>
+              currentOffer?.images.map((photo) =>
                 (
                   <div className="property__image-wrapper" key={photo}>
                     <img className="property__image" src={photo} alt="studio" key={photo} />
@@ -65,7 +78,7 @@ function PropretyScreen(): JSX.Element {
         <div className="property__container container">
           <div className="property__wrapper">
             {
-              offer?.isPremium === true
+              currentOffer?.isPremium === true
               ?
               <div className="property__mark">
                 <span>Premium</span>
@@ -74,9 +87,13 @@ function PropretyScreen(): JSX.Element {
             }
             <div className="property__name-wrapper">
               <h1 className="property__name">
-                {offer?.title}
+                {currentOffer?.title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
+              <button
+                className={`property__bookmark-button button ${favoriteStatus ? 'property__bookmark-button--active' : ''}`}
+                type="button"
+                onClick={() => handlerBookmarkClick()}
+              >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
                 </svg>
@@ -88,7 +105,7 @@ function PropretyScreen(): JSX.Element {
                 <span style={{width: '80%'}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="property__rating-value rating__value">{offer?.rating}</span>
+              <span className="property__rating-value rating__value">{currentOffer?.rating}</span>
             </div>
             <ul className="property__features">
               {
@@ -101,14 +118,14 @@ function PropretyScreen(): JSX.Element {
               }
             </ul>
             <div className="property__price">
-              <b className="property__price-value">&euro;{offer?.price}</b>
+              <b className="property__price-value">&euro;{currentOffer?.price}</b>
               <span className="property__price-text">&nbsp;night</span>
             </div>
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
                 {
-                  offer?.goods.map((item) =>
+                  currentOffer?.goods.map((item) =>
                     (
                       <li className="property__inside-item" key={item}>
                         {item}
@@ -118,7 +135,7 @@ function PropretyScreen(): JSX.Element {
               </ul>
             </div>
             <div className="property__host">
-              <PropretyHost offer={offer} />
+              <PropretyHost offer={currentOffer} />
             </div>
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments?.length}</span></h2>
@@ -142,7 +159,7 @@ function PropretyScreen(): JSX.Element {
           </div>
         </div>
         <section className="property__map map">
-          <Map chosenOffer={offer} offers={offersNearBy} variant={MapVariant.RoomMap} />
+          <Map chosenOffer={currentOffer} offers={offersNearBy} variant={MapVariant.RoomMap} />
         </section>
       </section>
       <div className="container">

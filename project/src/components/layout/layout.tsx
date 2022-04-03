@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {Link, Outlet, useLocation} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import NavLinkProfile from './nav-link-profile';
@@ -42,7 +43,7 @@ pagesDifferences
 
 function Layout(): JSX.Element {
   const currentLocation = useLocation().pathname;
-  const pageSettings = pagesDifferences.get(currentLocation) || pagesDifferences.get('Default');
+  const pageSettings = useMemo(() => pagesDifferences.get(currentLocation) || pagesDifferences.get('Default'), [currentLocation]);
 
   return (
       <div className={pageSettings?.outerDivClass}>

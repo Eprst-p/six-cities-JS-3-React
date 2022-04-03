@@ -3,7 +3,10 @@ import {api} from '../store';
 import {store} from '../store';
 import {offerTypes, offerType} from '../types/offer-types';
 import {CommentType, NewCommentType, CommentData} from '../types/comment-type';
-import {loadOfffers, loadFavorites, loadComments, loadOffer, loadOffersNearBy, setAuthorizationStatus, saveUserEmail, redirectToRoute, formSubmit} from './action';
+import {redirectToRoute} from './action';
+import {loadOfffers, loadOffer, loadComments, loadFavorites, loadOffersNearBy} from './data-process/data-process';
+import {setAuthorizationStatus, saveUserEmail} from './user-process/user-process';
+import {formSubmit} from './interface-process/interface-process';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute} from '../settings/api-routes';
 import {generatePath} from "react-router";
@@ -12,6 +15,7 @@ import {UserData} from '../types/user-data';
 import {AuthorizationStatus} from '../settings/auth-status';
 import {errorHandle} from '../services/error-handle';
 import {AppRoute} from '../settings/app-routes';
+import {Favorite} from '../settings/favorite-status';
 
 
 const setPromiseWaiter = (timer = 500) => new Promise(resolve => setTimeout(resolve, timer));
@@ -59,7 +63,7 @@ export const fetchFavoritesAction = createAsyncThunk(
   'data/loadFavorites',
   async () => {
     try {
-      const {data} = await api.get<offerTypes>(APIRoute.Favorite);
+      const {data} = await api.get<offerTypes>(generatePath(APIRoute.Favorite));
       await setPromiseWaiter();
       store.dispatch(loadFavorites(data));
     } catch (error) {
@@ -129,10 +133,23 @@ export const pushCommentAction = createAsyncThunk(
   async (newComment: CommentData) => {
     try {
       await api.post<NewCommentType>(generatePath(APIRoute.Comments, {id: `${newComment.id}`}), newComment.newComment);
+      await setPromiseWaiter();
       store.dispatch(formSubmit(false));
     } catch (error) {
       errorHandle(error);
       store.dispatch(formSubmit(false));
+    }
+  },
+);
+
+export const changeFavoritesAction = createAsyncThunk(
+  'data/changeFavorite',
+  async (offer: offerType) => {
+    const favoriteStatus = offer.isFavorite;
+    try {
+      await api.post<offerType>(generatePath(APIRoute.FavoriteHotel, {id: `${offer.id}`, status: `${favoriteStatus ? Favorite.Remove : Favorite.Add}` }), offer);
+    } catch (error) {
+      errorHandle(error);
     }
   },
 );

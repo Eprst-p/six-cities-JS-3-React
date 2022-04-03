@@ -1,22 +1,23 @@
 /* eslint-disable no-console */
 import PlacesAndMap from './places-and-map';
+import EmptyPlaces from './empty-places';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {changeCity} from '../../store/action';
-import {getOffersForCity} from '../../store/selectors';
+import { changeCity } from '../../store/interface-process/interface-process';
+import {getOffersForCity, getCities, getCity} from '../../store/selectors';
+import React from 'react';
 
 
 function MainScreen(): JSX.Element {
-  const cities = useAppSelector((state) => state.cities);
-  const newCity = useAppSelector((state) => state.city);
+  const cities = useAppSelector(getCities);
+  const newCity = useAppSelector(getCity);
   const offersForCity = useAppSelector(getOffersForCity);
+
   const dispatch = useAppDispatch();
 
-  const handlerOnCityClick = (city: string) => {
-    dispatch(changeCity(city));
-  };
+  const handlerOnCityClick = React.useCallback((city: string) =>dispatch(changeCity(city)), []);
 
   return (
-    <main className="page__main page__main--index">
+    <main className={`page__main page__main--index ${offersForCity.length === 0 ? 'page__main--index-empty' : ''}`}>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
@@ -36,7 +37,13 @@ function MainScreen(): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        <PlacesAndMap offers={offersForCity} city={newCity} />
+        {
+          offersForCity.length === 0
+          ?
+          <EmptyPlaces city={newCity} />
+          :
+          <PlacesAndMap offers={offersForCity} city={newCity} />
+        }
       </div>
     </main>
   );

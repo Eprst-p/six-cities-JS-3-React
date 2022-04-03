@@ -11,11 +11,12 @@ import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {useAppSelector} from '../../hooks/redux-hooks';
+import {getIsDataLoaded, getAuthStatus} from '../../store/selectors';
 
 
 function App(): JSX.Element {
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isDataLoaded = useAppSelector(getIsDataLoaded);
+  const authStatus = useAppSelector(getAuthStatus);
 
   if (!isDataLoaded) {
     return (

@@ -1,7 +1,5 @@
 import {offerTypes} from '../../types/offer-types';
 
-const getFavorites = (allOffers:offerTypes):offerTypes => allOffers.filter((offer) => offer.isPremium);
-
 const getFavoriteCities = (allFavorites:offerTypes) => {
   const favoriteCities:string[] = [];
   allFavorites.forEach((offer) => {
@@ -14,4 +12,4 @@ const getFavoriteCities = (allFavorites:offerTypes) => {
 
 const getLocationsPerCity = (allFavorites:offerTypes, city:string) => allFavorites.filter((favoriteOffer) => favoriteOffer.city.name === city);
 
-export {getFavorites, getFavoriteCities, getLocationsPerCity};
+export {getFavoriteCities, getLocationsPerCity};

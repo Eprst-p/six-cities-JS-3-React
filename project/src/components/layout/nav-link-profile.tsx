@@ -2,17 +2,17 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {logoutAction} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../settings/auth-status'
+import {AuthorizationStatus} from '../../settings/auth-status';
+import {getUserEmail, getAuthStatus} from '../../store/selectors';
+import React from 'react';
 
 
 function NavLinkProfile(): JSX.Element {
-  const userEmail = useAppSelector((state) => state.userEmail);
-  const authStatus =  useAppSelector((state) => state.authorizationStatus);
+  const userEmail = useAppSelector(getUserEmail);
+  const authStatus =  useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
 
-  const handlerSignOutClick = () => {
-    dispatch(logoutAction());
-  };
+  const handlerSignOutClick = React.useCallback(() =>dispatch(logoutAction()), []);
 
   return (
     <nav className="header__nav">
