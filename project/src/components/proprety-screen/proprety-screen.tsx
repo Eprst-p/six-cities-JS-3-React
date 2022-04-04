@@ -13,7 +13,6 @@ import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {changeFavoritesAction, fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status'
 import {getAuthStatus, getComments, getCommentsFinally, getOffer, getOffersNearBy} from '../../store/selectors';
-import throttle from 'lodash.throttle'
 
 
 function PropretyScreen(): JSX.Element {
@@ -31,7 +30,6 @@ function PropretyScreen(): JSX.Element {
     `${currentOffer?.bedrooms} Bedrooms`,
     `Max ${currentOffer?.maxAdults} adults`,
   ];
-  //const testThrottle = useCallback(throttle(() => console.log('asdasdasd'), 2000), []);
 
   const handlerMouseOverCard = () => null;
 

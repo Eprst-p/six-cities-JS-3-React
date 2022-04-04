@@ -5,8 +5,9 @@ import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
 import {generatePath} from "react-router";
 import React, { useCallback, useMemo } from 'react';
-import { useAppDispatch } from '../../hooks/redux-hooks';
-import { changeFavoritesAction, fetchFavoritesAction, fetchOffersAction, fetchOffersNearByAction } from '../../store/api-actions';
+import {useAppDispatch} from '../../hooks/redux-hooks';
+import {changeFavoritesAction, fetchFavoritesAction, fetchOffersAction, fetchOffersNearByAction } from '../../store/api-actions';
+import throttle from 'lodash.throttle'
 
 
 type CardProps = {
@@ -59,8 +60,8 @@ function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
   const favoriteStatus = offer.isFavorite;
   const dispatch = useAppDispatch();
 
-  const handlerMouseEnterCard = useCallback(() => handlerMouseOverCard(offer.id), [handlerMouseOverCard, offer.id]);
-  const handlerMouseLeaveCard = useCallback(() => handlerMouseOverCard(0), [handlerMouseOverCard]);
+  const handlerMouseEnterCard = useCallback(throttle(() => handlerMouseOverCard(offer.id), 350), [handlerMouseOverCard]);
+  const handlerMouseLeaveCard = useCallback(throttle(() => handlerMouseOverCard(0), 350), [handlerMouseOverCard]);
   const handlerBookmarkClick = useCallback(() => {
     dispatch(changeFavoritesAction(offer))
     .then(() => dispatch(fetchOffersAction()))
