@@ -4,15 +4,15 @@ import {AppRoute} from '../../settings/app-routes';
 import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
 import {generatePath} from "react-router";
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { useAppDispatch } from '../../hooks/redux-hooks';
+import { changeFavoritesAction, fetchFavoritesAction, fetchOffersAction, fetchOffersNearByAction } from '../../store/api-actions';
 
 
 type CardProps = {
   variant: Variant;
   offer: offerType;
-  handlerMouseEnterCard?: () => void;
-  handlerMouseLeaveCard?: () => void;
-  handlerBookmarkClick?: () => void;
+  handlerMouseOverCard: (id:number) => void;
 }
 
 type CardClasses = {
@@ -54,9 +54,19 @@ cardDifferences
     }
   );
 
-function Card({variant, offer, handlerMouseEnterCard, handlerMouseLeaveCard, handlerBookmarkClick} : CardProps): JSX.Element {
+function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
   const cardSettings = useMemo(() => cardDifferences.get(variant), [variant]);
   const favoriteStatus = offer.isFavorite;
+  const dispatch = useAppDispatch();
+
+  const handlerMouseEnterCard = useCallback(() => handlerMouseOverCard(offer.id), [handlerMouseOverCard, offer.id]);
+  const handlerMouseLeaveCard = useCallback(() => handlerMouseOverCard(0), [handlerMouseOverCard]);
+  const handlerBookmarkClick = useCallback(() => {
+    dispatch(changeFavoritesAction(offer))
+    .then(() => dispatch(fetchOffersAction()))
+    .then(() => dispatch(fetchFavoritesAction()))
+    .then(() => dispatch(fetchOffersNearByAction(offer.id)));
+  }, [dispatch, offer]);
 
   return (
     <article className={cardSettings?.articleClass} onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >
