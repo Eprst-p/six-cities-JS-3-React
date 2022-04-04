@@ -12,7 +12,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {changeFavoritesAction, fetchCommentsAction, fetchOfferAction, fetchOffersAction, fetchOffersNearByAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status'
-import {getAuthStatus, getOffer, getOffersNearBy, getComments} from '../../store/selectors';
+import {getAuthStatus, getComments, getCommentsFinally, getOffer, getOffersNearBy} from '../../store/selectors';
 import throttle from 'lodash.throttle'
 import {offerType} from '../../types/offer-types';
 
@@ -22,7 +22,8 @@ function PropretyScreen(): JSX.Element {
   const currentId = Number(id);
   const currentOffer = useAppSelector(getOffer);
   const offersNearBy = useAppSelector(getOffersNearBy);
-  const comments = useAppSelector(getComments);
+  const comments = useAppSelector(getCommentsFinally);
+  const allComments = useAppSelector(getComments);
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthStatus);
   const [favoriteStatus, setFavoriteStatus] = useState(currentOffer?.isFavorite)
@@ -146,10 +147,10 @@ function PropretyScreen(): JSX.Element {
               <PropretyHost offer={currentOffer} />
             </div>
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments?.length}</span></h2>
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{allComments.length}</span></h2>
               <ul className="reviews__list">
                 {
-                  comments?.map((comment) =>
+                  comments.map((comment) =>
                     (
                     <li className="reviews__item" key={`review-${comment.id}`}>
                       <PropretyReview key={`review-${comment.id}`} comment={comment}/>

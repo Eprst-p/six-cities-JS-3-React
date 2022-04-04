@@ -2,6 +2,8 @@ import {State} from '../types/state'
 import {SortOption} from '../settings/sort-options';
 import {sortByLowerPrice, sortByHigherPrice, sortByTopRate} from '../components/main-screen/sort-variants';
 import {createSelector} from 'reselect';
+import {sortByNewerDate} from '../components/proprety-screen/sort-commets';
+import {CommentsAmount} from '../settings/comments-settings';
 
 
 export const getSortedOffers = (state:State) => {
@@ -21,6 +23,17 @@ export const getOffer = (state:State) => state.DATA.offer;
 export const getOffers = (state:State) => state.DATA.offers;
 export const getOffersNearBy = (state:State) => state.DATA.offersNearBy;
 export const getComments = (state:State) => state.DATA.comments;
+export const getSortedComments = createSelector(getComments, (comments) => {
+  const copiedComments = comments.slice();
+  return copiedComments.sort(sortByNewerDate);
+});
+export const getCommentsFinally = createSelector(getSortedComments, (comments) => {
+  if (comments.length > CommentsAmount.Max) {
+    return comments.slice(0, CommentsAmount.Max)
+  }
+  return comments;
+});
+
 export const getFavorites = (state:State) => state.DATA.favorites;
 export const getFavoriteCities = createSelector(getFavorites, (favorites) => {
   const favoriteCities:string[] = [];
