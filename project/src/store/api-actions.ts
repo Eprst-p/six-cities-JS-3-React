@@ -150,6 +150,7 @@ export const changeFavoritesAction = createAsyncThunk(
       await api.post<offerType>(generatePath(APIRoute.FavoriteHotel, {id: `${offer.id}`, status: `${favoriteStatus ? Favorite.Remove : Favorite.Add}` }), offer);
     } catch (error) {
       errorHandle(error);
+      store.dispatch(redirectToRoute(AppRoute.Login));
     }
   },
 );

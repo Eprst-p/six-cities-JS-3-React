@@ -43,7 +43,7 @@ pagesDifferences
 
 function Layout(): JSX.Element {
   const currentLocation = useLocation().pathname;
-  const pageSettings = useMemo(() => pagesDifferences.get(currentLocation || 'Default'), [currentLocation]);
+  const pageSettings = useMemo(() => pagesDifferences.get(currentLocation) || pagesDifferences.get('Default'), [currentLocation]);
 
   return (
       <div className={pageSettings?.outerDivClass}>

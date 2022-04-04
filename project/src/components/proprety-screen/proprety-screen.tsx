@@ -10,10 +10,11 @@ import {MapVariant} from '../../settings/map-settings';
 import {useParams} from 'react-router-dom';
 import {useCallback, useEffect, useState} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
-import {changeFavoritesAction, fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
+import {changeFavoritesAction, fetchCommentsAction, fetchOfferAction, fetchOffersAction, fetchOffersNearByAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status'
 import {getAuthStatus, getOffer, getOffersNearBy, getComments} from '../../store/selectors';
 import throttle from 'lodash.throttle'
+import {offerType} from '../../types/offer-types';
 
 
 function PropretyScreen(): JSX.Element {
@@ -32,7 +33,13 @@ function PropretyScreen(): JSX.Element {
   ];
   //const testThrottle = useCallback(throttle(() => console.log('asdasdasd'), 2000), []);
 
-  const handlerBookmarkClick = useCallback(() => {
+  const handlerBookmarkClick = useCallback((offer:offerType) => {
+    dispatch(changeFavoritesAction(offer))
+    .then(() => dispatch(fetchOffersAction()))
+    .then(() => dispatch(fetchOffersNearByAction(currentId)));
+  }, [dispatch, currentId]);
+
+  const handlerBigBookmarkClick = useCallback(() => {
     if(currentOffer) {
       dispatch(changeFavoritesAction(currentOffer))
       .then(() => dispatch(fetchOfferAction(currentId)))
@@ -93,7 +100,7 @@ function PropretyScreen(): JSX.Element {
               <button
                 className={`property__bookmark-button button ${favoriteStatus ? 'property__bookmark-button--active' : ''}`}
                 type="button"
-                onClick={() => handlerBookmarkClick()}
+                onClick={() => handlerBigBookmarkClick()}
               >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
@@ -103,7 +110,7 @@ function PropretyScreen(): JSX.Element {
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{width: '80%'}}></span>
+                <span style={{width: `${Math.round(currentOffer.rating)*20}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="property__rating-value rating__value">{currentOffer?.rating}</span>
@@ -174,6 +181,7 @@ function PropretyScreen(): JSX.Element {
                     key={`place-card-${location.id}`}
                     variant={Variant.NearPlaceCard}
                     offer={location}
+                    handlerBookmarkClick={() => handlerBookmarkClick(location)}
                   />
                 </li>)
                 )
