@@ -8,12 +8,12 @@ import Map from '../map/map';
 import {Variant} from '../../settings/card-variants'
 import {MapVariant} from '../../settings/map-settings';
 import {useParams} from 'react-router-dom';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {changeFavoritesAction, fetchCommentsAction, fetchOfferAction, fetchOffersNearByAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status'
 import {getAuthStatus, getOffer, getOffersNearBy, getComments} from '../../store/selectors';
-import React from 'react';
+import throttle from 'lodash.throttle'
 
 
 function PropretyScreen(): JSX.Element {
@@ -30,7 +30,9 @@ function PropretyScreen(): JSX.Element {
     `${currentOffer?.bedrooms} Bedrooms`,
     `Max ${currentOffer?.maxAdults} adults`,
   ];
-  const handlerBookmarkClick = React.useCallback(() => {
+  //const testThrottle = useCallback(throttle(() => console.log('asdasdasd'), 2000), []);
+
+  const handlerBookmarkClick = useCallback(() => {
     if(currentOffer) {
       dispatch(changeFavoritesAction(currentOffer))
       .then(() => dispatch(fetchOfferAction(currentId)))

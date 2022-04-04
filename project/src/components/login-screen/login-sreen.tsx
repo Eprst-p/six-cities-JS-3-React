@@ -1,15 +1,25 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {useRef, FormEvent} from 'react';
-import {useAppDispatch} from '../../hooks/redux-hooks';
+import {useRef, FormEvent, useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {getAuthStatus} from '../../store/selectors';
+import {AuthorizationStatus} from '../../settings/auth-status';
 
 
 function LoginScreen(): JSX.Element {
+  const authStatus = useAppSelector(getAuthStatus);
+  const navigate =  useNavigate();
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [navigate, authStatus]);
+
+  const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
