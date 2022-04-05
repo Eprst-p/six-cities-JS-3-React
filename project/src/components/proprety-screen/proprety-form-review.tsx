@@ -1,10 +1,11 @@
-import {Fragment, useState, FormEvent, ChangeEvent, useRef, memo} from "react";
+import {Fragment, useState, FormEvent, ChangeEvent, useRef, memo, createRef} from "react";
 import {NewCommentType, CommentData} from "../../types/comment-type";
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {pushCommentAction, fetchCommentsAction} from '../../store/api-actions';
 import {CommentLength} from '../../settings/comments-settings';
 import {formSubmit} from '../../store/interface-process/interface-process';
 import {getIsFormDisabled} from "../../store/selectors";
+import throttle from 'lodash.throttle'
 
 
 const starsValues = [
@@ -36,21 +37,27 @@ type PropretyFormReviewProps = {
 
 function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
-  const commentTextRef = textAreaRef.current !== null ? textAreaRef.current.value : '';
+  const starInputRefs = starsValues.map(() => createRef<HTMLInputElement>());
+  const [commentText, setCommentText] = useState('');
   const [rating, setRating] = useState(0);
-  const isButtonDisabled: boolean = rating === 0 || commentTextRef.length < CommentLength.Min || commentTextRef.length > CommentLength.Max;
+  const isButtonDisabled: boolean = rating === 0 || commentText.length < CommentLength.Min || commentText.length > CommentLength.Max;
   const dispatch = useAppDispatch();
   const isFormDisabled = useAppSelector(getIsFormDisabled);
-
 
   const handleStarsChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = +evt.target.value;
     setRating(value);
   };
+
+  const handleTextAreaInput = throttle(() => {
+    const commentTextRef = textAreaRef.current !== null ? textAreaRef.current.value : '';
+    setCommentText(commentTextRef);
+  }, 1000)
+
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const newComment:NewCommentType = {
-      comment: commentTextRef,
+      comment: commentText,
       rating: rating,
     };
     const commentData:CommentData = {
@@ -64,6 +71,8 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
       textAreaRef.current.value = '';
     }
     setRating(0);
+    setCommentText('');
+    starInputRefs.forEach((starRef) => starRef.current !== null ? starRef.current.checked = false : null);
   };
 
   return (
@@ -76,7 +85,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
-          starsValues.map((star) =>
+          starsValues.map((star, i) =>
             (
               <Fragment key={star.value}>
                 <input
@@ -87,7 +96,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
                   type="radio"
                   onChange={handleStarsChange}
                   disabled={isFormDisabled}
-                  checked={false}
+                  ref={starInputRefs[i]}
                 />
                 <label htmlFor={`${star.value}-stars`} className="reviews__rating-label form__rating-label" title={star.title}>
                   <svg className="form__star-image" width="37" height="33" >
@@ -104,6 +113,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        onInput={handleTextAreaInput}
         ref={textAreaRef}
         disabled={isFormDisabled}
         >

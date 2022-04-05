@@ -1,5 +1,5 @@
 export enum CommentLength {
-  Min = 50,
+  Min = 5 ,
   Max = 300,
 }
 
