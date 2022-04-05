@@ -12,7 +12,7 @@ function NavLinkProfile(): JSX.Element {
   const authStatus =  useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
 
-  const handlerSignOutClick = useCallback(() =>dispatch(logoutAction()), [dispatch]);
+  const handleSignOutClick = useCallback(() =>dispatch(logoutAction()), [dispatch]);
 
   return (
     <nav className="header__nav">
@@ -28,7 +28,7 @@ function NavLinkProfile(): JSX.Element {
           {
             authStatus===AuthorizationStatus.Auth
             ?
-            <Link className="header__nav-link" to={AppRoute.Main} title={AppRoute.Main} onClick={handlerSignOutClick}>
+            <Link className="header__nav-link" to={AppRoute.Main} title={AppRoute.Main} onClick={handleSignOutClick}>
               <span className="header__signout">Sign out</span>
             </Link>
             :

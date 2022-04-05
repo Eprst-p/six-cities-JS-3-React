@@ -9,14 +9,14 @@ function SortForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const [isOpened, setOpenedStatus] = useState(false);
 
-  const handlerOptionClick = useCallback((evt:MouseEvent<HTMLLIElement>) => dispatch(changeSortOption(evt.currentTarget.id)), [dispatch]);
-  const handlerSortFormCLick = useCallback(() => setOpenedStatus(!isOpened), [isOpened]);
+  const handleOptionClick = useCallback((evt:MouseEvent<HTMLLIElement>) => dispatch(changeSortOption(evt.currentTarget.id)), [dispatch]);
+  const handleSortFormCLick = useCallback(() => setOpenedStatus(!isOpened), [isOpened]);
 
   const sortOption = useAppSelector(getSortOption);
   const placesOptions = Array.from(Object.values(SortOption));
 
   return (
-    <form className="places__sorting" action="#" method="get" onClick={handlerSortFormCLick}>
+    <form className="places__sorting" action="#" method="get" onClick={handleSortFormCLick}>
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0}>
         {sortOption}
@@ -28,7 +28,7 @@ function SortForm(): JSX.Element {
         {
           placesOptions.map((option) =>
             (
-              <li id={option} className={`places__option ${sortOption === option ? 'places__option--active' : ''} `} tabIndex={0} onClick={handlerOptionClick} key={option}>{option}</li>
+              <li id={option} className={`places__option ${sortOption === option ? 'places__option--active' : ''} `} tabIndex={0} onClick={handleOptionClick} key={option}>{option}</li>
             ),
           )
         }

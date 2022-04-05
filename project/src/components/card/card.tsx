@@ -12,7 +12,7 @@ import throttle from 'lodash.throttle'
 type CardProps = {
   variant: Variant;
   offer: offerType;
-  handlerMouseOverCard: (id:number) => void;
+  handleMouseOverCard: (id:number) => void;
 }
 
 type CardClasses = {
@@ -54,14 +54,14 @@ cardDifferences
     }
   );
 
-function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
+function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
   const cardSettings = useMemo(() => cardDifferences.get(variant), [variant]);
   const favoriteStatus = offer.isFavorite;
   const dispatch = useAppDispatch();
 
-  const handlerMouseEnterCard = useCallback(throttle(() => handlerMouseOverCard(offer.id), 350), [handlerMouseOverCard]);
-  const handlerMouseLeaveCard = useCallback(throttle(() => handlerMouseOverCard(0), 350), [handlerMouseOverCard]);
-  const handlerBookmarkClick = useCallback(() => {
+  const handleMouseEnterCard = useCallback(throttle(() => handleMouseOverCard(offer.id), 350), [handleMouseOverCard]);
+  const handleMouseLeaveCard = useCallback(throttle(() => handleMouseOverCard(0), 350), [handleMouseOverCard]);
+  const handleBookmarkClick = useCallback(() => {
     dispatch(changeFavoritesAction(offer))
     .then(() => dispatch(fetchOffersAction()))
     .then(() => dispatch(fetchFavoritesAction()))
@@ -69,7 +69,7 @@ function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
   }, [dispatch, offer]);
 
   return (
-    <article className={cardSettings?.articleClass} onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >
+    <article className={cardSettings?.articleClass} onMouseEnter={handleMouseEnterCard} onMouseLeave={handleMouseLeaveCard} >
       {
         offer.isPremium
         ?
@@ -92,7 +92,7 @@ function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
           <button
             className={`place-card__bookmark-button button ${favoriteStatus ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
-            onClick={handlerBookmarkClick}
+            onClick={handleBookmarkClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

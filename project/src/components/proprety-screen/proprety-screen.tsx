@@ -30,9 +30,9 @@ function PropretyScreen(): JSX.Element {
     `Max ${currentOffer?.maxAdults} adults`,
   ];
 
-  const handlerMouseOverCard = () => null;
+  const handleMouseOverCard = () => null;
 
-  const handlerBigBookmarkClick = useCallback(() => {
+  const handleBigBookmarkClick = useCallback(() => {
     if(currentOffer) {
       dispatch(changeFavoritesAction(currentOffer))
       .then(() => dispatch(fetchOfferAction(currentId)))
@@ -91,7 +91,7 @@ function PropretyScreen(): JSX.Element {
               <button
                 className={`property__bookmark-button button ${favoriteStatus ? 'property__bookmark-button--active' : ''}`}
                 type="button"
-                onClick={() => handlerBigBookmarkClick()}
+                onClick={() => handleBigBookmarkClick()}
               >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
@@ -172,7 +172,7 @@ function PropretyScreen(): JSX.Element {
                     key={`place-card-${location.id}`}
                     variant={Variant.NearPlaceCard}
                     offer={location}
-                    handlerMouseOverCard={handlerMouseOverCard}
+                    handleMouseOverCard={handleMouseOverCard}
                   />
                 </li>)
                 )

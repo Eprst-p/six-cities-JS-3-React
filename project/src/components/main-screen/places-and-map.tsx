@@ -20,7 +20,7 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
   const sortedOffers = useAppSelector(getSortedOffers);
   const dispatch = useAppDispatch();
 
-  const handlerMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
+  const handleMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
 
   return (
     <div className="cities__places-container container">
@@ -35,7 +35,7 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
                 key={`place-card-${location.id}`}
                 variant={Variant.PlaceCard}
                 offer={location}
-                handlerMouseOverCard={handlerMouseOverCard}
+                handleMouseOverCard={handleMouseOverCard}
               />))
           }
         </div>

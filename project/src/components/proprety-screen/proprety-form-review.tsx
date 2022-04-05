@@ -43,11 +43,11 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   const isFormDisabled = useAppSelector(getIsFormDisabled);
 
 
-  const handlerStarsChange = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleStarsChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = +evt.target.value;
     setRating(value);
   };
-  const handlerFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const newComment:NewCommentType = {
       comment: commentTextRef,
@@ -71,7 +71,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={handlerFormSubmit}
+      onSubmit={handleFormSubmit}
       >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -85,7 +85,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
                   value={star.value}
                   id={`${star.value}-stars`}
                   type="radio"
-                  onChange={handlerStarsChange}
+                  onChange={handleStarsChange}
                   disabled={isFormDisabled}
                   checked={false}
                 />

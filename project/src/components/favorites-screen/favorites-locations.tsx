@@ -15,7 +15,7 @@ type FavoritesLocationsProps = {
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handlerMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
+  const handleMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
 
   return (
     <>
@@ -33,7 +33,7 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
               key={`favorite-card-${location.id}`}
               variant={Variant.FavoriteCard}
               offer={location}
-              handlerMouseOverCard={handlerMouseOverCard}
+              handleMouseOverCard={handleMouseOverCard}
             />))
         }
       </div>
