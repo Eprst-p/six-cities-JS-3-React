@@ -1,10 +1,9 @@
-/* eslint-disable no-console */
 import {Fragment, useState, FormEvent, ChangeEvent, useRef, memo} from "react";
 import {NewCommentType, CommentData} from "../../types/comment-type";
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {pushCommentAction, fetchCommentsAction} from '../../store/api-actions';
-import {CommentLength} from "../../settings/comments-settings";
-import {formSubmit} from "../../store/interface-process/interface-process";
+import {CommentLength} from '../../settings/comments-settings';
+import {formSubmit} from '../../store/interface-process/interface-process';
 import {getIsFormDisabled} from "../../store/selectors";
 
 

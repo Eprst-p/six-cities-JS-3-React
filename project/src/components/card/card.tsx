@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {Variant} from '../../settings/card-variants';

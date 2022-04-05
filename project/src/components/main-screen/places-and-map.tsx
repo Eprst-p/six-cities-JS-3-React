@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Card from '../card/card';
 import SortForm from './sort-form';
 import Map from '../map/map';

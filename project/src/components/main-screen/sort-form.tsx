@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {useState, MouseEvent, memo, useCallback} from 'react';
 import {SortOption} from '../../settings/sort-options';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';

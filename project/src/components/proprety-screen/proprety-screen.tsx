@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import PropretyHost from './proprety-host';
 import PropretyReview from './proprety-review';
 import PropretyFormReview from './proprety-form-review';

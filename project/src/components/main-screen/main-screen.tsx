@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import PlacesAndMap from './places-and-map';
 import EmptyPlaces from './empty-places';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
@@ -25,7 +24,11 @@ function MainScreen(): JSX.Element {
               cities.map((city) =>
                 (
                   <li className="locations__item" key={city}>
-                    <a className="locations__item-link tabs__item" href="/#" onClick = {() => handlerOnCityClick(city)}>
+                    <a
+                      className={`locations__item-link tabs__item ${newCity === city ? 'tabs__item--active' : ''}`}
+                      href="/#"
+                      onClick = {() => handlerOnCityClick(city)}
+                    >
                       <span>{city}</span>
                     </a>
                   </li>

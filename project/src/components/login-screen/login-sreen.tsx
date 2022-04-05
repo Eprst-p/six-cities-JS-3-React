@@ -6,7 +6,7 @@ import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import {getAuthStatus, getCities} from '../../store/selectors';
 import {AuthorizationStatus} from '../../settings/auth-status';
-import {getRandomPositiveNumber} from '../../mocks/randomaizers';
+import {getRandomPositiveNumber} from '../../services/randomaizers';
 import {changeCity} from '../../store/interface-process/interface-process';
 
 

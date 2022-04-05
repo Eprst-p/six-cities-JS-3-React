@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {useEffect, useState, MutableRefObject} from 'react';
 import {offerType, offerTypes} from '../types/offer-types';
 import {Map, Marker, LayerGroup} from 'leaflet';
