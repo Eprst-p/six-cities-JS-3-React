@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
-import {generatePath} from "react-router";
+import {generatePath, useParams} from "react-router";
 import React, { useCallback, useMemo } from 'react';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {changeFavoritesAction, fetchFavoritesAction, fetchOffersAction, fetchOffersNearByAction } from '../../store/api-actions';
@@ -58,6 +58,9 @@ function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
   const cardSettings = useMemo(() => cardDifferences.get(variant), [variant]);
   const favoriteStatus = offer.isFavorite;
   const dispatch = useAppDispatch();
+  const {id} = useParams();
+  const roomId = Number(id);
+
 
   const handleMouseEnterCard = useCallback(throttle(() => handleMouseOverCard(offer.id), 350), [handleMouseOverCard]);
   const handleMouseLeaveCard = useCallback(throttle(() => handleMouseOverCard(0), 350), [handleMouseOverCard]);
@@ -65,8 +68,12 @@ function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
     dispatch(changeFavoritesAction(offer))
     .then(() => dispatch(fetchOffersAction()))
     .then(() => dispatch(fetchFavoritesAction()))
-    .then(() => dispatch(fetchOffersNearByAction(offer.id)));
-  }, [dispatch, offer]);
+    .then(() => {
+      if (variant === Variant.NearPlaceCard) {
+        dispatch(fetchOffersNearByAction(roomId));
+      }
+    })
+  }, [dispatch, offer, variant, roomId]);
 
   return (
     <article className={cardSettings?.articleClass} onMouseEnter={handleMouseEnterCard} onMouseLeave={handleMouseLeaveCard} >

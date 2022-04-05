@@ -16,6 +16,7 @@ import {AuthorizationStatus} from '../settings/auth-status';
 import {errorHandle} from '../services/error-handle';
 import {AppRoute} from '../settings/app-routes';
 import {Favorite} from '../settings/favorite-status';
+import throttle from 'lodash.throttle'
 
 
 const setPromiseWaiter = (timer = 300) => new Promise(resolve => setTimeout(resolve, timer));
@@ -67,7 +68,7 @@ export const fetchFavoritesAction = createAsyncThunk(
       await setPromiseWaiter();
       store.dispatch(loadFavorites(data));
     } catch (error) {
-      errorHandle(error);
+      throttle(() => errorHandle(error), 800);
     }
   },
 );
@@ -93,7 +94,7 @@ export const checkAuthAction = createAsyncThunk(
       store.dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
       store.dispatch(saveUserEmail(data.email))
     } catch (error) {
-      errorHandle(error);
+      throttle(() => errorHandle(error), 800);
     }
   },
 );

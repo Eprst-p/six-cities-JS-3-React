@@ -7,13 +7,12 @@ import {store} from './store';
 import {fetchOffersAction, fetchFavoritesAction, checkAuthAction} from './store/api-actions';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import throttle from 'lodash.throttle'
 
 
 store.dispatch(fetchOffersAction())
 .then(() => store.dispatch(fetchFavoritesAction()))
-.then(() => throttle(() => store.dispatch(checkAuthAction()), 1000)
-);
+.then(() => store.dispatch(checkAuthAction()));
+
 
 ReactDOM.render(
   <React.StrictMode>
