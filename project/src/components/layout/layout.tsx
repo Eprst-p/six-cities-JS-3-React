@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import {Link, Outlet, useLocation} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import NavLinkProfile from './nav-link-profile';
@@ -64,4 +64,4 @@ function Layout(): JSX.Element {
   );
 }
 
-export default Layout;
+export default memo(Layout);

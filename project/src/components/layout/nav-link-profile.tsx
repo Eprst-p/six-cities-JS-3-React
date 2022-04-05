@@ -4,7 +4,7 @@ import {useAppSelector, useAppDispatch} from '../../hooks/redux-hooks';
 import {logoutAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../settings/auth-status';
 import {getUserEmail, getAuthStatus} from '../../store/selectors';
-import React from 'react';
+import  {memo, useCallback} from 'react';
 
 
 function NavLinkProfile(): JSX.Element {
@@ -12,7 +12,7 @@ function NavLinkProfile(): JSX.Element {
   const authStatus =  useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
 
-  const handlerSignOutClick = React.useCallback(() =>dispatch(logoutAction()), []);
+  const handlerSignOutClick = useCallback(() =>dispatch(logoutAction()), [dispatch]);
 
   return (
     <nav className="header__nav">
@@ -42,4 +42,4 @@ function NavLinkProfile(): JSX.Element {
   );
 }
 
-export default NavLinkProfile;
+export default memo(NavLinkProfile);

@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {offerType} from '../../types/offer-types';
 
 type PropretyHostProps = {
@@ -41,4 +42,4 @@ function PropretyHost({offer}: PropretyHostProps): JSX.Element {
   );
 }
 
-export default PropretyHost;
+export default memo(PropretyHost);

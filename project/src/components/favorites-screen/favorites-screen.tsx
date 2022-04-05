@@ -11,7 +11,7 @@ function FavoritesScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchFavoritesAction());
-  }, []);
+  }, [dispatch]);
   const favorites = useAppSelector(getFavorites);
 
   return (

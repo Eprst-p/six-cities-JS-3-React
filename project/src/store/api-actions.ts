@@ -18,14 +18,14 @@ import {AppRoute} from '../settings/app-routes';
 import {Favorite} from '../settings/favorite-status';
 
 
-const setPromiseWaiter = (timer = 500) => new Promise(resolve => setTimeout(resolve, timer));
+const setPromiseWaiter = (timer = 300) => new Promise(resolve => setTimeout(resolve, timer));
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
   async () => {
     try {
       const {data} = await api.get<offerTypes>(APIRoute.Hotels);
-      await setPromiseWaiter(800);
+      await setPromiseWaiter(500);
       store.dispatch(loadOfffers(data));
     } catch (error) {
       errorHandle(error);
@@ -150,6 +150,7 @@ export const changeFavoritesAction = createAsyncThunk(
       await api.post<offerType>(generatePath(APIRoute.FavoriteHotel, {id: `${offer.id}`, status: `${favoriteStatus ? Favorite.Remove : Favorite.Add}` }), offer);
     } catch (error) {
       errorHandle(error);
+      store.dispatch(redirectToRoute(AppRoute.Login));
     }
   },
 );

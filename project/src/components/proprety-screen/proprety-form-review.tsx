@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import {Fragment, useState, FormEvent, ChangeEvent, useRef} from "react";
+import {Fragment, useState, FormEvent, ChangeEvent, useRef, memo} from "react";
 import {NewCommentType, CommentData} from "../../types/comment-type";
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {pushCommentAction, fetchCommentsAction} from '../../store/api-actions';
-import {CommentLength} from "../../settings/comment-length";
+import {CommentLength} from "../../settings/comments-settings";
 import {formSubmit} from "../../store/interface-process/interface-process";
 import {getIsFormDisabled} from "../../store/selectors";
 
@@ -39,7 +39,7 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const commentTextRef = textAreaRef.current !== null ? textAreaRef.current.value : '';
   const [rating, setRating] = useState(0);
-  const isButtonDisabled: boolean = rating === 0 || commentTextRef.length < CommentLength.min || commentTextRef.length > CommentLength.max;
+  const isButtonDisabled: boolean = rating === 0 || commentTextRef.length < CommentLength.Min || commentTextRef.length > CommentLength.Max;
   const dispatch = useAppDispatch();
   const isFormDisabled = useAppSelector(getIsFormDisabled);
 
@@ -119,4 +119,4 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   );
 }
 
-export default PropretyFormReview;
+export default memo(PropretyFormReview);

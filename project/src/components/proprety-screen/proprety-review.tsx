@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {CommentType} from '../../types/comment-type';
 
 type PropretyReviewProps = {
@@ -51,4 +52,4 @@ function PropretyReview({comment} : PropretyReviewProps): JSX.Element {
   );
 }
 
-export default PropretyReview;
+export default memo(PropretyReview);

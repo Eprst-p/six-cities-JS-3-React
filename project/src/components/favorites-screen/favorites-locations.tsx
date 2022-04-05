@@ -2,12 +2,11 @@
 import Card from '../card/card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {offerTypes, offerType} from '../../types/offer-types';
+import {offerTypes} from '../../types/offer-types';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {chooseOfferID} from '../../store/interface-process/interface-process';
 import {Variant} from '../../settings/card-variants'
-import React from 'react';
-import {changeFavoritesAction, fetchFavoritesAction} from '../../store/api-actions';
+import {useCallback} from 'react';
 
 type FavoritesLocationsProps = {
   city: string;
@@ -17,13 +16,7 @@ type FavoritesLocationsProps = {
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handlerMouseEnterCard = React.useCallback((id: number) => dispatch(chooseOfferID(id)), []);
-  const handlerMouseLeaveCard = React.useCallback(() => dispatch(chooseOfferID(0)), []);
-  const handlerBookmarkClick = React.useCallback((offer:offerType) => {
-    dispatch(changeFavoritesAction(offer))
-    .then(() => dispatch(fetchFavoritesAction()));
-  }, []);
-
+  const handlerMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
 
   return (
     <>
@@ -41,10 +34,8 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
               key={`favorite-card-${location.id}`}
               variant={Variant.FavoriteCard}
               offer={location}
-              handlerMouseEnterCard={() => handlerMouseEnterCard(location.id)}
-              handlerMouseLeaveCard={() => handlerMouseLeaveCard()}
-              handlerBookmarkClick={() => handlerBookmarkClick(location)}
-              />))
+              handlerMouseOverCard={handlerMouseOverCard}
+            />))
         }
       </div>
     </>

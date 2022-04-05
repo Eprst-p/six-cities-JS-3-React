@@ -1,13 +1,16 @@
 import FavoritesLocations from './favorites-locations';
-import {getFavoriteCities, getLocationsPerCity} from './favorites-get-data'
+import {getFavoriteCities} from '../../store/selectors';
 import {offerTypes} from '../../types/offer-types';
+import {memo, useCallback} from 'react';
+import {useAppSelector} from '../../hooks/redux-hooks';
 
 type FavoritesListProps = {
   favorites: offerTypes;
 }
 
 function FavoritesList({favorites}: FavoritesListProps): JSX.Element {
-  const favoriteCities = getFavoriteCities(favorites);
+  const favoriteCities = useAppSelector(getFavoriteCities);
+  const getLocationsPerCity = useCallback((allFavorites:offerTypes, city:string) => allFavorites.filter((favoriteOffer) => favoriteOffer.city.name === city), []);
 
   return (
     <section className="favorites">
@@ -26,4 +29,4 @@ function FavoritesList({favorites}: FavoritesListProps): JSX.Element {
   );
 }
 
-export default FavoritesList;
+export default memo(FavoritesList);

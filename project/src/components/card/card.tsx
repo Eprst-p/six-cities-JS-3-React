@@ -4,15 +4,16 @@ import {AppRoute} from '../../settings/app-routes';
 import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
 import {generatePath} from "react-router";
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import {useAppDispatch} from '../../hooks/redux-hooks';
+import {changeFavoritesAction, fetchFavoritesAction, fetchOffersAction, fetchOffersNearByAction } from '../../store/api-actions';
+import throttle from 'lodash.throttle'
 
 
 type CardProps = {
   variant: Variant;
   offer: offerType;
-  handlerMouseEnterCard?: () => void;
-  handlerMouseLeaveCard?: () => void;
-  handlerBookmarkClick?: () => void;
+  handlerMouseOverCard: (id:number) => void;
 }
 
 type CardClasses = {
@@ -54,9 +55,19 @@ cardDifferences
     }
   );
 
-function Card({variant, offer, handlerMouseEnterCard, handlerMouseLeaveCard, handlerBookmarkClick} : CardProps): JSX.Element {
+function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
   const cardSettings = useMemo(() => cardDifferences.get(variant), [variant]);
   const favoriteStatus = offer.isFavorite;
+  const dispatch = useAppDispatch();
+
+  const handlerMouseEnterCard = useCallback(throttle(() => handlerMouseOverCard(offer.id), 350), [handlerMouseOverCard]);
+  const handlerMouseLeaveCard = useCallback(throttle(() => handlerMouseOverCard(0), 350), [handlerMouseOverCard]);
+  const handlerBookmarkClick = useCallback(() => {
+    dispatch(changeFavoritesAction(offer))
+    .then(() => dispatch(fetchOffersAction()))
+    .then(() => dispatch(fetchFavoritesAction()))
+    .then(() => dispatch(fetchOffersNearByAction(offer.id)));
+  }, [dispatch, offer]);
 
   return (
     <article className={cardSettings?.articleClass} onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >
@@ -92,7 +103,7 @@ function Card({variant, offer, handlerMouseEnterCard, handlerMouseLeaveCard, han
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${offer.rating*20}%`}}></span>
+            <span style={{width: `${Math.round(offer.rating)*20}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

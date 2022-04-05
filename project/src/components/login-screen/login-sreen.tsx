@@ -1,21 +1,33 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {useRef, FormEvent} from 'react';
-import {useAppDispatch} from '../../hooks/redux-hooks';
+import {useRef, FormEvent, useEffect, useCallback} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {getAuthStatus, getCities} from '../../store/selectors';
+import {AuthorizationStatus} from '../../settings/auth-status';
+import {getRandomPositiveNumber} from '../../mocks/randomaizers';
+import {changeCity} from '../../store/interface-process/interface-process';
 
 
 function LoginScreen(): JSX.Element {
+  const authStatus = useAppSelector(getAuthStatus);
+  const navigate =  useNavigate();
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [navigate, authStatus]);
+
+  const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const dispatch = useAppDispatch();
 
-  const onSubmit = (authData: AuthData) => {
+  const onSubmit = useCallback((authData: AuthData) => {
     dispatch(loginAction(authData));
-  };
+  },[dispatch]);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
@@ -24,7 +36,11 @@ function LoginScreen(): JSX.Element {
         password: passwordRef.current.value,
       });
     }
-  };
+  }, [loginRef, passwordRef, onSubmit]);
+
+  const cities = useAppSelector(getCities);
+  const randomCity = cities[getRandomPositiveNumber(0, cities.length-1)];
+  const handleCityClick = useCallback(() => dispatch(changeCity(randomCity)), [dispatch, randomCity]);
 
   return (
     <main className="page__main page__main--login">
@@ -66,8 +82,8 @@ function LoginScreen(): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <Link className="locations__item-link" to={AppRoute.Main}>
-              <span>Amsterdam</span>
+            <Link className="locations__item-link" to={AppRoute.Main} onClick={handleCityClick}>
+              <span>{randomCity}</span>
             </Link>
           </div>
         </section>
