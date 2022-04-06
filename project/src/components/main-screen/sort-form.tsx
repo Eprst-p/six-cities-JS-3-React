@@ -10,13 +10,13 @@ function SortForm(): JSX.Element {
   const [isOpened, setOpenedStatus] = useState(false);
 
   const handleSortOptionClick = useCallback((evt:MouseEvent<HTMLLIElement>) => dispatch(changeSortOption(evt.currentTarget.id)), [dispatch]);
-  const handleSortFormCLick = useCallback(() => setOpenedStatus(!isOpened), [isOpened]);
+  const handleSortFormClick = useCallback(() => setOpenedStatus(!isOpened), [isOpened]);
 
   const sortOption = useAppSelector(getSortOption);
   const placesOptions = Array.from(Object.values(SortOption));
 
   return (
-    <form className="places__sorting" action="#" method="get" onClick={handleSortFormCLick}>
+    <form className="places__sorting" action="#" method="get" onClick={handleSortFormClick}>
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0}>
         {sortOption}
