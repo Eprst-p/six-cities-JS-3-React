@@ -62,8 +62,8 @@ function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
   const roomId = Number(id);
 
 
-  const handleMouseEnterCard = useCallback(throttle(() => handleMouseOverCard(offer.id), 350), [handleMouseOverCard]);
-  const handleMouseLeaveCard = useCallback(throttle(() => handleMouseOverCard(0), 350), [handleMouseOverCard]);
+  const handleMouseEnterCard = useCallback(() => throttle(() => handleMouseOverCard(offer.id), 350), [handleMouseOverCard, offer.id]);
+  const handleMouseLeaveCard = useCallback(() => throttle(() => handleMouseOverCard(0), 350), [handleMouseOverCard]);
   const handleBookmarkClick = useCallback(() => {
     dispatch(changeFavoritesAction(offer))
     .then(() => dispatch(fetchOffersAction()))

@@ -91,7 +91,7 @@ function PropretyScreen(): JSX.Element {
               <button
                 className={`property__bookmark-button button ${favoriteStatus ? 'property__bookmark-button--active' : ''}`}
                 type="button"
-                onClick={() => handleBigBookmarkClick()}
+                onClick={handleBigBookmarkClick}
               >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>

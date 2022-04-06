@@ -20,6 +20,9 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
   const sortedOffers = useAppSelector(getSortedOffers);
   const dispatch = useAppDispatch();
 
+  // eslint-disable-next-line no-console
+  console.log('chosenOffer в placeMap:', chosenOffer);
+
   const handleMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
 
   return (

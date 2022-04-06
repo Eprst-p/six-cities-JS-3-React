@@ -9,7 +9,7 @@ function SortForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const [isOpened, setOpenedStatus] = useState(false);
 
-  const handleOptionClick = useCallback((evt:MouseEvent<HTMLLIElement>) => dispatch(changeSortOption(evt.currentTarget.id)), [dispatch]);
+  const handleSortOptionClick = useCallback((evt:MouseEvent<HTMLLIElement>) => dispatch(changeSortOption(evt.currentTarget.id)), [dispatch]);
   const handleSortFormCLick = useCallback(() => setOpenedStatus(!isOpened), [isOpened]);
 
   const sortOption = useAppSelector(getSortOption);
@@ -28,7 +28,7 @@ function SortForm(): JSX.Element {
         {
           placesOptions.map((option) =>
             (
-              <li id={option} className={`places__option ${sortOption === option ? 'places__option--active' : ''} `} tabIndex={0} onClick={handleOptionClick} key={option}>{option}</li>
+              <li id={option} className={`places__option ${sortOption === option ? 'places__option--active' : ''} `} tabIndex={0} onClick={handleSortOptionClick} key={option}>{option}</li>
             ),
           )
         }
