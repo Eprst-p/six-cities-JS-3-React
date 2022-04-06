@@ -3,7 +3,7 @@ import {AppRoute} from '../../settings/app-routes';
 import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
 import {generatePath, useParams} from "react-router";
-import React, { useCallback, useMemo } from 'react';
+import {memo, useCallback, useMemo} from 'react';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {changeFavoritesAction, fetchFavoritesAction, fetchOffersAction, fetchOffersNearByAction } from '../../store/api-actions';
 import throttle from 'lodash.throttle'
@@ -62,8 +62,8 @@ function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
   const roomId = Number(id);
 
 
-  const handleMouseEnterCard = useCallback(() => throttle(() => handleMouseOverCard(offer.id), 350), [handleMouseOverCard, offer.id]);
-  const handleMouseLeaveCard = useCallback(() => throttle(() => handleMouseOverCard(0), 350), [handleMouseOverCard]);
+  const handleMouseEnterCard = useCallback(throttle(() => handleMouseOverCard(offer.id), 350), [handleMouseOverCard, offer.id]);
+  const handleMouseLeaveCard = useCallback(throttle(() => handleMouseOverCard(0), 350), [handleMouseOverCard]);
   const handleBookmarkClick = useCallback(() => {
     dispatch(changeFavoritesAction(offer))
     .then(() => dispatch(fetchOffersAction()))
@@ -86,7 +86,7 @@ function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
         : null
       }
       <div className={cardSettings?.divImgWrapperClass}>
-        <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>
+        <Link  to={generatePath(AppRoute.Property, {id: `${offer.id}`})}>
           <img className="place-card__image" src={offer.previewImage} width={cardSettings?.imgWidth} height={cardSettings?.imgHeigh} alt="Place" />
         </Link>
       </div>
@@ -114,7 +114,7 @@ function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>{offer.title}</Link>
+          <Link  to={generatePath(AppRoute.Property, {id: `${offer.id}`})}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
@@ -126,4 +126,4 @@ function equalProps(prevProps:CardProps, nextProps:CardProps) {
   return prevProps.offer === nextProps.offer && prevProps.variant === nextProps.variant;
 };
 
-export default React.memo(Card, equalProps) ;
+export default memo(Card, equalProps) ;

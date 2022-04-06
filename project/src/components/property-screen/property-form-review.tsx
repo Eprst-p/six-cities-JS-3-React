@@ -31,11 +31,11 @@ const starsValues = [
   },
 ];
 
-type PropretyFormReviewProps = {
+type PropertyFormReviewProps = {
   id: number;
 }
 
-function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
+function PropertyFormReview({id} : PropertyFormReviewProps): JSX.Element {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const starInputRefs = starsValues.map(() => createRef<HTMLInputElement>());
   const [commentText, setCommentText] = useState('');
@@ -128,4 +128,4 @@ function PropretyFormReview({id} : PropretyFormReviewProps): JSX.Element {
   );
 }
 
-export default memo(PropretyFormReview);
+export default memo(PropertyFormReview);

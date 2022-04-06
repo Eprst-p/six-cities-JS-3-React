@@ -1,6 +1,6 @@
-import PropretyHost from './proprety-host';
-import PropretyReview from './proprety-review';
-import PropretyFormReview from './proprety-form-review';
+import PropretyHost from './property-host';
+import PropretyReview from './property-review';
+import PropertyFormReview from './property-form-review';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Card from '../card/card';
 import Map from '../map/map';
@@ -14,7 +14,7 @@ import {AuthorizationStatus} from '../../settings/auth-status'
 import {getAuthStatus, getComments, getCommentsFinally, getOffer, getOffersNearBy} from '../../store/selectors';
 
 
-function PropretyScreen(): JSX.Element {
+function PropertyScreen(): JSX.Element {
   const {id} = useParams();
   const currentId = Number(id);
   const currentOffer = useAppSelector(getOffer);
@@ -151,7 +151,7 @@ function PropretyScreen(): JSX.Element {
               {
                 authStatus === AuthorizationStatus.Auth
                 ?
-                <PropretyFormReview id={currentId} />
+                <PropertyFormReview id={currentId} />
                 : null
               }
             </section>
@@ -184,4 +184,4 @@ function PropretyScreen(): JSX.Element {
   );
 }
 
-export default PropretyScreen;
+export default PropertyScreen;

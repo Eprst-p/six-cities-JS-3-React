@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {useEffect, useState, MutableRefObject, useCallback} from 'react';
 import {offerType, offerTypes} from '../types/offer-types';
 import {Map, Marker, LayerGroup} from 'leaflet';
@@ -45,7 +44,6 @@ function useMap(
     }
   };
 
-  console.log('chosenOffer вне функции:', chosenOffer);
 
   const setMarkers = useCallback((viewedMap: Map):LayerGroup => {
     const groupMarkers = new LayerGroup();
@@ -54,13 +52,6 @@ function useMap(
           lat: offer.location.latitude,
           lng: offer.location.longitude
         });
-
-
-        console.log('chosenOffer:', chosenOffer);
-        console.log('offer.id:', offer.id);
-        console.log('chosenOffer.id:', chosenOffer?.id);
-
-
           marker
           .setIcon(
             chosenOffer !== undefined  && offer.id === chosenOffer.id && variant===MapVariant.MainMap
