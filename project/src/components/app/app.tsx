@@ -6,7 +6,7 @@ import Layout from '../layout/layout';
 import MainScreen from '../main-screen/main-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PropertyScreen from '../property-screen/property-screen';
-import LoginScreen from '../login-screen/login-sreen';
+import LoginScreen from '../login-screen/login-screen';
 import PrivateRoute  from '../private-route/private-route';
 import NotFound404 from '../not-found-404/not-found-404';
 import LoadingScreen from '../loading-screen/loading-screen';
