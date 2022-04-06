@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import PlacesAndMap from './places-and-map';
 import EmptyPlaces from './empty-places';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
@@ -13,7 +12,7 @@ function MainScreen(): JSX.Element {
   const offersForCity = useAppSelector(getOffersForCity);
   const dispatch = useAppDispatch();
 
-  const handlerOnCityClick = useCallback((city: string) =>dispatch(changeCity(city)), [dispatch]);
+  const handleOnCityClick = useCallback((city: string) =>dispatch(changeCity(city)), [dispatch]);
 
   return (
     <main className={`page__main page__main--index ${offersForCity.length === 0 ? 'page__main--index-empty' : ''}`}>
@@ -25,7 +24,11 @@ function MainScreen(): JSX.Element {
               cities.map((city) =>
                 (
                   <li className="locations__item" key={city}>
-                    <a className="locations__item-link tabs__item" href="/#" onClick = {() => handlerOnCityClick(city)}>
+                    <a
+                      className={`locations__item-link tabs__item ${newCity === city ? 'tabs__item--active' : ''}`}
+                      href="/#"
+                      onClick = {() => handleOnCityClick(city)}
+                    >
                       <span>{city}</span>
                     </a>
                   </li>

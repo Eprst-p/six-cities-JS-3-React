@@ -1,5 +1,5 @@
 export enum NameSpace {
-  data = 'DATA',
-  user = 'USER',
-  interface = 'INTERFACE',
+  Data = 'DATA',
+  User = 'USER',
+  Interface = 'INTERFACE',
 }

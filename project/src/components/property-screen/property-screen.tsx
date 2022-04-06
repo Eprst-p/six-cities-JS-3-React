@@ -1,7 +1,6 @@
-/* eslint-disable no-console */
-import PropretyHost from './proprety-host';
-import PropretyReview from './proprety-review';
-import PropretyFormReview from './proprety-form-review';
+import PropretyHost from './property-host';
+import PropretyReview from './property-review';
+import PropertyFormReview from './property-form-review';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Card from '../card/card';
 import Map from '../map/map';
@@ -15,7 +14,7 @@ import {AuthorizationStatus} from '../../settings/auth-status'
 import {getAuthStatus, getComments, getCommentsFinally, getOffer, getOffersNearBy} from '../../store/selectors';
 
 
-function PropretyScreen(): JSX.Element {
+function PropertyScreen(): JSX.Element {
   const {id} = useParams();
   const currentId = Number(id);
   const currentOffer = useAppSelector(getOffer);
@@ -31,9 +30,9 @@ function PropretyScreen(): JSX.Element {
     `Max ${currentOffer?.maxAdults} adults`,
   ];
 
-  const handlerMouseOverCard = () => null;
+  const handleMouseOverCard = () => null;
 
-  const handlerBigBookmarkClick = useCallback(() => {
+  const handleBigBookmarkClick = useCallback(() => {
     if(currentOffer) {
       dispatch(changeFavoritesAction(currentOffer))
       .then(() => dispatch(fetchOfferAction(currentId)))
@@ -92,7 +91,7 @@ function PropretyScreen(): JSX.Element {
               <button
                 className={`property__bookmark-button button ${favoriteStatus ? 'property__bookmark-button--active' : ''}`}
                 type="button"
-                onClick={() => handlerBigBookmarkClick()}
+                onClick={handleBigBookmarkClick}
               >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
@@ -152,7 +151,7 @@ function PropretyScreen(): JSX.Element {
               {
                 authStatus === AuthorizationStatus.Auth
                 ?
-                <PropretyFormReview id={currentId} />
+                <PropertyFormReview id={currentId} />
                 : null
               }
             </section>
@@ -173,7 +172,7 @@ function PropretyScreen(): JSX.Element {
                     key={`place-card-${location.id}`}
                     variant={Variant.NearPlaceCard}
                     offer={location}
-                    handlerMouseOverCard={handlerMouseOverCard}
+                    handleMouseOverCard={handleMouseOverCard}
                   />
                 </li>)
                 )
@@ -185,4 +184,4 @@ function PropretyScreen(): JSX.Element {
   );
 }
 
-export default PropretyScreen;
+export default PropertyScreen;

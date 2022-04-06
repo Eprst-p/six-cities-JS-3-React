@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Card from '../card/card';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
@@ -16,7 +15,7 @@ type FavoritesLocationsProps = {
 function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handlerMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
+  const handleMouseOverCard = useCallback((id=0) => dispatch(chooseOfferID(id)), [dispatch]);
 
   return (
     <>
@@ -34,7 +33,7 @@ function FavoritesLocations({city, locationsPerCity}: FavoritesLocationsProps): 
               key={`favorite-card-${location.id}`}
               variant={Variant.FavoriteCard}
               offer={location}
-              handlerMouseOverCard={handlerMouseOverCard}
+              handleMouseOverCard={handleMouseOverCard}
             />))
         }
       </div>

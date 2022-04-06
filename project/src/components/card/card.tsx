@@ -1,10 +1,9 @@
-/* eslint-disable no-console */
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
 import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
-import {generatePath} from "react-router";
-import React, { useCallback, useMemo } from 'react';
+import {generatePath, useParams} from "react-router";
+import {memo, useCallback, useMemo} from 'react';
 import {useAppDispatch} from '../../hooks/redux-hooks';
 import {changeFavoritesAction, fetchFavoritesAction, fetchOffersAction, fetchOffersNearByAction } from '../../store/api-actions';
 import throttle from 'lodash.throttle'
@@ -13,7 +12,7 @@ import throttle from 'lodash.throttle'
 type CardProps = {
   variant: Variant;
   offer: offerType;
-  handlerMouseOverCard: (id:number) => void;
+  handleMouseOverCard: (id:number) => void;
 }
 
 type CardClasses = {
@@ -55,22 +54,29 @@ cardDifferences
     }
   );
 
-function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
+function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
   const cardSettings = useMemo(() => cardDifferences.get(variant), [variant]);
   const favoriteStatus = offer.isFavorite;
   const dispatch = useAppDispatch();
+  const {id} = useParams();
+  const roomId = Number(id);
 
-  const handlerMouseEnterCard = useCallback(throttle(() => handlerMouseOverCard(offer.id), 350), [handlerMouseOverCard]);
-  const handlerMouseLeaveCard = useCallback(throttle(() => handlerMouseOverCard(0), 350), [handlerMouseOverCard]);
-  const handlerBookmarkClick = useCallback(() => {
+
+  const handleMouseEnterCard = useCallback(throttle(() => handleMouseOverCard(offer.id), 350), [handleMouseOverCard, offer.id]);
+  const handleMouseLeaveCard = useCallback(throttle(() => handleMouseOverCard(0), 350), [handleMouseOverCard]);
+  const handleBookmarkClick = useCallback(() => {
     dispatch(changeFavoritesAction(offer))
     .then(() => dispatch(fetchOffersAction()))
     .then(() => dispatch(fetchFavoritesAction()))
-    .then(() => dispatch(fetchOffersNearByAction(offer.id)));
-  }, [dispatch, offer]);
+    .then(() => {
+      if (variant === Variant.NearPlaceCard) {
+        dispatch(fetchOffersNearByAction(roomId));
+      }
+    })
+  }, [dispatch, offer, variant, roomId]);
 
   return (
-    <article className={cardSettings?.articleClass} onMouseEnter={handlerMouseEnterCard} onMouseLeave={handlerMouseLeaveCard} >
+    <article className={cardSettings?.articleClass} onMouseEnter={handleMouseEnterCard} onMouseLeave={handleMouseLeaveCard} >
       {
         offer.isPremium
         ?
@@ -80,7 +86,7 @@ function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
         : null
       }
       <div className={cardSettings?.divImgWrapperClass}>
-        <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>
+        <Link  to={generatePath(AppRoute.Property, {id: `${offer.id}`})}>
           <img className="place-card__image" src={offer.previewImage} width={cardSettings?.imgWidth} height={cardSettings?.imgHeigh} alt="Place" />
         </Link>
       </div>
@@ -93,7 +99,7 @@ function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
           <button
             className={`place-card__bookmark-button button ${favoriteStatus ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
-            onClick={handlerBookmarkClick}
+            onClick={handleBookmarkClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -108,7 +114,7 @@ function Card({variant, offer, handlerMouseOverCard} : CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link  to={generatePath(AppRoute.Proprety, {id: `${offer.id}`})}>{offer.title}</Link>
+          <Link  to={generatePath(AppRoute.Property, {id: `${offer.id}`})}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
@@ -120,4 +126,4 @@ function equalProps(prevProps:CardProps, nextProps:CardProps) {
   return prevProps.offer === nextProps.offer && prevProps.variant === nextProps.variant;
 };
 
-export default React.memo(Card, equalProps) ;
+export default memo(Card, equalProps) ;

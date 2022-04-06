@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import {useEffect, useState, MutableRefObject} from 'react';
+import {useEffect, useState, MutableRefObject, useCallback} from 'react';
 import {offerType, offerTypes} from '../types/offer-types';
 import {Map, Marker, LayerGroup} from 'leaflet';
 import {City} from '../types/city';
@@ -18,7 +17,7 @@ function useMap(
   const city:City | undefined = offers[0]?.city;
   const centralLocation:City | offerType | undefined = variant===MapVariant.MainMap ? city : chosenOffer;
 
-  const createMap = () => {
+  const createMap = useCallback(() => {
     if (mapRef.current !== null && centralLocation!==undefined) {
       const instance = leaflet.map(mapRef.current, {
         center: {
@@ -37,7 +36,7 @@ function useMap(
         .addTo(instance);
       setMap(instance);
     };
-  };
+  }, [centralLocation, mapRef]);
 
   const moveMapToCity = (newCity: City | undefined, viewedMap: Map) :void => {
     if (newCity) {
@@ -45,7 +44,8 @@ function useMap(
     }
   };
 
-  const setMarkers = (viewedMap: Map):LayerGroup => {
+
+  const setMarkers = useCallback((viewedMap: Map):LayerGroup => {
     const groupMarkers = new LayerGroup();
       offers.forEach((offer) => {
         const marker = new Marker({
@@ -71,7 +71,7 @@ function useMap(
       });
     groupMarkers.addTo(viewedMap);
     return groupMarkers;
-  };
+  }, [chosenOffer, offers, variant]);
 
   useEffect(() => {
     let groupMarkers: LayerGroup;
@@ -87,7 +87,7 @@ function useMap(
     return () => {
         map?.removeLayer(groupMarkers);
     };
-  }, [map, offers, variant, chosenOffer]);
+  }, [map, offers, variant, chosenOffer, createMap, city, setMarkers]);
 
   return map;
 };

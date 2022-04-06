@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../settings/name-space';
 import {InterfaceProcess} from '../../types/state';
-import {cities} from '../../mocks/sources';
+import {cities} from '../../settings/cities';
 import {SortOption} from '../../settings/sort-options';
 
 
@@ -14,7 +14,7 @@ const initialState: InterfaceProcess = {
 };
 
 export const interfaceProcess = createSlice({
-  name: NameSpace.user,
+  name: NameSpace.User,
   initialState,
   reducers: {
     formSubmit: (state, {payload}) => {state.isFormDisabled = payload},
