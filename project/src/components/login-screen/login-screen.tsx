@@ -1,6 +1,6 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute} from '../../settings/app-routes';
-import {useRef, FormEvent, useEffect, useCallback} from 'react';
+import {useRef, FormEvent, useEffect, useCallback, useState, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
@@ -13,33 +13,73 @@ import {changeCity} from '../../store/interface-process/interface-process';
 function LoginScreen(): JSX.Element {
   const authStatus = useAppSelector(getAuthStatus);
   const navigate =  useNavigate();
+  const dispatch = useAppDispatch();
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const emailRegExp = useMemo(() => new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/), []);
+  const passwordRegExp = useMemo(() => new RegExp(/(?=.*[0-9])(?=.*[A-Za-z])[0-9A-Za-z]{2,}/), []);
+
   useEffect(() => {
     if (authStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Main);
     }
   }, [navigate, authStatus]);
 
-  const dispatch = useAppDispatch();
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const emailValidation = (email:string) => {
+    if (email === '') {
+      setEmailError('Емэйл не может быть пустым');
+      return false;
+    }
+    if (!emailRegExp.test(String(email).toLowerCase())) {
+      setEmailError('Некорректный емейл');
+      return false;
+    } else {
+      setEmailError('');
+      return true;
+    }
+  };
+
+  const passwordValidation = (password: string) => {
+    if (password === '') {
+      setPasswordError('Пароль не может быть пустым');
+      return false;
+    }
+    if (!passwordRegExp.test(String(password).toLowerCase())) {
+      setPasswordError('Некорректный пароль');
+      return false;
+    } else {
+      setPasswordError('');
+      return true;
+    }
+  };
 
   const onSubmit = useCallback((authData: AuthData) => {
     dispatch(loginAction(authData));
   },[dispatch]);
 
-  const handleSubmit = useCallback((evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
 
+  const checkValidation = () =>  {
     if (loginRef.current !== null && passwordRef.current !== null) {
+      return emailValidation(loginRef.current.value) && passwordValidation(passwordRef.current.value);
+    } else {
+      return false;
+    }
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (checkValidation() && loginRef.current !== null && passwordRef.current !== null) {
       onSubmit({
         login: loginRef.current.value,
-        password: passwordRef.current.value,
+        password: passwordRef.current.value.trim(),
       });
     }
-  }, [loginRef, passwordRef, onSubmit]);
+  };
 
   const cities = useAppSelector(getCities);
-  const randomCity = cities[getRandomPositiveNumber(0, cities.length-1)];
+  const randomCity = useMemo(() => cities[getRandomPositiveNumber(0, cities.length-1)], [cities]);
   const handleCityClick = useCallback(() => dispatch(changeCity(randomCity)), [dispatch, randomCity]);
 
   return (
@@ -55,6 +95,7 @@ function LoginScreen(): JSX.Element {
           >
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">E-mail</label>
+              {emailError ? <div style={{color: '#d91818'}}>{emailError}</div> : ''}
               <input
                 className="login__input form__input"
                 type="email"
@@ -67,6 +108,7 @@ function LoginScreen(): JSX.Element {
             </div>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">Password</label>
+              {passwordError ? <div style={{color: '#d91818'}}>{passwordError}</div> : ''}
               <input
                 className="login__input form__input"
                 type="password"
