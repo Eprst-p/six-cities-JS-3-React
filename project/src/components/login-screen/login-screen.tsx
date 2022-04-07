@@ -34,7 +34,7 @@ function LoginScreen(): JSX.Element {
       setEmailError('Email cannot be empty');
       return false;
     }
-    if (!emailRegExp.test(String(email).toLowerCase())) {
+    if (!emailRegExp.test(`${email}`.toLowerCase())) {
       setEmailError('Incorrect Email');
       return false;
     } else {
@@ -48,7 +48,7 @@ function LoginScreen(): JSX.Element {
       setPasswordError('Password cannot be empty');
       return false;
     }
-    if (!passwordRegExp.test(String(password).toLowerCase())) {
+    if (!passwordRegExp.test(`${password}`.toLowerCase())) {
       setPasswordError('Incorrect password');
       return false;
     } else {
