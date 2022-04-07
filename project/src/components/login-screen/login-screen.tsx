@@ -31,11 +31,11 @@ function LoginScreen(): JSX.Element {
 
   const emailValidation = (email:string) => {
     if (email === '') {
-      setEmailError('Емэйл не может быть пустым');
+      setEmailError('Email cannot be empty');
       return false;
     }
     if (!emailRegExp.test(String(email).toLowerCase())) {
-      setEmailError('Некорректный емейл');
+      setEmailError('Incorrect Email');
       return false;
     } else {
       setEmailError('');
@@ -45,11 +45,11 @@ function LoginScreen(): JSX.Element {
 
   const passwordValidation = (password: string) => {
     if (password === '') {
-      setPasswordError('Пароль не может быть пустым');
+      setPasswordError('Password cannot be empty');
       return false;
     }
     if (!passwordRegExp.test(String(password).toLowerCase())) {
-      setPasswordError('Некорректный пароль');
+      setPasswordError('Incorrect password');
       return false;
     } else {
       setPasswordError('');
