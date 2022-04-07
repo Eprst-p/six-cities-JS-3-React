@@ -4,9 +4,11 @@ import {Variant} from '../../settings/card-variants';
 import {offerType} from '../../types/offer-types';
 import {generatePath, useParams} from "react-router";
 import {memo, useCallback, useMemo} from 'react';
-import {useAppDispatch} from '../../hooks/redux-hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {changeFavoritesAction, fetchFavoritesAction, fetchOffersAction, fetchOffersNearByAction } from '../../store/api-actions';
 import throttle from 'lodash.throttle'
+import {getAuthStatus} from '../../store/selectors';
+import {AuthorizationStatus} from '../../settings/auth-status';
 
 
 type CardProps = {
@@ -57,10 +59,10 @@ cardDifferences
 function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
   const cardSettings = useMemo(() => cardDifferences.get(variant), [variant]);
   const favoriteStatus = offer.isFavorite;
+  const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const roomId = Number(id);
-
 
   const handleMouseEnterCard = useCallback(throttle(() => handleMouseOverCard(offer.id), 350), [handleMouseOverCard, offer.id]);
   const handleMouseLeaveCard = useCallback(throttle(() => handleMouseOverCard(0), 350), [handleMouseOverCard]);
@@ -97,7 +99,7 @@ function Card({variant, offer, handleMouseOverCard} : CardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button button ${favoriteStatus ? 'place-card__bookmark-button--active' : ''}`}
+            className={`place-card__bookmark-button button ${(favoriteStatus && authStatus===AuthorizationStatus.Auth) ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
             onClick={handleBookmarkClick}
           >

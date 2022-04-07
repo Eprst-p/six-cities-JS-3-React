@@ -18,6 +18,8 @@ function LoginScreen(): JSX.Element {
   const [passwordError, setPasswordError] = useState('');
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const cities = useAppSelector(getCities);
+  const randomCity = useMemo(() => cities[getRandomPositiveNumber(0, cities.length-1)], [cities]);
   const emailRegExp = useMemo(() => new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/), []);
   const passwordRegExp = useMemo(() => new RegExp(/(?=.*[0-9])(?=.*[A-Za-z])[0-9A-Za-z]{2,}/), []);
 
@@ -78,8 +80,6 @@ function LoginScreen(): JSX.Element {
     }
   };
 
-  const cities = useAppSelector(getCities);
-  const randomCity = useMemo(() => cities[getRandomPositiveNumber(0, cities.length-1)], [cities]);
   const handleCityClick = useCallback(() => dispatch(changeCity(randomCity)), [dispatch, randomCity]);
 
   return (
