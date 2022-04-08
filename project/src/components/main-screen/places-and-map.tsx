@@ -24,11 +24,11 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
 
   return (
     <div className="cities__places-container container">
-      <section className="cities__places places">
+      <section className="cities__places places" data-testid="cities_places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{`${offers.length} places to stay in ${city}`}</b>
           <SortForm />
-        <div className="cities__places-list places__list tabs__content">
+        <div className="cities__places-list places__list tabs__content" data-testid="filled_cards_container">
           {
             sortedOffers.map((location) => (
               <Card
@@ -41,7 +41,7 @@ function PlacesAndMap({offers, city}: PlacesAndMapProps): JSX.Element {
         </div>
       </section>
       <div className="cities__right-section">
-        <section className="cities__map map">
+        <section className="cities__map map" data-testid="cities__map">
           <Map chosenOffer={chosenOffer} offers={offers} variant={MapVariant.MainMap} />
         </section>
       </div>

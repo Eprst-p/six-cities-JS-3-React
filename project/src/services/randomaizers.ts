@@ -4,5 +4,6 @@ const getRandomPositiveNumber = (a:number, b:number) => {
   return Math.floor(Math.random() * (upper - lower + 1)) + lower; //рандомное число от a до b включительно
 };
 
+const getRandomElement = (array:unknown[]) => array[getRandomPositiveNumber(0, array.length-1)];
 
-export {getRandomPositiveNumber}
+export {getRandomPositiveNumber, getRandomElement};

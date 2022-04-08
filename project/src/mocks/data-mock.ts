@@ -1,6 +1,9 @@
-import { name, datatype, internet, image, date } from "faker";
+import { name, datatype, internet, image, date, address } from "faker";
 import { CommentType } from "../types/comment-type";
 import { offerType } from "../types/offer-types";
+import { getRandomElement } from "../services/randomaizers";
+
+export const makeFakeCities = Array.from({length: 6}, address.city);
 
 export const makeFakeOffer = () => ({
   bedrooms: datatype.number(),
@@ -10,7 +13,7 @@ export const makeFakeOffer = () => ({
     longitude: datatype.number(),
     zoom: datatype.number(),
   },
-  name: name.title(),
+  name: getRandomElement(makeFakeCities),
   },
   description: name.title(),
   goods: new Array(5).fill(name.title()),

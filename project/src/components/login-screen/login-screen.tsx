@@ -104,6 +104,7 @@ function LoginScreen(): JSX.Element {
                 ref={loginRef}
                 id="name"
                 required
+                data-testid="login"
               />
             </div>
             <div className="login__input-wrapper form__input-wrapper">
@@ -117,14 +118,15 @@ function LoginScreen(): JSX.Element {
                 ref={passwordRef}
                 id="password"
                 required
+                data-testid="password"
               />
             </div>
-            <button className="login__submit form__submit button" type="submit">Sign in</button>
+            <button className="login__submit form__submit button" type="submit" data-testid="submit_button">Sign in</button>
           </form>
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <Link className="locations__item-link" to={AppRoute.Main} onClick={handleCityClick}>
+            <Link className="locations__item-link" to={AppRoute.Main} onClick={handleCityClick} data-testid="locations_link">
               <span>{randomCity}</span>
             </Link>
           </div>

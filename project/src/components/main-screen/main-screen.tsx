@@ -28,6 +28,7 @@ function MainScreen(): JSX.Element {
                       className={`locations__item-link tabs__item ${newCity === city ? 'tabs__item--active' : ''}`}
                       href="/#"
                       onClick = {() => handleOnCityClick(city)}
+                      data-testid="city"
                     >
                       <span>{city}</span>
                     </a>
@@ -38,7 +39,7 @@ function MainScreen(): JSX.Element {
           </ul>
         </section>
       </div>
-      <div className="cities">
+      <div className="cities" data-testid="places_and_map">
         {
           offersForCity.length === 0
           ?

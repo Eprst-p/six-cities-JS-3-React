@@ -1,9 +1,10 @@
 import {formSubmit, chooseOfferID, changeSortOption, changeCity, interfaceProcess, initialState } from "./interface-process";
 import { SortOption } from "../../settings/sort-options";
 import { InterfaceProcess } from "../../types/state";
-import { name, datatype } from "faker";
+import { datatype } from "faker";
+import { makeFakeCities } from "../../mocks/data-mock";
 
-const fakeCities = Array.from({length: 6}, name.title)
+const fakeCities = makeFakeCities;
 
 const initialFakeState: InterfaceProcess = {
   isFormDisabled: false,

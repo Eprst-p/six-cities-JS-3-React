@@ -13,7 +13,6 @@ import { loadOfffers, loadOffer, loadOffersNearBy, loadFavorites, loadComments }
 import { datatype, internet } from 'faker';
 import { generatePath } from 'react-router-dom';
 import { redirectToRoute } from './action';
-import { AppRoute } from '../settings/app-routes';
 import { AuthorizationStatus } from '../settings/auth-status';
 import { formSubmit } from './interface-process/interface-process';
 import { Favorite } from '../settings/favorite-status';
