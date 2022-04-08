@@ -5,7 +5,7 @@ import {cities} from '../../settings/cities';
 import {SortOption} from '../../settings/sort-options';
 
 
-const initialState: InterfaceProcess = {
+export const initialState: InterfaceProcess = {
   isFormDisabled: false,
   chosenOfferID: 0,
   cities: cities,
