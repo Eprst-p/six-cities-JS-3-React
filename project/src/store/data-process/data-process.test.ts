@@ -23,8 +23,9 @@ describe('Reducer: data-process', () => {
   });
 
   it('should load offer to store', () => {
-    expect(dataProcess.reducer(initialState, loadOffer(makeFakeOffer())))
-      .toEqual({...initialState, offer: makeFakeOffer()});
+    const mockOffer = makeFakeOffer();
+    expect(dataProcess.reducer(initialState, loadOffer(mockOffer)))
+      .toEqual({...initialState, offer: mockOffer});
   });
 
   it('should load favorites to store', () => {
