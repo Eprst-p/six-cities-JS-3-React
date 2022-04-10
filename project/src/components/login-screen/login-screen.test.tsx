@@ -2,7 +2,6 @@ import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
-import userEvent from '@testing-library/dom';
 import HistoryRouter from '../history-route/history-route';
 import LoginScreen from './login-screen';
 import { AuthorizationStatus } from '../../settings/auth-status';
@@ -37,9 +36,6 @@ describe('Component: LoginScreen', () => {
     expect(screen.getByText(/Password/i)).toBeInTheDocument();
     expect(screen.getByTestId(/submit_button/i)).toBeInTheDocument();
     expect(screen.getByTestId(/locations_link/i)).toBeInTheDocument();
-
-    userEvent.type(screen.getByTestId('login'), 'vasyan_petrosyan@mail.ru');
-    userEvent.type(screen.getByTestId('password'), 'ss44');
 
     expect(screen.getByDisplayValue(/vasyan_petrosyan@mail.ru/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/ss44/i)).toBeInTheDocument();
