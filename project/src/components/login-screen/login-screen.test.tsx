@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/dom';
 import HistoryRouter from '../history-route/history-route';
 import LoginScreen from './login-screen';
 import { AuthorizationStatus } from '../../settings/auth-status';
